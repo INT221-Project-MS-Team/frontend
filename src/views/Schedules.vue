@@ -1,8 +1,14 @@
-<script setup></script>
+<script setup>
+import { ref } from '@vue/reactivity';
+
+const schedules = ref([]);
+</script>
 
 <template>
-  <div>
+  <div class="bg-schedules-bg w-screen h-screen bg-no-repeat bg-cover">
+    <div>
       
+    </div>
   </div>
 </template>
 
