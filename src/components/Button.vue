@@ -19,7 +19,7 @@ const btnTypes = {
   <div>
     <button
       type="button"
-      class="font-bold border-2 focus:outline-none rounded-3xl text-lg px-10 py-3 text-center mr-2 mb-2 uppercase"
+      class="font-bold border-2 focus:outline-none rounded-3xl text-xl px-10 py-3 text-center mr-2 mb-2 "
       :class="[btnTypes[btnType]]"
     >
       {{ text }}
