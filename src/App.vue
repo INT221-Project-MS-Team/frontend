@@ -3,14 +3,9 @@ import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-  <div id="allback">
+  <div class="bg-clinic-blue-300">
     <Navbar />
     <router-view></router-view>
   </div>
 </template>
  
-<style>
-#allback{
-   background-color: #5f72ff;
-}
-</style>

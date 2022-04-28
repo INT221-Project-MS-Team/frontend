@@ -3,7 +3,7 @@ import Button from '../components/Button.vue';
 </script>
 
 <template>
-  <div class="bg-home-bg w-screen h-screen bg-no-repeat bg-cover flex items-center">
+  <div class="bg-home-bg w-screen h-screen bg-no-repeat bg-cover bg-center flex items-center">
     <div class="container mx-auto px-4 pt-16">
       <div class="flex flex-wrap-reverse justify-center items-center gap-3">
         <div class="flex flex-col gap-6">
@@ -63,11 +63,4 @@ import Button from '../components/Button.vue';
   }
 }
 
-.bg-home-bg {
-  background-image: url('/images/home-bg-new-1.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-color: #5f72ff;
-}
 </style>
