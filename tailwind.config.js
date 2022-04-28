@@ -10,6 +10,14 @@ module.exports = {
         prompt: ['Prompt', 'sans-serif'],
         kanit: ['Kanit', 'sans-serif'],
       },
+      backgroundImage: {
+        'home-bg': "url('/images/home-bg.png')",
+      },
+      colors: {
+        'clinic-blue-300': '#5f72ff',
+        'clinic-blue-200': '#677eff',
+        'clinic-blue-100': '#8da1ff',
+      },
     },
   },
   plugins: [],
