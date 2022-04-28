@@ -20,7 +20,9 @@ import Button from '../components/Button.vue';
           </p>
           <div class="flex flex-row">
             <Button text="Check !" btnType="primary" />
-            <Button text="Reserve !" btnType="secondary" />
+            <router-link :to="{ name: 'schedules' }">
+              <Button text="Reserve !" btnType="secondary" />
+            </router-link>
           </div>
         </div>
         <img class="object-cover w-3/5" src="images/calen-phone.png" alt="" />
