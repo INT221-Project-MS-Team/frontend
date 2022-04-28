@@ -1,11 +1,5 @@
-<script>
-export default {
-  
-}
-</script>
+<script></script>
 
 <template>
-  <div>
-    
-  </div>
+  <router-view></router-view>
 </template>
