@@ -21,7 +21,7 @@ import Button from '../components/Button.vue';
             <Button text="Reserve !" btnType="secondary" />
           </div>
         </div>
-        <img class="calender bounce-2 object-cover w-3/5" src="images/calen-phone.png" alt="cover" />
+        <img class="calender bounce-2 object-cover w-3/5" src="images/calen-phone-new.png" alt="cover" />
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@ import Button from '../components/Button.vue';
 }
 
 .bg-home-bg {
-  background-image: url('../../public/images/home-bg.png');
+  background-image: url('/images/home-bg-new-1.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
