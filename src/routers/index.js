@@ -1,15 +1,15 @@
-const { def } = require("@vue/shared");
-const { createWebHashHistory, createRouter } = require("vue-router");
+import { createWebHashHistory, createRouter } from 'vue-router';
+import Home from '../views/Home.vue';
 
 const history = createWebHashHistory();
 const routes = [
   {
     path: '/',
-    name: '',
-    component: null
+    name: 'home',
+    component: Home,
   },
 ];
 
-const router = createRouter({history, routes});
+const router = createRouter({ history, routes });
 
 export default router;
