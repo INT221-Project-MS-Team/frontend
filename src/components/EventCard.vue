@@ -1,5 +1,5 @@
 <script setup>
-const emits = defineEmits(['selectEvent']);
+const emits = defineEmits([]);
 const props = defineProps({
   event: {
     type: Object,
@@ -10,9 +10,9 @@ const props = defineProps({
 
 <template>
   <div
-    @click="$emit('selectEvent', event.id)"
-    class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 w-full"
+    class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 min-w-full"
   >
+    <img class="w-2/12 rounded-full" src="/images/demo-cat.png" alt="">
     <div class="flex flex-col justify-between p-3 leading-normal">
       <p class="mb-3 font-normal">
         <span

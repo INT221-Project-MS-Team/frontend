@@ -19,7 +19,7 @@ const test = () =>{console.log('test');}
       </p>
       <SmButton text="close" @click="$emit('clearSelectedEvent', event.id)" />
     </div>
-    <img class="object-cover w-2/6 mx-auto" src="images/time.png" alt="cover" />
+    <img class="object-cover w-2/6 mx-auto" src="/images/time.png" alt="cover" />
     <div class="p-5">
       <p class="mb-3 font-normal gap-4 flex flex-col">
         <span
