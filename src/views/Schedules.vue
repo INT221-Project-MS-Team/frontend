@@ -12,8 +12,8 @@ const route = useRoute();
 const schedulesData = ref([]);
 const selectedDate = ref(new Date().toISOString().substr(0, 10));
 const selectedEvent = ref(null);
-const sortBy = ref("eventStartTime");
-const sortOrder = ref("desc");
+const sortBy = ref('eventStartTime');
+const sortOrder = ref('desc');
 
 const selectEvent = (eventId) => {
   selectedEvent.value = schedulesData.value.find(
@@ -21,18 +21,25 @@ const selectEvent = (eventId) => {
   );
 };
 
+const clearSelectedEvent = () => {
+  selectedEvent.value = null;
+};
+
 const dateCompute = computed(() => {
   return selectedDate.value.split('-').reverse().join('/');
 });
 
 const endPointUrl = computed(() => {
-  return import.meta.env.VITE_SERVER_URI + `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`;
+  return (
+    import.meta.env.VITE_SERVER_URI +
+    `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
+  );
 });
 
 const getSchedulesData = async () => {
   const response = await fetch(endPointUrl.value);
   const data = await response.json();
-  if(data?.content){
+  if (data?.content) {
     schedulesData.value = data.content;
   }
   console.log(data);
@@ -47,7 +54,7 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
-    <div class="bg-white rounded-3xl h-2/3 w-1/5 flex shadow-lg">
+    <div class="bg-white rounded-3xl h-2/3 w-1/4 flex shadow-lg">
       <div
         v-if="!schedulesData.length"
         class="flex flex-col items-center justify-center"
@@ -83,10 +90,10 @@ onBeforeMount(async () => {
       </div>
 
       <div v-else class="flex flex-col p-5">
-        <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">
-          Scheduled Detail
-        </p>
-        <EventDetail :event="selectedEvent" />
+        <EventDetail
+          :event="selectedEvent"
+          @clearSelectedEvent="clearSelectedEvent"
+        />
       </div>
     </div>
   </div>
