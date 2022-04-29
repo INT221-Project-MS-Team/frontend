@@ -12,6 +12,8 @@ const route = useRoute();
 const schedulesData = ref([]);
 const selectedDate = ref(new Date().toISOString().substr(0, 10));
 const selectedEvent = ref(null);
+const sortBy = ref("eventStartTime");
+const sortOrder = ref("desc");
 
 const selectEvent = (eventId) => {
   selectedEvent.value = schedulesData.value.find(
@@ -23,10 +25,16 @@ const dateCompute = computed(() => {
   return selectedDate.value.split('-').reverse().join('/');
 });
 
+const endPointUrl = computed(() => {
+  return import.meta.env.VITE_SERVER_URI + `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`;
+});
+
 const getSchedulesData = async () => {
-  const response = await fetch(import.meta.env.VITE_SERVER_URI + '/api/events');
+  const response = await fetch(endPointUrl.value);
   const data = await response.json();
-  schedulesData.value = data;
+  if(data?.content){
+    schedulesData.value = data.content;
+  }
   console.log(data);
 };
 
