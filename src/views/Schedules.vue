@@ -42,18 +42,15 @@ onBeforeMount(async () => {
 
 <template>
   <div
-    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
-  >
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2">
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
-      <div
-        v-if="!schedulesData.length"
-        class="flex flex-col items-center justify-center"
-      >
-        <img class="object-cover w-3/5" src="/images/girl.png" alt="cover" />
+      <div v-if="!schedulesData.length" class="flex flex-col items-center justify-center">
+        <!-- <img class="object-cover w-3/5" src="/images/girl.png" alt="cover" />
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">
           No Scheduled Events
-        </p>
+        </p> -->
+        <NoEvent />
       </div>
 
       <!-- have event -->
@@ -62,12 +59,7 @@ onBeforeMount(async () => {
           Scheduled Events
         </p>
         <div class="flex flex-col gap-2 overflow-auto min-w-full">
-          <EventCard
-            v-for="(event, index) in schedulesData"
-            :event="event"
-            :key="index"
-            @selectEvent="selectEvent"
-          />
+          <EventCard v-for="(event, index) in schedulesData" :event="event" :key="index" @selectEvent="selectEvent" />
         </div>
       </div>
     </div>
@@ -76,24 +68,13 @@ onBeforeMount(async () => {
       <div class="flex flex-col p-10 min-w-full">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
-        <label
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-          >Select date</label
-        >
-        <litepie-datepicker
-          :formatter="formatter"
-          as-single
-          v-model="selectedDate"
-        ></litepie-datepicker>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select date</label>
+        <litepie-datepicker :formatter="formatter" as-single v-model="selectedDate"></litepie-datepicker>
         <Divider text="Category" />
 
-        <label
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-          >Select category</label
-        >
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select category</label>
         <select
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option>Front-End</option>
           <option>Backend</option>
           <option>Database</option>
@@ -105,4 +86,5 @@ onBeforeMount(async () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
