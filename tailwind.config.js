@@ -1,5 +1,3 @@
-// import path from 'path'
-// import colors from 'tailwindcss/colors'
 const path = require('path');
 const colors = require('tailwindcss/colors');
 
