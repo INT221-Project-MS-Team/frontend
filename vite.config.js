@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server:{
+    cors:{
+      origin: '*',
+    },
     port: 8080,
   },
 })
