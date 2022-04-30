@@ -11,7 +11,7 @@ const props = defineProps({
 });
 const btnTypes = {
   primary: ['bg-white', 'text-clinic-blue-300', 'hover:bg-gray-100'],
-  secondary: ['bg-transparent', 'text-white', 'hover:bg-white', 'hover:text-clinic-blue-300'],
+  secondary: ['bg-clinic-blue-300', 'text-white', 'hover:bg-white', 'hover:text-clinic-blue-300'],
 };
 </script>
 

@@ -1,6 +1,7 @@
 <script setup>
 import NoEvent from '../components/NoEvent.vue';
 import EventCard from '../components/EventCard.vue';
+import SmButton from '../components/SmButton.vue';
 import EventDetail from '../components/EventDetail.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
@@ -67,16 +68,18 @@ onBeforeMount(async () => {
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select date</label>
         <litepie-datepicker :formatter="formatter" as-single v-model="selectedDate"></litepie-datepicker>
         <Divider text="Category" />
-
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select category</label>
         <select
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option selected>All</option>
           <option>Front-End</option>
           <option>Backend</option>
           <option>Database</option>
           <option>DevOps/Infra</option>
           <option>Project Managers</option>
         </select>
+        <Divider text="Apply" />
+        <SmButton text="Apply" btnType="secondary" />
       </div>
     </div>
   </div>
