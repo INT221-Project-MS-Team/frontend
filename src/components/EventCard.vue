@@ -24,7 +24,7 @@ const props = defineProps({
         <br />
         <span
           ><span class="text-clinic-blue-300">Date:</span>
-          {{ new Date(event.eventStartTime).toString() }}
+          {{ new Date(event.eventStartTime).toString().split('GMT')[0].trim() }}
         </span>
         <br />
         <span
