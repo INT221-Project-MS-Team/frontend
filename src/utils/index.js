@@ -1,6 +1,9 @@
 export const getCurrentDateTime = () => {
   return new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
 };
+export const convertToISO = (date) => {
+  return date.split('/').reverse().join('-');
+}
 
 export const getDate = (eventStartTime) => {
   return new Date(eventStartTime)

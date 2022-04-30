@@ -4,12 +4,14 @@ import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
-import { getCurrentDateTime } from '../utils';
+import { getCurrentDateTime, convertToISO } from '../utils';
 
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
 
 const schedulesData = ref([]);
+const categoriesData = ref([]);
+const selectedEventCategoryName = ref('All');
 const selectedDate = ref('');
 const sortBy = ref('eventStartTime');
 const sortOrder = ref('desc');
@@ -25,6 +27,42 @@ const endPointUrl = computed(() => {
   );
 });
 
+const filteredSchedules = computed(() => {
+  const schedules = schedulesData.value;
+  const categoryName =
+    selectedEventCategoryName.value === 'All'
+      ? null
+      : selectedEventCategoryName.value;
+  const date = convertToISO(selectedDate.value);
+
+  if (categoryName && date) {
+    return schedules.filter(
+      (schedule) =>
+        schedule.eventCategory.eventCategoryName === categoryName &&
+        schedule.eventStartTime.includes(date)
+    );
+  }
+
+  if (categoryName) {
+    return schedules.filter(
+      (schedule) => schedule.eventCategory.eventCategoryName === categoryName
+    );
+  }
+
+  if (date) {
+    return schedules.filter((schedule) =>
+      schedule.eventStartTime.includes(date)
+    );
+  }
+
+  return schedules;
+});
+
+const resetFilter = () => {
+  selectedEventCategoryName.value = 'All';
+  selectedDate.value = '';
+};
+
 const getSchedulesData = async () => {
   const response = await fetch(endPointUrl.value);
   if (response.status === 200) {
@@ -38,13 +76,13 @@ const getSchedulesData = async () => {
   }
 };
 
-const getCategoryData = async () => {
+const getCategoriesData = async () => {
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events-categories'
   );
   if (response.status === 200) {
     const data = await response.json();
-    console.log(data);
+    categoriesData.value = data;
   } else {
     console.log('Fetch Category Error');
   }
@@ -52,7 +90,7 @@ const getCategoryData = async () => {
 
 onBeforeMount(async () => {
   await getSchedulesData();
-  await getCategoryData();
+  await getCategoriesData();
 });
 </script>
 
@@ -63,7 +101,7 @@ onBeforeMount(async () => {
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
       <div
-        v-if="!schedulesData.length"
+        v-if="!filteredSchedules.length"
         class="flex flex-col items-center justify-center"
       >
         <NoEvent />
@@ -74,13 +112,13 @@ onBeforeMount(async () => {
         <div class="text-sm md:text-lg lg:text-2xl flex justify-between">
           <span class="text-gray-400"> Scheduled Events </span>
           <span class="text-gray-300 text-xs md:text-base lg:text-xl">
-            {{ schedulesData.length }} events
+            {{ filteredSchedules.length }} events
           </span>
         </div>
 
         <div class="flex flex-col gap-2 overflow-auto min-w-full">
           <EventCard
-            v-for="(event, index) in schedulesData"
+            v-for="(event, index) in filteredSchedules"
             :event="event"
             :key="index"
           />
@@ -107,17 +145,18 @@ onBeforeMount(async () => {
           >Select category</label
         >
         <select
+          v-model="selectedEventCategoryName"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option selected>All</option>
-          <option>Front-End</option>
-          <option>Backend</option>
-          <option>Database</option>
-          <option>DevOps/Infra</option>
-          <option>Project Managers</option>
+          <option v-for="(value, index) in categoriesData" :key="index">
+            {{ value.eventCategoryName }}
+          </option>
         </select>
-        <Divider text="Apply" />
-        <SmButton text="Apply" btnType="secondary" />
+        <Divider text="Reset" />
+        <div class="flex gap-2">
+          <SmButton text="Reset" btnType="secondary" @click="resetFilter" />
+        </div>
       </div>
     </div>
   </div>
