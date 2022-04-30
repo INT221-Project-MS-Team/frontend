@@ -2,7 +2,6 @@
 import NoEvent from '../components/NoEvent.vue';
 import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
-import EventDetail from '../components/EventDetail.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
 import { getCurrentDateTime } from '../utils';
