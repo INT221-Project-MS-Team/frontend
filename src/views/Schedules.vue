@@ -46,10 +46,6 @@ onBeforeMount(async () => {
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
       <div v-if="!schedulesData.length" class="flex flex-col items-center justify-center">
-        <!-- <img class="object-cover w-3/5" src="/images/girl.png" alt="cover" />
-        <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">
-          No Scheduled Events
-        </p> -->
         <NoEvent />
       </div>
 
