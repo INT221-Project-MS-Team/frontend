@@ -2,6 +2,7 @@
 import NoEvent from '../components/NoEvent.vue';
 import Divider from '../components/Divider.vue';
 import SmButton from '../components/SmButton.vue';
+import { getDate, getTime } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
@@ -84,12 +85,11 @@ onBeforeMount(async () => {
             >
             <span
               ><span class="text-clinic-blue-300">Date:</span>
-              {{
-                new Date(eventData.eventStartTime)
-                  .toString()
-                  .split('GMT')[0]
-                  .trim()
-              }}
+              {{ getDate(eventData.eventStartTime) }}
+            </span>
+            <span
+              ><span class="text-clinic-blue-300">Start Time:</span>
+              {{ getTime(eventData.eventStartTime) }}
             </span>
             <span
               ><span class="text-clinic-blue-300">Duration:</span>
