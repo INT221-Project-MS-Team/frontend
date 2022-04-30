@@ -5,14 +5,13 @@ import SmButton from '../components/SmButton.vue';
 import EventDetail from '../components/EventDetail.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
+import { getCurrentDateTime } from '../utils';
 
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
 
 const schedulesData = ref([]);
-const selectedDate = ref(
-  new Date().toISOString().substr(0, 10).split('-').reverse().join('/')
-);
+const selectedDate = ref('');
 const sortBy = ref('eventStartTime');
 const sortOrder = ref('desc');
 const formatter = ref({
@@ -29,34 +28,61 @@ const endPointUrl = computed(() => {
 
 const getSchedulesData = async () => {
   const response = await fetch(endPointUrl.value);
-  const data = await response.json();
-  if (data?.content) {
-    schedulesData.value = data.content;
+  if (response.status === 200) {
+    const data = await response.json();
+    if (data?.content) {
+      schedulesData.value = data.content;
+    }
+    console.log(data);
+  } else {
+    console.log('Fetch Scheduled events Error');
   }
-  console.log(data);
+};
+
+const getCategoryData = async () => {
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URI + '/api/events-categories'
+  );
+  if (response.status === 200) {
+    const data = await response.json();
+    console.log(data);
+  } else {
+    console.log('Fetch Category Error');
+  }
 };
 
 onBeforeMount(async () => {
   await getSchedulesData();
+  await getCategoryData();
 });
 </script>
 
 <template>
   <div
-    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2">
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
+  >
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
-      <div v-if="!schedulesData.length" class="flex flex-col items-center justify-center">
+      <div
+        v-if="!schedulesData.length"
+        class="flex flex-col items-center justify-center"
+      >
         <NoEvent />
       </div>
 
       <!-- have event -->
       <div v-else class="flex flex-col p-10 min-w-full">
-        <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">
-          Scheduled Events
-        </p>
+        <div class="text-sm md:text-lg lg:text-2xl flex justify-between">
+          <span class="text-gray-400"> Scheduled Events </span>
+          <span class="text-gray-300 text-xs md:text-base lg:text-xl"> {{ schedulesData.length }} events </span>
+        </div>
+
         <div class="flex flex-col gap-2 overflow-auto min-w-full">
-          <EventCard v-for="(event, index) in schedulesData" :event="event" :key="index"  />
+          <EventCard
+            v-for="(event, index) in schedulesData"
+            :event="event"
+            :key="index"
+          />
         </div>
       </div>
     </div>
@@ -65,12 +91,23 @@ onBeforeMount(async () => {
       <div class="flex flex-col p-10 min-w-full">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select date</label>
-        <litepie-datepicker :formatter="formatter" as-single v-model="selectedDate"></litepie-datepicker>
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+          >Select date</label
+        >
+        <litepie-datepicker
+          :formatter="formatter"
+          as-single
+          v-model="selectedDate"
+        ></litepie-datepicker>
         <Divider text="Category" />
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select category</label>
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+          >Select category</label
+        >
         <select
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
           <option selected>All</option>
           <option>Front-End</option>
           <option>Backend</option>
@@ -85,5 +122,4 @@ onBeforeMount(async () => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
