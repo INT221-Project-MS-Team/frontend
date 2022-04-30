@@ -1,6 +1,6 @@
 <script setup>
 import { ArrowNarrowRightIcon } from '@heroicons/vue/outline';
-import SmButton from './SmButton.vue'
+import SmButton from './SmButton.vue';
 const emits = defineEmits([]);
 const props = defineProps({
   event: {
@@ -14,7 +14,7 @@ const props = defineProps({
   <div
     class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 min-w-full"
   >
-    <img class="w-2/12 rounded-full" src="/images/demo-cat.png" alt="" />
+    <img class="w-2/12 rounded-full object-scale-down" src="/images/person.png" alt="" />
     <div class="flex flex-col justify-between p-3 leading-normal">
       <div class="mb-3 font-normal">
         <span
@@ -38,8 +38,9 @@ const props = defineProps({
         >
         <br />
       </div>
-        <SmButton  text="Read more detail"/>
-
+      <router-link :to="`/event?id=${event.id}`">
+        <SmButton text="Read more detail" />
+      </router-link>
     </div>
   </div>
 </template>
