@@ -1,6 +1,7 @@
 import { createWebHashHistory, createRouter } from 'vue-router';
 import Home from '../views/Home.vue';
 import Schedules from '../views/Schedules.vue';
+import Event from '../views/Event.vue';
 import NotFound from '../views/NotFound.vue';
 const history = createWebHashHistory();
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: '/schedules',
     name: 'schedules',
     component: Schedules,
+  },
+  {
+    path: '/event',
+    name: 'event',
+    component: Event,
   },
   {
     path: '/:notMatchPath(.*)',
