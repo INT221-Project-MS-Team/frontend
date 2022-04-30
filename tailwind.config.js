@@ -24,6 +24,7 @@ module.exports = {
         'clinic-blue-300': '#5f72ff',
         'clinic-blue-200': '#677eff',
         'clinic-blue-100': '#8da1ff',
+        'clinic-blue-50': '#B7C2FF',
         'litepie-primary': colors.sky, 
       },
     },
