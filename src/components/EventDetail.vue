@@ -1,7 +1,6 @@
 <script setup>
 import SmButton from './SmButton.vue';
 
-const emits = defineEmits(['clearSelectedEvent']);
 const props = defineProps({
   event: {
     type: Object,
@@ -17,7 +16,7 @@ const test = () =>{console.log('test');}
       <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">
         Event Detail
       </p>
-      <SmButton text="close" @click="$emit('clearSelectedEvent', event.id)" />
+      <SmButton text="close" />
     </div>
     <img class="object-cover w-2/6 mx-auto" src="/images/time.png" alt="cover" />
     <div class="p-5">

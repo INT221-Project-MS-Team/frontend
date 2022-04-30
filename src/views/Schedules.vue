@@ -55,7 +55,7 @@ onBeforeMount(async () => {
           Scheduled Events
         </p>
         <div class="flex flex-col gap-2 overflow-auto min-w-full">
-          <EventCard v-for="(event, index) in schedulesData" :event="event" :key="index" @selectEvent="selectEvent" />
+          <EventCard v-for="(event, index) in schedulesData" :event="event" :key="index"  />
         </div>
       </div>
     </div>
