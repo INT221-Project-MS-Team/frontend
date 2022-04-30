@@ -13,10 +13,9 @@ const eventId = ref('');
 const eventData = ref(null);
 
 const endPointUrl = computed(() => {
-  return import.meta.env.PROD
-    ? import.meta.env.VITE_PROD_SERVER_URL
-    : import.meta.env.VITE_DEV_SERVER_URI +
-        `/api/events/detail/${eventId.value}`;
+  return (
+    import.meta.env.VITE_SERVER_URL + `/api/events/detail/${eventId.value}`
+  );
 });
 
 const getEventData = async () => {
