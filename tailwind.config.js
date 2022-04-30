@@ -2,11 +2,11 @@ const path = require('path');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: [path.resolve(__dirname, './node_modules/litepie-datepicker/**/*.js')],
   content: [
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
     './node_modules/flowbite/**/*.js',
+    './node_modules/litepie-datepicker/**/*.js'
   ],
   theme: {
     extend: {
