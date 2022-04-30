@@ -19,10 +19,10 @@ const formatter = ref({
 });
 
 const endPointUrl = computed(() => {
-  return (
-    import.meta.env.VITE_SERVER_URI +
-    `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
-  );
+  return import.meta.env.PROD
+    ? import.meta.env.VITE_PROD_SERVER_URL
+    : import.meta.env.VITE_DEV_SERVER_URI +
+        `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`;
 });
 
 const getSchedulesData = async () => {
@@ -40,7 +40,9 @@ const getSchedulesData = async () => {
 
 const getCategoryData = async () => {
   const response = await fetch(
-    import.meta.env.VITE_SERVER_URI + '/api/events-categories'
+    import.meta.env.PROD
+      ? import.meta.env.VITE_PROD_SERVER_URL
+      : import.meta.env.VITE_DEV_SERVER_URI + '/api/events-categories'
   );
   if (response.status === 200) {
     const data = await response.json();
@@ -73,7 +75,9 @@ onBeforeMount(async () => {
       <div v-else class="flex flex-col p-10 min-w-full">
         <div class="text-sm md:text-lg lg:text-2xl flex justify-between">
           <span class="text-gray-400"> Scheduled Events </span>
-          <span class="text-gray-300 text-xs md:text-base lg:text-xl"> {{ schedulesData.length }} events </span>
+          <span class="text-gray-300 text-xs md:text-base lg:text-xl">
+            {{ schedulesData.length }} events
+          </span>
         </div>
 
         <div class="flex flex-col gap-2 overflow-auto min-w-full">

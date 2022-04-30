@@ -13,9 +13,10 @@ const eventId = ref('');
 const eventData = ref(null);
 
 const endPointUrl = computed(() => {
-  return (
-    import.meta.env.VITE_SERVER_URI + `/api/events/detail/${eventId.value}`
-  );
+  return import.meta.env.PROD
+    ? import.meta.env.VITE_PROD_SERVER_URL
+    : import.meta.env.VITE_DEV_SERVER_URI +
+        `/api/events/detail/${eventId.value}`;
 });
 
 const getEventData = async () => {
@@ -60,9 +61,17 @@ onBeforeMount(async () => {
 
       <!-- have event -->
       <div v-else class="flex flex-row min-w-full p-5 gap-6">
-        <div class="min-h-full bg-clinic-blue-50 w-6/12 rounded-lg flex flex-col justify-center items-center p-5 gap-2">
-            <img class="object-cover w-10/12" src="/images/person.png" alt="cover" />
-            <p class="text-white text-3xl text-center">Event ID : {{eventData.id}}</p>
+        <div
+          class="min-h-full bg-clinic-blue-50 w-6/12 rounded-lg flex flex-col justify-center items-center p-5 gap-2"
+        >
+          <img
+            class="object-cover w-10/12"
+            src="/images/person.png"
+            alt="cover"
+          />
+          <p class="text-white text-3xl text-center">
+            Event ID : {{ eventData.id }}
+          </p>
         </div>
         <div class="flex flex-col overflow-auto w-full mt-5">
           <div class="font-normal gap-5 flex flex-col">
