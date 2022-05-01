@@ -25,7 +25,6 @@ module.exports = {
         'clinic-blue-50': '#B7C2FF',
         'clinic-blue-25': '#edf0ff',
         'litepie-primary': colors.sky, 
-        'red' : '#dc2626',
       },
     },
   },
