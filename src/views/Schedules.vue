@@ -165,7 +165,6 @@ onBeforeMount(async () => {
             {{ value.eventCategoryName }}
           </option>
         </select>
-        <br />
         <Divider text="Other" />
         <label class="block mb-2 text-sm font-medium text-gray-900"
           >Booking Name, Booking Email</label
@@ -190,7 +189,6 @@ onBeforeMount(async () => {
             />
           </div>
         </form>
-        <br />
         <Divider text="Reset" />
         <SmButton text="Reset" btnType="danger" @click="resetFilter" />
       </div>
