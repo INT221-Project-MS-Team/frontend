@@ -140,22 +140,18 @@ onBeforeMount(async () => {
       </div>
     </div>
 
-    <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg p-2.5">
+    <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg px-2.5">
       <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
-        <Divider text="Date" />
-        <label class="block mb-2 text-sm font-medium text-gray-900"
-          >Select date</label
-        >
+        <Divider  text="Select Date" />
+      
         <litepie-datepicker
           :formatter="formatter"
           as-single
           v-model="selectedDate"
         ></litepie-datepicker>
-        <Divider text="Category" />
-        <label class="block mb-2 text-sm font-medium text-gray-900"
-          >Select category</label
-        >
+        <Divider text="Select Category" />
+    
         <select
           v-model="selectedEventCategoryName"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -166,9 +162,7 @@ onBeforeMount(async () => {
           </option>
         </select>
         <Divider text="Other" />
-        <label class="block mb-2 text-sm font-medium text-gray-900"
-          >Booking Name, Booking Email</label
-        >
+      
         <form>
           <label
             class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
