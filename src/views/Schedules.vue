@@ -140,7 +140,7 @@ onBeforeMount(async () => {
       </div>
     </div>
 
-    <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg">
+    <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg p-2.5">
       <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
