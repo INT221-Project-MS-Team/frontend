@@ -69,16 +69,18 @@ onBeforeMount(async () => {
             src="/images/person.png"
             alt="cover"
           />
+          <br>
           <p class="text-white text-3xl text-center">
             Event ID : {{ eventData.id }}
           </p>
         </div>
         <div class="flex flex-col overflow-auto w-full mt-5">
           <div class="font-normal gap-5 flex flex-col">
-            <span class="text-xl"
+            <span class="text-2xl"
               ><span class="text-clinic-blue-300">Booking Name:</span>
               {{ eventData.bookingName }}</span
             >
+            <hr>
             <span
               ><span class="text-clinic-blue-300">Email:</span>
               {{ eventData.bookingEmail }}</span
@@ -105,9 +107,9 @@ onBeforeMount(async () => {
             >
             <span
               ><span class="text-clinic-blue-300">Note:</span>
-              {{ eventData.eventNotes || 'No Note' }}
+              {{ eventData.eventNotes || '(blank)' }}
             </span>
-            <SmButton text="Back" @click="goBack" />
+            <SmButton text="Back" btnType="events" @click="goBack" />
           </div>
         </div>
       </div>
