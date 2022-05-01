@@ -35,7 +35,7 @@ const filteredSchedules = computed(() => {
       : selectedEventCategoryName.value;
   const dateTemp = selectedDate.value === '' ? null : selectedDate.value;
 
-  if (categoryName && date) {
+  if (categoryName && dateTemp) {
     return schedules.filter(
       (schedule) =>
         schedule.eventCategory.eventCategoryName === categoryName &&
