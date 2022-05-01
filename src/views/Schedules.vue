@@ -33,13 +33,13 @@ const filteredSchedules = computed(() => {
     selectedEventCategoryName.value === 'All'
       ? null
       : selectedEventCategoryName.value;
-  const date = convertToISO(selectedDate.value);
+  const dateTemp = selectedDate.value === '' ? null : selectedDate.value;
 
   if (categoryName && date) {
     return schedules.filter(
       (schedule) =>
         schedule.eventCategory.eventCategoryName === categoryName &&
-        schedule.eventStartTime.includes(date)
+        schedule.eventStartTime.includes(convertToISO(dateTemp))
     );
   }
 
@@ -49,9 +49,9 @@ const filteredSchedules = computed(() => {
     );
   }
 
-  if (date) {
+  if (dateTemp) {
     return schedules.filter((schedule) =>
-      schedule.eventStartTime.includes(date)
+      schedule.eventStartTime.includes(convertToISO(dateTemp))
     );
   }
 
@@ -154,9 +154,7 @@ onBeforeMount(async () => {
           </option>
         </select>
         <Divider text="Reset" />
-        <div class="flex gap-2">
-          <SmButton text="Reset" btnType="secondary" @click="resetFilter" />
-        </div>
+        <SmButton text="Reset" btnType="primary" @click="resetFilter" />
       </div>
     </div>
   </div>

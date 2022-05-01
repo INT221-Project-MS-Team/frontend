@@ -15,7 +15,7 @@ const eventData = ref(null);
 
 const endPointUrl = computed(() => {
   return (
-    import.meta.env.VITE_SERVER_URL + `/api/events/detail/${eventId.value}`
+    import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`
   );
 });
 
