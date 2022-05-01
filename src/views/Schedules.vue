@@ -5,7 +5,7 @@ import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
 import { getCurrentDateTime, convertToISO } from '../utils';
-
+import { SearchIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
 
@@ -13,6 +13,7 @@ const schedulesData = ref([]);
 const categoriesData = ref([]);
 const selectedEventCategoryName = ref('All');
 const selectedDate = ref('');
+const filterBookingNameEmail = ref('');
 const sortBy = ref('eventStartTime');
 const sortOrder = ref('desc');
 const formatter = ref({
@@ -34,12 +35,15 @@ const filteredSchedules = computed(() => {
       ? null
       : selectedEventCategoryName.value;
   const dateTemp = selectedDate.value === '' ? null : selectedDate.value;
+  const bookingNameEmail = filterBookingNameEmail.value;
 
-  if (categoryName && dateTemp) {
+  if (categoryName && dateTemp && bookingNameEmail) {
     return schedules.filter(
       (schedule) =>
         schedule.eventCategory.eventCategoryName === categoryName &&
-        schedule.eventStartTime.includes(convertToISO(dateTemp))
+        schedule.eventStartTime.includes(convertToISO(dateTemp)) &&
+        (schedule.bookingName.includes(bookingNameEmail) ||
+          schedule.bookingEmail.includes(bookingNameEmail))
     );
   }
 
@@ -55,12 +59,20 @@ const filteredSchedules = computed(() => {
     );
   }
 
+  if(bookingNameEmail){
+    return schedules.filter((schedule) =>
+      (schedule.bookingName.includes(bookingNameEmail) ||
+        schedule.bookingEmail.includes(bookingNameEmail))
+    );
+  }
+
   return schedules;
 });
 
 const resetFilter = () => {
   selectedEventCategoryName.value = 'All';
   selectedDate.value = '';
+  filterBookingNameEmail.value = '';
 };
 
 const getSchedulesData = async () => {
@@ -116,7 +128,9 @@ onBeforeMount(async () => {
           </span>
         </div>
 
-        <div class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar">
+        <div
+          class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar"
+        >
           <EventCard
             v-for="(event, index) in filteredSchedules"
             :event="event"
@@ -127,7 +141,7 @@ onBeforeMount(async () => {
     </div>
 
     <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg">
-      <div class="flex flex-col p-10 min-w-full">
+      <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
         <label class="block mb-2 text-sm font-medium text-gray-900"
@@ -151,6 +165,31 @@ onBeforeMount(async () => {
             {{ value.eventCategoryName }}
           </option>
         </select>
+        <br />
+        <Divider text="Other" />
+        <label class="block mb-2 text-sm font-medium text-gray-900"
+          >Booking Name, Booking Email</label
+        >
+        <form>
+          <label
+            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+            >Search</label
+          >
+          <div class="relative">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <SearchIcon class="w-5 h-5 text-gray-500" />
+            </div>
+            <input
+              type="text"
+              v-model="filterBookingNameEmail"
+              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search Booking Name, Booking Email..."
+              required
+            />
+          </div>
+        </form>
         <br />
         <Divider text="Reset" />
         <SmButton text="Reset" btnType="danger" @click="resetFilter" />
