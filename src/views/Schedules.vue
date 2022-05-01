@@ -96,10 +96,14 @@ onBeforeMount(async () => {
 
 <template>
   <div
-    class="bg-schedules  w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2">
-    <div class="bg-white dark:bg-black rounded-3xl h-2/3 w-7/12 flex shadow-lg">
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
+  >
+    <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
-      <div v-if="!filteredSchedules.length" class="flex flex-col items-center justify-center">
+      <div
+        v-if="!filteredSchedules.length"
+        class="flex flex-col items-center justify-center"
+      >
         <NoEvent />
       </div>
 
@@ -112,8 +116,12 @@ onBeforeMount(async () => {
           </span>
         </div>
 
-        <div id="style-7" class="flex flex-col gap-2 overflow-auto min-w-full scrollbar">
-          <EventCard v-for="(event, index) in filteredSchedules" :event="event" :key="index" />
+        <div class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar">
+          <EventCard
+            v-for="(event, index) in filteredSchedules"
+            :event="event"
+            :key="index"
+          />
         </div>
       </div>
     </div>
@@ -122,53 +130,33 @@ onBeforeMount(async () => {
       <div class="flex flex-col p-10 min-w-full">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select date</label>
-        <litepie-datepicker :formatter="formatter" as-single v-model="selectedDate"></litepie-datepicker>
+        <label class="block mb-2 text-sm font-medium text-gray-900"
+          >Select date</label
+        >
+        <litepie-datepicker
+          :formatter="formatter"
+          as-single
+          v-model="selectedDate"
+        ></litepie-datepicker>
         <Divider text="Category" />
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select category</label>
-        <select v-model="selectedEventCategoryName"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label class="block mb-2 text-sm font-medium text-gray-900"
+          >Select category</label
+        >
+        <select
+          v-model="selectedEventCategoryName"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
           <option selected>All</option>
           <option v-for="(value, index) in categoriesData" :key="index">
             {{ value.eventCategoryName }}
           </option>
         </select>
-        <br>
-        <!-- <Divider text="Reset" /> -->
+        <br />
+        <Divider text="Reset" />
         <SmButton text="Reset" btnType="danger" @click="resetFilter" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-#style-7::-webkit-scrollbar-track
-{
-	/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
-	background-color: #B7C2FF; 
- border-radius: 10px; 
- } 
-
-#style-7::-webkit-scrollbar
-{
-	width: 10px;
-
-
-}
-
-#style-7::-webkit-scrollbar-thumb
-{
-
-	border-radius: 10px;
-
-	background-image: -webkit-gradient(linear,
-									   left bottom,
-									   left top,
-									   color-stop(0.44, #8da1ff),
-									   color-stop(0.72, #677eff));
-}
-</style>
-'clinic-blue-300': '#5f72ff',
-        'clinic-blue-200': '#677eff',
-        'clinic-blue-100': '#8da1ff',
+<style scoped></style>

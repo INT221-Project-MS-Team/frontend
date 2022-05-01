@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex flex-col items-center bg-slate-900 rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-50 min-w-full min-h-min p-2 hover:text-white"
+    class="flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-25 min-w-full min-h-min p-2"
   >
     <img
       class="w-2/12 rounded-full object-scale-down"

@@ -74,7 +74,7 @@ onBeforeMount(async () => {
             Event ID : {{ eventData.id }}
           </p>
         </div>
-        <div class="flex flex-col overflow-auto w-full mt-5">
+        <div class="flex flex-col overflow-auto w-full mt-5 clinic-scollbar">
           <div class="font-normal gap-5 flex flex-col">
             <span class="text-2xl"
               ><span class="text-clinic-blue-300">Booking Name:</span>
