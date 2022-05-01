@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.clinic-scollbar::-webkit-scrollbar-track {
+  background-color: #edf0ff;
+  border-radius: 5px;
+}
+
+.clinic-scollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.clinic-scollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, #8da1ff),
+    color-stop(0.72, #677eff)
+  );
+}

@@ -13,15 +13,15 @@ const props = defineProps({
 
 <template>
   <div
-    class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 min-w-full p-2"
+    class="flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-25 min-w-full min-h-min p-2"
   >
     <img
       class="w-2/12 rounded-full object-scale-down"
       src="/images/person.png"
       alt=""
     />
-    <div class="flex flex-col justify-between p-3 leading-normal">
-      <div class="mb-3 font-normal">
+    <div class="flex flex-col justify-between p-1 leading-normal">
+      <div class="mb-2 font-normal force-overflow">
         <span
           ><span class="text-clinic-blue-300">Name:</span>
           {{ event.bookingName }}</span
@@ -49,7 +49,7 @@ const props = defineProps({
         <br />
       </div>
       <router-link :to="`/event?id=${event.id}`">
-        <SmButton text="Read more detail" />
+        <SmButton btnType="events" text="Read More → " />
       </router-link>
     </div>
   </div>

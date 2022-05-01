@@ -116,7 +116,7 @@ onBeforeMount(async () => {
           </span>
         </div>
 
-        <div class="flex flex-col gap-2 overflow-auto min-w-full">
+        <div class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar">
           <EventCard
             v-for="(event, index) in filteredSchedules"
             :event="event"
@@ -130,8 +130,7 @@ onBeforeMount(async () => {
       <div class="flex flex-col p-10 min-w-full">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
         <Divider text="Date" />
-        <label
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+        <label class="block mb-2 text-sm font-medium text-gray-900"
           >Select date</label
         >
         <litepie-datepicker
@@ -140,21 +139,21 @@ onBeforeMount(async () => {
           v-model="selectedDate"
         ></litepie-datepicker>
         <Divider text="Category" />
-        <label
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+        <label class="block mb-2 text-sm font-medium text-gray-900"
           >Select category</label
         >
         <select
           v-model="selectedEventCategoryName"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option selected>All</option>
           <option v-for="(value, index) in categoriesData" :key="index">
             {{ value.eventCategoryName }}
           </option>
         </select>
+        <br />
         <Divider text="Reset" />
-        <SmButton text="Reset" btnType="primary" @click="resetFilter" />
+        <SmButton text="Reset" btnType="danger" @click="resetFilter" />
       </div>
     </div>
   </div>
