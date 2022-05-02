@@ -1,26 +1,17 @@
 export const getCurrentDateTime = () => {
-  return new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
+  return new Date().toISOString();
 };
-export const convertToISO = (date) => {
+
+export const convertDateFormat = (date) => {
   return date.split('/').reverse().join('-');
-}
+};
 
 export const getDate = (eventStartTime) => {
-  return new Date(eventStartTime)
-    .toString()
-    .split('GMT')[0]
-    .trim()
-    .split(' ')
-    .slice(0, 4)
-    .join(' ');
+  let date = new Date(eventStartTime);
+  return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
 };
 
 export const getTime = (eventStartTime) => {
-  return new Date(eventStartTime)
-    .toString()
-    .split('GMT')[0]
-    .trim()
-    .split(' ')
-    .slice(4)
-    .join(' ');
+  let date = new Date(eventStartTime);
+  return date.getHours() + ':' + date.getMinutes();
 };
