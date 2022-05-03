@@ -58,7 +58,7 @@ const goBack = () => {
             Rawis Noiwong
           </div>
           <span class="text-sm text-gray-200">63130500100</span>
-          <a href="https://github.com/siraom15">
+          <a href="https://github.com/Tttangentt">
             <img src="/images/Github-white.png" class="mx-auto" />
           </a>
         </div>
@@ -71,7 +71,7 @@ const goBack = () => {
             Siriwat Jaiyungyuen
           </div>
           <span class="text-sm text-gray-200">63130500120</span>
-          <a href="https://github.com/Tttangentt">
+          <a href="https://github.com/siraom15">
             <img src="/images/Github-white.png" class="mx-auto" />
           </a>
         </div>
