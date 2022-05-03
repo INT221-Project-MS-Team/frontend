@@ -20,9 +20,7 @@ const goBack=()=>myRouter.go(-1);
              The request url was not found on this.
           </p>
           <div class="flex flex-row">
-            <router-link :to="{ name: 'NotFound' }">
               <Button  text="Go back !" btnType="secondary"  @click="goBack" />
-            </router-link>
           </div>
         </div>
          <img
