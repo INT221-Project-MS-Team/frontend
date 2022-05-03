@@ -29,6 +29,11 @@
               <a class="block py-2 pr-4 pl-3 rounded md:p-0 hover:text-clinic-blue-100">Reserve</a>
             </router-link>
           </li>
+          <li>
+            <router-link :to="{ name: 'about' }">
+              <a class="block py-2 pr-4 pl-3 rounded md:p-0 hover:text-clinic-blue-100">About</a>
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>
