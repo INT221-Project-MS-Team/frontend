@@ -1,7 +1,10 @@
-# Vue 3 + Vite
+# BOOKING
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Booking is part of the INT221 subject. The purpose of this program is to apply all the knowledge learned, to adapt it into a usable product. Including training to work as a team with others as well. We hope those who have made it through will find it useful and worth learning.
 
-## Recommended IDE Setup
+### MEMBERS
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
+## IDE 
+
+- [VS Code](https://code.visualstudio.com/) 
