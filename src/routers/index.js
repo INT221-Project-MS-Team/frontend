@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import Schedules from '../views/Schedules.vue';
 import Event from '../views/Event.vue';
 import NotFound from '../views/NotFound.vue';
+import About from '../views/About.vue'
 const history = createWebHashHistory();
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/event',
     name: 'event',
     component: Event,
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About,
   },
   {
     path: '/:notMatchPath(.*)',
