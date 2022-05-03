@@ -1,8 +1,11 @@
 <script setup>
 import Button from '../components/Button.vue';
 import { useRouter } from 'vue-router';
-const myRouter = useRouter();
-const goBack=()=>myRouter.go(-1);
+const router = useRouter();
+
+const goBack = () => {
+  router.go(-1);
+};
 </script>
 
 <template>
