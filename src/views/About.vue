@@ -30,7 +30,7 @@ const goBack = () => {
         </div>
       </div>
       <div
-        class="grid grid-cols-3 pb-10 gap-4 min-w-full container text-center"
+        class="grid grid-cols-3 pb-10 min-w-full container text-center"
       >
         <div>
           <img
