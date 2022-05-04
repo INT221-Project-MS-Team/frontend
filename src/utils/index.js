@@ -15,3 +15,8 @@ export const getTime = (eventStartTime) => {
   let date = new Date(eventStartTime);
   return date.toLocaleTimeString();
 };
+
+export const convertDateTimeToISOString = (date, time) => {
+  let dateTime = new Date(date + ' ' + time);
+  return dateTime.toISOString();
+};
