@@ -2,7 +2,7 @@
 
 <template>
   <nav
-    class="xs:bg-white sm:bg-white md:bg-white lg:bg-transparent lg:text-white sm:px-4 absolute w-full rounded-none"
+    class="xs:bg-white sm:bg-white md:bg-white lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-none"
   >
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <router-link :to="{ name: 'home' }">
