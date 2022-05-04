@@ -20,7 +20,9 @@ import Button from '../components/Button.vue';
             <router-link :to="{ name: 'schedules' }">
               <Button text="Check !" btnType="primary" />
             </router-link>
-            <Button text="Reserve !" btnType="secondary" />
+            <router-link :to="{ name: 'reserve' }">
+              <Button text="Reserve !" btnType="secondary" />
+            </router-link>
           </div>
         </div>
         <img
