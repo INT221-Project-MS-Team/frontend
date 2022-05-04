@@ -95,9 +95,7 @@ const getSchedulesData = async () => {
   const response = await fetch(endPointUrl.value);
   if (response.status === 200) {
     const data = await response.json();
-    if (data?.content) {
-      schedulesData.value = data.content;
-    }
+      schedulesData.value = data;
     console.log(data);
   } else {
     console.log('Fetch Scheduled events Error');
