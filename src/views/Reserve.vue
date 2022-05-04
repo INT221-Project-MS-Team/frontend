@@ -58,7 +58,7 @@ const submitReserve = async () => {
   };
 
   const response = await fetch(
-    import.meta.env.VITE_SERVER_URL + '/api/events/',
+    import.meta.env.VITE_SERVER_URL + '/api/events',
     {
       method: 'POST',
       headers: {
