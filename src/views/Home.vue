@@ -26,9 +26,8 @@ import Button from '../components/Button.vue';
           </div>
         </div>
         <img
-          class="calender bounce-2 object-cover w-3/5"
+          class="calender bounce-2 object-cover w-6/12"
           src="/images/calen-phone-new.png"
-          alt="cover"
         />
       </div>
     </div>
