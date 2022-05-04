@@ -5,7 +5,7 @@ import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
 import LitepieDatepicker from 'litepie-datepicker';
 import { getCurrentDateTime, convertDateFormat } from '../utils';
-import { SearchIcon } from '@heroicons/vue/outline';
+import { SearchIcon,CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
 
@@ -181,11 +181,21 @@ onBeforeMount(async () => {
           </div>
         </form>
         <Divider text="Select Date" />
-        <litepie-datepicker
-          :formatter="formatter"
-          as-single
-          v-model="selectedDate"
-        ></litepie-datepicker>
+        <form>
+          <div class="relative">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <CalendarIcon class="w-5 h-5 text-gray-500" />
+            </div>
+            <input
+              type="date"
+              v-model="selectedDate"
+              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </div>
+        </form>
 
         <Divider text="Select Category" />
         <select
