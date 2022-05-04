@@ -1,6 +1,5 @@
 <script setup>
 import Divider from '../components/Divider.vue';
-import LitepieDatepicker from 'litepie-datepicker';
 import { ref } from '@vue/reactivity';
 import SmButton from './SmButton.vue';
 import { computed } from '@vue/runtime-core';

@@ -6,7 +6,6 @@ module.exports = {
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
     './node_modules/flowbite/**/*.js',
-    './node_modules/litepie-datepicker/**/*.js'
   ],
   theme: {
     extend: {
@@ -24,15 +23,7 @@ module.exports = {
         'clinic-blue-100': '#8da1ff',
         'clinic-blue-50': '#B7C2FF',
         'clinic-blue-25': '#edf0ff',
-        'litepie-primary': colors.sky, 
       },
-    },
-  },
-  variants: {
-    extend: {
-      cursor: ['disabled'],
-      textOpacity: ['disabled'],
-      textColor: ['disabled'],
     },
   },
   plugins: [require('flowbite/plugin')],

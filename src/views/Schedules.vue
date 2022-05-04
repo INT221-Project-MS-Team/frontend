@@ -3,7 +3,6 @@ import NoEvent from '../components/NoEvent.vue';
 import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
-import LitepieDatepicker from 'litepie-datepicker';
 import { getCurrentDateTime, convertDateFormat } from '../utils';
 import { SearchIcon,CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
