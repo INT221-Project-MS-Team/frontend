@@ -25,7 +25,7 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'home' }">
+            <router-link :to="{ name: 'reserve' }">
               <a class="block py-2 pr-4 pl-3 rounded md:p-0 hover:text-clinic-blue-100">Reserve</a>
             </router-link>
           </li>
