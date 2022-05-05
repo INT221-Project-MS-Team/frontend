@@ -9,6 +9,7 @@
 
 .clinic-scollbar::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 .clinic-scollbar::-webkit-scrollbar-thumb {
