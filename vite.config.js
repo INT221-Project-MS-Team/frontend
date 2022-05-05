@@ -8,7 +8,7 @@ export default defineConfig({
     cors: {
       origin: '*',
     },
-    port: 8080,
+    port: 80,
   },
   base: './',
 });
