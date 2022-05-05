@@ -92,7 +92,7 @@ onBeforeMount(async () => {
       </div>
       <ReserveStepBar :step="currentStep" />
       <div
-        class="flex justify-center items-center overflow-auto clinic-scollbar"
+        class=" overflow-auto clinic-scollbar"
       >
         <SelectCategoryForm
           v-if="currentStep === 1"

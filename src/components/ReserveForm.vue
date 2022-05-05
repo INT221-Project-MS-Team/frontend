@@ -26,11 +26,11 @@ const reserverInformation = computed(() => ({
 </script>
 
 <template>
-  <div class="w-8/12">
+  <div class="flex flex-col justify-center items-center">
     <div class="text-sm md:text-base lg:text-xl text-center text-gray-900">
       Reserve Information
     </div>
-    <form @submit.prevent="$emit('next', reserverInformation)">
+    <form @submit.prevent="$emit('next', reserverInformation)" class="w-8/12">
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
@@ -128,9 +128,9 @@ const reserverInformation = computed(() => ({
       </div>
       <div class="flex gap-2 justify-center">
        
-        <SmButton @click="$emit('back',reserverInformation)" type="submit" text="back" />
+        <SmButton @click="$emit('back',reserverInformation)" type="submit" text="Back" />
         <button type="submit">
-          <SmButton btnType="secondary" text="submit" />
+          <SmButton btnType="secondary" text="Submit" />
         </button>
       </div>
     </form>
