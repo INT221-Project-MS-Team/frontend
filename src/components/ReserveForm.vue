@@ -14,12 +14,12 @@ const props = defineProps({
     default: {},
   },
 });
+
 const reserverInformation = computed(() => ({
   name: props.info.name,
   email: props.info.email,
   date: props.info.date,
   startTime: props.info.startTime,
-  duration: props.info.duration,
   note: props.info.note,
 }));
 
@@ -60,22 +60,6 @@ const reserverInformation = computed(() => ({
           >Email address</label
         >
       </div>
-
-      <!-- <div class="relative z-5 w-full mb-6 group">
-        <input
-          type="date"
-          v-model="reserverInformation.date"
-          name="floating_email"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-          required=""
-        />
-        <label
-          for="floating_email"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Date</label
-        >
-      </div> -->
       <div class="grid xl:grid-cols-2 xl:gap-6">
         <div class="relative z-0 w-full mb-6 group">
           <input
@@ -122,12 +106,10 @@ const reserverInformation = computed(() => ({
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="number"
-            min="1"
-            max="40"
             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
-            required=""
-            v-model="reserverInformation.duration"
+            disabled
+            :value="category.eventDuration"
           />
           <label
             for="floating_last_name"

@@ -52,7 +52,6 @@ const submitReserve = async () => {
       reserverInformation.value.date,
       reserverInformation.value.startTime
     ),
-    eventDuration: reserverInformation.value.duration,
     eventNotes: reserverInformation.value.note,
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
   };
