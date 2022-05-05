@@ -95,7 +95,7 @@ onBeforeMount(async () => {
         </div>
         <div class="flex flex-col overflow-auto w-full mt-5 clinic-scollbar">
           <div class="font-normal gap-5 flex flex-col">
-            <span class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl "
+            <span class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl"
               ><span class="text-clinic-blue-300">Booking Name:</span>
               {{ eventData.bookingName }}</span
             >
@@ -125,8 +125,10 @@ onBeforeMount(async () => {
               {{ eventData.eventCategory.eventCategoryDescription }}</span
             >
             <span
-              ><span class="text-clinic-blue-300">Note:</span>
-              {{ eventData.eventNotes || '(blank)' }}
+              ><span class="text-clinic-blue-300">Note: </span>
+              <span :class="!eventData.eventNotes ? ['text-gray-300'] : ''">
+                {{ eventData.eventNotes || '(blank)' }}
+              </span>
             </span>
             <div class="flex gap-2">
               <SmButton text="Back" btnType="events" @click="goBack" />

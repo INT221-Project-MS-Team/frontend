@@ -12,7 +12,7 @@ import Button from '../components/Button.vue';
           <p class="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-7xl text-white font-black uppercase tracking-widest">
             Booking
           </p>
-          <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white font-medium tracking-wider">
+          <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white font-light tracking-normal">
             Check for available and <br />
             make your reservation
           </p>
