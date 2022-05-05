@@ -14,8 +14,8 @@ module.exports = {
         kanit: ['Kanit', 'sans-serif'],
       },
       backgroundImage: {
-        home: "url('/images/home-bg-new-1.png')",
-        schedules: "url('/images/schedules-bg.png')",
+        home: "url('../images/home-bg-new-1.png')",
+        schedules: "url('../images/schedules-bg.png')",
       },
       colors: {
         'clinic-blue-300': '#5f72ff',
