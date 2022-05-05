@@ -9,10 +9,10 @@ import Button from '../components/Button.vue';
     <div class="container mx-auto px-4 pt-16">
       <div class="flex flex-wrap-reverse justify-center items-center gap-3">
         <div class="flex flex-col gap-6">
-          <p class="text-7xl text-white font-black uppercase tracking-widest">
+          <p class="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-7xl text-white font-black uppercase tracking-widest">
             Booking
           </p>
-          <p class="text-2xl text-white font-medium tracking-wider">
+          <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white font-medium tracking-wider">
             Check for available and <br />
             make your reservation
           </p>

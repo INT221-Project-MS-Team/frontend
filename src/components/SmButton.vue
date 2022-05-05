@@ -10,10 +10,29 @@ const props = defineProps({
   },
 });
 const btnTypes = {
-  primary: ['bg-white', 'text-clinic-blue-300', 'hover:bg-gray-100'],
-  secondary: ['bg-clinic-blue-300', 'text-white', 'hover:bg-white', 'hover:text-clinic-blue-300'],
-  danger: ['bg-white','text-red-600', 'hover:bg-red-600', 'hover:text-white'],
-  events: [ 'bg-clinic-blue-200', 'text-white','hover:bg-clinic-blue-300']
+  primary: [
+    'bg-white',
+    'text-clinic-blue-300',
+    'hover:bg-gray-100',
+    'border-white',
+  ],
+  secondary: [
+    'bg-clinic-blue-300',
+    'text-white',
+    'hover:bg-white',
+    'hover:text-clinic-blue-300',
+    'hover:border-clinic-blue-300',
+    'border-white',
+  ],
+  danger: [
+    'bg-white',
+    'text-red-600',
+    'hover:bg-red-600',
+    'hover:text-white',
+    'border-red-600',
+    'border-2',
+  ],
+  events: ['bg-clinic-blue-200', 'text-white', 'hover:bg-clinic-blue-300', 'border-clinic-blue-200'],
 };
 </script>
 
@@ -21,7 +40,7 @@ const btnTypes = {
   <div>
     <button
       type="button"
-      class="font-medium border-2 focus:outline-none rounded-xl text-sm px-2 py-2 text-center"
+      class="font-medium border-2 focus:outline-none rounded-lg text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm px-2 py-2 text-center"
       :class="[btnTypes[btnType]]"
     >
       {{ text }}

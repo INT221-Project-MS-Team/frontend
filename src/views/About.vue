@@ -1,5 +1,6 @@
 <script setup>
 import SmButton from '../components/SmButton.vue';
+import Button from '../components/Button.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -15,13 +16,13 @@ const goBack = () => {
   >
     <div>
       <div
-        class="container text-center text-base sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl uppercase font-black text-white tracking-widest mb-8"
+        class="container text-center text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-4xl uppercase font-black text-white tracking-widest mb-8"
       >
         about
       </div>
       <div class="mx-auto min-w-full container justify-center items-center">
         <div
-          class="text-center text-sm sm:text-xl md:text-xl lg:text-xl xl:text-2xl text-white font-medium tracking-wider mb-8"
+          class="text-center text-sm sm:text-xl md:text-xl lg:text-xl xl:text-xl text-white font-medium tracking-wider mb-8"
         >
           We are SY-2 proud to present this project "Booking" which is part of
           the <br />

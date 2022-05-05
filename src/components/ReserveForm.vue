@@ -30,12 +30,12 @@ const reserverInformation = computed(() => ({
     <div class="text-sm md:text-base lg:text-xl text-center text-gray-900">
       Reserve Information
     </div>
-    <form @submit.prevent="$emit('next', reserverInformation)" class="w-8/12">
+    <form @submit.prevent="$emit('next', reserverInformation)" class="w-8/12 mt-10">
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
           v-model="reserverInformation.name"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required=""
         />
@@ -50,7 +50,7 @@ const reserverInformation = computed(() => ({
           type="email"
           v-model="reserverInformation.email"
           name="floating_email"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required=""
         />
@@ -65,7 +65,7 @@ const reserverInformation = computed(() => ({
           <input
             type="date"
             v-model="reserverInformation.date"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
           />
@@ -77,7 +77,7 @@ const reserverInformation = computed(() => ({
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="time"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
             v-model="reserverInformation.startTime"
@@ -93,7 +93,7 @@ const reserverInformation = computed(() => ({
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="text"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             disabled
             :value="category.eventCategoryName"
@@ -106,7 +106,7 @@ const reserverInformation = computed(() => ({
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="number"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             disabled
             :value="category.eventDuration"
@@ -123,7 +123,7 @@ const reserverInformation = computed(() => ({
         <textarea
           rows="4"
           v-model="reserverInformation.note"
-          class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-100 focus:ring-blue-500 focus:border-blue-500"
         ></textarea>
       </div>
       <div class="flex gap-2 justify-center">

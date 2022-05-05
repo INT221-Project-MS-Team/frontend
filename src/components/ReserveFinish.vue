@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <div class="flex flex-col justify-center items-center gap-2 mt-16">
-    <CheckCircleIcon class="h-4/6 w-4/6 text-green-500" />
+    <CheckCircleIcon class="h-2/6 w-2/6 text-green-500" />
     <p class="text-lg">Reserve Successfully</p>
     <router-link :to="`/event?id=${reserveData.id}`">
     <SmButton text="View" />

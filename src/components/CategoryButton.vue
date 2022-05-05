@@ -1,5 +1,5 @@
 <script setup>
-import {DesktopComputerIcon} from '@heroicons/vue/outline';
+import { DesktopComputerIcon } from '@heroicons/vue/outline';
 const props = defineProps({
   text: {
     type: String,
@@ -16,8 +16,6 @@ const btnTypes = {
     'text-clinic-blue-300',
     'hover:bg-clinic-blue-300',
     'hover:text-white',
-    'border-2',
-    'border-clinic-blue-50',
   ],
   secondary: [
     'bg-clinic-blue-300',
@@ -31,16 +29,16 @@ const btnTypes = {
 </script>
 
 <template>
-    <button
-      type="button"
-      class="font-medium focus:outline-none rounded-lg w-full text-sm px-5 py-5 text-center"
-      :class="[btnTypes[btnType]]"
-    >
-        <span class="flex items-center justify-between gap-3">
-            <span>{{ text }}</span>
-            <DesktopComputerIcon class="w-6 h-6 mr-2" />
-        </span>
-    </button>
+  <button
+    type="button"
+    class="font-medium rounded-lg w-full text-sm px-5 py-5 text-center shadow-xl"
+    :class="[btnTypes[btnType]]"
+  >
+    <span class="flex items-center justify-between gap-3">
+      <span>{{ text }}</span>
+      <DesktopComputerIcon class="w-6 h-6 mr-2" />
+    </span>
+  </button>
 </template>
 
 <style scoped></style>
