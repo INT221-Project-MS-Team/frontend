@@ -2,9 +2,9 @@
 
 <template>
   <nav
-    class="bg-white xs:bg-white sm:bg-white md:bg-white lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-b-3xl shadow-sm"
+    class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full "
   >
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="container flex flex-wrap justify-between items-center mx-auto"> 
       <router-link :to="{ name: 'home' }">
         <a class="flex items-center">
           <img src="/images/logo-white.png" class=" w-2/12" />
@@ -13,7 +13,7 @@
       <button
         data-collapse-toggle="mobile-menu"
         type="button"
-        class="inline-flex items-center p-2 ml-3 text-sm text-clinic-blue-300 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        class="inline-flex text-white items-center p-2 ml-3 text-sm text-white rounded-lg lg:hidden hover:bg-clinic-blue-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="mobile-menu"
         aria-expanded="false"
       >
@@ -45,7 +45,7 @@
       </button>
       <div class="hidden w-full min-h-full lg:block lg:w-auto" id="mobile-menu">
         <ul
-          class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-center"
+          class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-white text-center"
         >
           <li>
             <router-link :to="{ name: 'home' }">
