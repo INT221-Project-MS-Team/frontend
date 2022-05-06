@@ -1,6 +1,5 @@
 <script setup>
 import NoEvent from '../components/NoEvent.vue';
-import Divider from '../components/Divider.vue';
 import SmButton from '../components/SmButton.vue';
 import { getDate, getTime } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
@@ -49,8 +48,8 @@ const gotoHome = () => {
   router.push({ name: 'home' });
 };
 
-const goBack = () => {
-  router.go(-1);
+const gotoschedules = () => {
+  router.push({ name: 'schedules' });
 };
 
 onBeforeMount(async () => {
@@ -131,7 +130,7 @@ onBeforeMount(async () => {
               </span>
             </span>
             <div class="flex gap-2">
-              <SmButton text="Back" btnType="events" @click="goBack" />
+              <SmButton text="Back" btnType="events" @click="gotoschedules" />
               <SmButton
                 text="Cancel Event"
                 btnType="danger"
