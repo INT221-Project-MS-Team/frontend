@@ -84,12 +84,7 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2"
   >
-    <div class="bg-white rounded-3xl h-5/6 w-6/12 flex flex-col shadow-lg p-2">
-      <!-- <div
-        class="text-sm md:text-lg lg:text-2xl text-center text-gray-400 mt-5"
-      >
-        Reserve
-      </div> -->
+    <div class="bg-white rounded-3xl h-5/6 w-10/12 xs:w-8/12 sm:w-8/12 md:w-8/12 lg:w-6/12  flex flex-col shadow-lg p-2">
       <ReserveStepBar :step="currentStep" />
       <div
         class=" overflow-auto clinic-scollbar"
