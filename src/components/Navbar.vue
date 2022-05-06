@@ -2,18 +2,18 @@
 
 <template>
   <nav
-    class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full "
+    class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-b-3xl p-1"
   >
-    <div class="container flex flex-wrap justify-between items-center mx-auto"> 
+    <div class="container flex flex-wrap justify-between items-center mx-auto">
       <router-link :to="{ name: 'home' }">
         <a class="flex items-center">
-          <img src="/images/logo-white.png" class=" w-2/12" />
+          <img src="/images/logo-white.png" class="w-2/12" />
         </a>
       </router-link>
       <button
         data-collapse-toggle="mobile-menu"
         type="button"
-        class="inline-flex text-white items-center p-2 ml-3 text-sm text-white rounded-lg lg:hidden hover:bg-clinic-blue-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        class="inline-flex text-white items-center p-2 ml-3 text-sm rounded-lg lg:hidden hover:bg-clinic-blue-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="mobile-menu"
         aria-expanded="false"
       >
@@ -50,7 +50,7 @@
           <li>
             <router-link :to="{ name: 'home' }">
               <div
-                class="block py-2 pr-4 pl-3 rounded lg:p-0 hover:text-clinic-blue-100"
+                class="block py-4 pr-4 pl-4 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
               >
                 Home
               </div>
@@ -59,7 +59,7 @@
           <li>
             <router-link :to="{ name: 'schedules' }">
               <a
-                class="block py-2 pr-4 pl-3 rounded lg:p-0 hover:text-clinic-blue-100"
+                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
                 >Check</a
               >
             </router-link>
@@ -67,7 +67,7 @@
           <li>
             <router-link :to="{ name: 'reserve' }">
               <a
-                class="block py-2 pr-4 pl-3 rounded lg:p-0 hover:text-clinic-blue-100"
+                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
                 >Reserve</a
               >
             </router-link>
@@ -75,7 +75,7 @@
           <li>
             <router-link :to="{ name: 'about' }">
               <a
-                class="block py-2 pr-4 pl-3 rounded lg:p-0 hover:text-clinic-blue-100"
+                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
                 >About</a
               >
             </router-link>
