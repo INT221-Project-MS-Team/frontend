@@ -49,7 +49,7 @@ const props = defineProps({
               class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1"
             >
               <div
-                class="w-0 bg-clinic-blue-50 py-1 rounded"
+                class="w-0 bg-clinic-blue-300 py-1 rounded"
                 :style="step >= 2 ? 'width: 100%' : 'width: 0%'"
               ></div>
             </div>
@@ -102,7 +102,7 @@ const props = defineProps({
               class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1"
             >
               <div
-                class="w-0 bg-clinic-blue-50 py-1 rounded"
+                class="w-0 bg-clinic-blue-300 py-1 rounded"
                 :style="step >= 3 ? 'width: 100%' : 'width: 0%'"
               ></div>
             </div>
