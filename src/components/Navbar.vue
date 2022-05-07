@@ -7,7 +7,7 @@
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <router-link :to="{ name: 'home' }">
         <a class="flex items-center">
-          <img src="/images/logo-white.png" class="w-2/12" />
+          <img src="/images/logo-white-group-1.png" class="w-3/12" />
         </a>
       </router-link>
       <button
