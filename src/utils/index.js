@@ -3,7 +3,7 @@ export const getCurrentDateTime = () => {
 };
 
 export const convertDateFormat = (date) => {
-  return date.split('/').reverse().join('-');
+  return date.split('-').reverse().join('/');
 };
 
 export const getDate = (eventStartTime) => {
