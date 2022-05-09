@@ -4,8 +4,9 @@ import SmButton from '../components/SmButton.vue';
 import { getDate, getTime } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
-import { computed, onBeforeMount } from '@vue/runtime-core';
+import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 
+const swal = inject('$swal');
 const router = useRouter();
 const route = useRoute();
 
@@ -28,20 +29,42 @@ const getEventData = async () => {
 };
 
 const deleteEvent = async () => {
-  if (confirm('Do you want to cancel this event ?')) {
-    const response = await fetch(
-      import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
-      {
-        method: 'DELETE',
+  await swal({
+    title: '<p class="text-lg">Are you sure to <b>cancel</b> this event ?</p>',
+    text: 'You won\'t be able to revert this!',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#5f72ff',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'No',
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const response = await fetch(
+        import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      if (response.status === 200) {
+        swal({
+          title: '<p class="text-lg">Success</p>',
+          text: 'Event has been canceled',
+          icon: 'success',
+          confirmButtonColor: '#5f72ff',
+        });
+        router.push({ name: 'schedules' });
+      } else {
+        swal({
+          title: 'Failure',
+          text: 'Something went wrong',
+          icon: 'error',
+          confirmButtonColor: '#5f72ff',
+        });
+        console.log('error,cannot delete');
       }
-    );
-    if (response.status === 200) {
-      alert('Event Canceled');
-      router.push({ name: 'schedules' });
-    } else {
-      console.log('error,cannot delete');
     }
-  }
+  });
 };
 
 const gotoHome = () => {
