@@ -8,12 +8,13 @@ export const convertDateFormat = (date) => {
 
 export const getDate = (eventStartTime) => {
   let date = new Date(eventStartTime);
-  return date.toLocaleDateString();
+  return date.toLocaleDateString('en-GB');
 };
 
 export const getTime = (eventStartTime) => {
   let date = new Date(eventStartTime);
-  return date.toLocaleTimeString();
+  let option = { hour: '2-digit', minute: '2-digit' };
+  return date.toLocaleTimeString('en-GB', option);
 };
 
 export const convertDateTimeToISOString = (date, time) => {
