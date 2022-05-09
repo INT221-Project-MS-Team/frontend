@@ -4,7 +4,7 @@ import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
 import { getCurrentDateTime, convertDateFormat } from '../utils';
-import { SearchIcon,CalendarIcon } from '@heroicons/vue/outline';
+import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
 
@@ -51,7 +51,10 @@ const filteredSchedules = computed(() => {
   // filter date
   if (date) {
     result = result.filter((schedule) => {
-      return schedule.eventStartTime.includes(convertDateFormat(date));
+      let scduleDate = new Date(schedule.eventStartTime).toLocaleDateString(
+        'en-GB'
+      );
+      return scduleDate.includes(convertDateFormat(date));
     });
   }
 
@@ -94,7 +97,7 @@ const getSchedulesData = async () => {
   const response = await fetch(endPointUrl.value);
   if (response.status === 200) {
     const data = await response.json();
-      schedulesData.value = data;
+    schedulesData.value = data;
     console.log(data);
   } else {
     console.log('Fetch Scheduled events Error');
@@ -156,7 +159,6 @@ onBeforeMount(async () => {
     <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg px-2.5">
       <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
-
 
         <Divider text="Search" />
         <form>
