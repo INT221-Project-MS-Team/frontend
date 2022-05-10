@@ -40,7 +40,7 @@ const btnTypes = {
   <div>
     <button
       type="button"
-      class="font-medium border-2 focus:outline-none rounded-lg text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm px-2 py-2 text-center"
+      class="font-medium border-2 focus:outline-none rounded-lg text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm px-1 py-1 text-center"
       :class="[btnTypes[btnType]]"
     >
       {{ text }}
