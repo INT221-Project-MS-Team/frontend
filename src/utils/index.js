@@ -21,3 +21,24 @@ export const convertDateTimeToISOString = (date, time) => {
   let dateTime = new Date(date + ' ' + time);
   return dateTime.toISOString();
 };
+
+export const categoryIdToBadgeColor = (categoryId) => {
+  let colors = [
+    'primary',
+    'yellow',
+    'pink',
+    'purple',
+    'red',
+    'indego',
+    'green',
+    'dark',
+  ];
+  return categoryId - 1 > colors.length ? 'primary' : colors[categoryId - 1];
+};
+
+export const truncateString = (string, length = 50) => {
+  if (string.length > length) {
+    return string.substring(0, length) + '...';
+  }
+  return string;
+};
