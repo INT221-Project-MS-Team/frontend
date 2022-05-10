@@ -1,7 +1,13 @@
 <script setup>
 import { ArrowNarrowRightIcon } from '@heroicons/vue/outline';
-import { getDate, getTime } from '../utils';
+import {
+  getDate,
+  getTime,
+  categoryIdToBadgeColor,
+  truncateString,
+} from '../utils';
 import SmButton from './SmButton.vue';
+import Badge from './Badge.vue';
 const emits = defineEmits([]);
 const props = defineProps({
   event: {
@@ -16,7 +22,7 @@ const props = defineProps({
     class="flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-25 min-w-full min-h-min p-2"
   >
     <img
-      class="w-2/12 rounded-full object-scale-down"
+      class="w-4/12 md:w-3/12 lg:w-2/12 object-scale-down"
       src="/images/person.png"
       alt=""
     />
@@ -24,7 +30,7 @@ const props = defineProps({
       <div class="mb-2 font-normal force-overflow">
         <span
           ><span class="text-clinic-blue-300">Name:</span>
-          {{ event.bookingName }}</span
+          {{ truncateString(event.bookingName) }}</span
         >
         <br />
         <span
@@ -42,10 +48,13 @@ const props = defineProps({
           {{ event.eventDuration }} Minutes</span
         >
         <br />
-        <span
-          ><span class="text-clinic-blue-300">Category:</span>
-          {{ event.eventCategory.eventCategoryName }}</span
-        >
+        <span>
+          <span class="text-clinic-blue-300">Category: </span>
+          <Badge
+            :text="event.eventCategory.eventCategoryName"
+            :color="categoryIdToBadgeColor(event.eventCategory.id)"
+          />
+        </span>
         <br />
       </div>
       <router-link :to="`/event?id=${event.id}`">
