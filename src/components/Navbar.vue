@@ -1,5 +1,5 @@
 <script setup>
-import { MenuIcon } from '@heroicons/vue/outline'
+import { MenuIcon } from '@heroicons/vue/outline';
 </script>
 
 <template>
@@ -7,8 +7,14 @@ import { MenuIcon } from '@heroicons/vue/outline'
     class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-b-2xl p-1"
   >
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-      <router-link :to="{ name: 'home' }" class="w-2/12 md:w-2/12 lg:w-3/12 m-2">
-        <img src="/images/logo-white-group-1.png" class="w-full md:w-9/12 lg:w-5/12 lg:m-2" />
+      <router-link
+        :to="{ name: 'home' }"
+        class="w-2/12 md:w-2/12 lg:w-3/12 m-2"
+      >
+        <img
+          src="/images/logo-white-group-1.png"
+          class="w-full md:w-9/12 lg:w-4/12 lg:m-2"
+        />
       </router-link>
       <button
         data-collapse-toggle="mobile-menu"
