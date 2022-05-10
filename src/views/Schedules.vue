@@ -137,9 +137,9 @@ onBeforeMount(async () => {
 
       <!-- have event -->
       <div v-else class="flex flex-col p-10 min-w-full">
-        <div class="text-sm md:text-lg lg:text-2xl flex justify-between">
+        <div class="text-sm md:text-lg lg:text-lg flex justify-between">
           <span class="text-gray-400"> Scheduled Events </span>
-          <span class="text-gray-300 text-xs md:text-base lg:text-xl">
+          <span class="text-gray-300 text-xs md:text-base lg:text-base">
             {{ filteredSchedules.length }} events
           </span>
         </div>
@@ -158,7 +158,7 @@ onBeforeMount(async () => {
 
     <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg px-2.5">
       <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
-        <p class="text-gray-400 text-sm md:text-lg lg:text-2xl">Event Filter</p>
+        <p class="text-gray-400 text-sm md:text-lg lg:text-lg">Event Filter</p>
 
         <Divider text="Search" />
         <form>
