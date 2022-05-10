@@ -1,47 +1,25 @@
-<script setup></script>
+<script setup>
+import { MenuIcon } from '@heroicons/vue/outline'
+</script>
 
 <template>
   <nav
-    class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-b-3xl p-1"
+    class="bg-clinic-blue-200 xs:bg-clinic-blue-200 sm:bg-clinic-blue-200 md:bg-clinic-blue-200 lg:bg-transparent lg:text-white sm:px-4 absolute z-50 w-full rounded-b-2xl p-1"
   >
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-      <router-link :to="{ name: 'home' }">
-        <a class="flex items-center">
-          <img src="/images/logo-white-group-1.png" class="w-3/12 m-3" />
-        </a>
+      <router-link :to="{ name: 'home' }" class="w-2/12 md:w-2/12 lg:w-3/12 m-2">
+        <img src="/images/logo-white-group-1.png" class="w-full md:w-9/12 lg:w-5/12 lg:m-2" />
       </router-link>
       <button
         data-collapse-toggle="mobile-menu"
         type="button"
-        class="inline-flex text-white items-center p-2 ml-3 text-sm rounded-lg lg:hidden hover:bg-clinic-blue-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        class="inline-flex text-white items-center p-2 text-sm rounded-lg lg:hidden hover:bg-clinic-blue-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="mobile-menu"
         aria-expanded="false"
       >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-        <svg
-          class="hidden w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
+        <!-- <span class="sr-only">Open main menu</span> -->
+        <MenuIcon class="w-4 h-4" />
+        <MenuIcon class="hidden w-4 h-4" />
       </button>
       <div class="hidden w-full min-h-full lg:block lg:w-auto" id="mobile-menu">
         <ul
@@ -50,7 +28,7 @@
           <li>
             <router-link :to="{ name: 'home' }">
               <div
-                class="block py-4 pr-4 pl-4 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
+                class="block py-4 pr-2 pl-2 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
               >
                 Home
               </div>
@@ -59,7 +37,7 @@
           <li>
             <router-link :to="{ name: 'schedules' }">
               <a
-                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
+                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
                 >Check</a
               >
             </router-link>
@@ -67,7 +45,7 @@
           <li>
             <router-link :to="{ name: 'reserve' }">
               <a
-                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
+                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
                 >Reserve</a
               >
             </router-link>
@@ -75,7 +53,7 @@
           <li>
             <router-link :to="{ name: 'about' }">
               <a
-                class="block py-4 pr-4 pl-4 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent"
+                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
                 >About</a
               >
             </router-link>
