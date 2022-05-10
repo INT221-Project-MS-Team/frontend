@@ -32,7 +32,7 @@ const btnTypes = {
     'border-red-600',
     'border-2',
   ],
-  events: ['bg-clinic-blue-200', 'text-white', 'hover:bg-clinic-blue-300', 'border-clinic-blue-200'],
+  events: ['bg-clinic-blue-200', 'text-white', 'hover:bg-transparent', 'hover:text-clinic-blue-200' ,'border-clinic-blue-200'],
 };
 </script>
 
