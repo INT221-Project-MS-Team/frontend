@@ -13,7 +13,7 @@ import { MenuIcon } from '@heroicons/vue/outline';
       >
         <img
           src="/images/logo-white-group-1.png"
-          class="w-full md:w-9/12 lg:w-4/12 lg:m-2"
+          class="w-full md:w-10/12 lg:w-5/12 xl:w-4/12 lg:m-2"
         />
       </router-link>
       <button
@@ -29,7 +29,7 @@ import { MenuIcon } from '@heroicons/vue/outline';
       </button>
       <div class="hidden w-full min-h-full lg:block lg:w-auto" id="mobile-menu">
         <ul
-          class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-white text-center"
+          class="flex flex-col mt-4 text-xs lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-white text-center"
         >
           <li>
             <router-link :to="{ name: 'home' }">
