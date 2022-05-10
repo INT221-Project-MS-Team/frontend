@@ -27,35 +27,35 @@ const props = defineProps({
       alt=""
     />
     <div class="flex flex-col justify-between p-1 leading-normal">
-      <div class="mb-2 font-normal force-overflow">
-        <span
+      <div
+        class="mb-2 font-normal overflow-auto force-overflow grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-1"
+      >
+        <span class="truncate"
           ><span class="text-clinic-blue-300">Name:</span>
           {{ truncateString(event.bookingName) }}</span
         >
-        <br />
-        <span
+        <span class="truncate"
           ><span class="text-clinic-blue-300">Date:</span>
           {{ getDate(event.eventStartTime) }}
         </span>
-        <br />
-        <span
+
+        <span class="truncate"
           ><span class="text-clinic-blue-300">Start Time:</span>
           {{ getTime(event.eventStartTime) }}
         </span>
-        <br />
-        <span
+
+        <span class="truncate"
           ><span class="text-clinic-blue-300">Duration:</span>
           {{ event.eventDuration }} Minutes</span
         >
-        <br />
-        <span>
+
+        <span class="truncate">
           <span class="text-clinic-blue-300">Category: </span>
           <Badge
             :text="event.eventCategory.eventCategoryName"
             :color="categoryIdToBadgeColor(event.eventCategory.id)"
           />
         </span>
-        <br />
       </div>
       <router-link :to="`/event?id=${event.id}`">
         <SmButton btnType="events" text="Read More → " />
