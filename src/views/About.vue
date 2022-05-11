@@ -16,7 +16,7 @@ const goBack = () => {
   >
     <div>
       <div
-        class="container text-center text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-4xl uppercase font-black text-white tracking-widest mb-8"
+        class="container mt-6 text-center text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-4xl uppercase font-black text-white tracking-widest mb-8"
       >
         about
       </div>
@@ -24,9 +24,8 @@ const goBack = () => {
         <div
           class="text-center text-sm sm:text-xl md:text-xl lg:text-xl xl:text-xl text-white font-medium tracking-wider mb-8"
         >
-          We are SY-2 proud to present this project "Booking" which is part of
-          the <br />
-          subject at the school of information technology KMUTT.<br />
+          We are SY-2 (advisor: Siam Yamsaengsung) proud to present this project "Booking" <br />
+          which is part of the INT221 subject at the school of information technology KMUTT.<br />
           Let's introduce ourselves. <br />
         </div>
       </div>
@@ -79,7 +78,7 @@ const goBack = () => {
       </div>
     </div>
     <div class="flex flex-row">
-      <SmButton text="Go back" btnType="secondary" @click="goBack" />
+      <Button  text="Go back !" btnType="secondary"  @click="goBack" />
     </div>
   </div>
 </template>
