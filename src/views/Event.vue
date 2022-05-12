@@ -92,7 +92,7 @@ const updateEvent = async () => {
         eventNotes: undefined,
       };
 
-      if (editingEventDate.value !== '') {
+      if (editingEventDate.value !== '' && editingEventTime.value !== '') {
         body.eventStartTime = convertDateTimeToISOString(
           editingEventDate.value,
           editingEventTime.value
