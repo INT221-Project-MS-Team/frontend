@@ -38,6 +38,7 @@ const reserverInformation = computed(() => ({
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required=""
+          maxlength="100"
         />
         <label
           for="floating_password"
@@ -109,6 +110,7 @@ const reserverInformation = computed(() => ({
             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             disabled
+            max="480"
             :value="category.eventDuration"
           />
           <label
@@ -124,6 +126,7 @@ const reserverInformation = computed(() => ({
           rows="4"
           v-model="reserverInformation.note"
           class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-100 focus:ring-blue-500 focus:border-blue-500"
+          maxlength="500"
         ></textarea>
       </div>
       <div class="flex gap-2 justify-center">
