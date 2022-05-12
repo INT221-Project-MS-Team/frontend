@@ -6,7 +6,11 @@ import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import SelectCategoryForm from '../components/ReserveCategoryForm.vue';
 import ReserveForm from '../components/ReserveForm.vue';
 import ReserveFinish from '../components/ReserveFinish.vue';
-import { convertDateTimeToISOString, validateFutureTime } from '../utils';
+import {
+  convertDateTimeToISOString,
+  validateFutureTime,
+  validateEmail,
+} from '../utils';
 
 const swal = inject('$swal');
 
@@ -58,8 +62,13 @@ const submitReserve = async () => {
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
   };
 
-  if(!validateFutureTime(body.eventStartTime)){
-     swal('Error', 'Cannot reserve in past time', 'error');
+  if (!validateEmail(body.bookingEmail)) {
+    swal('Error', 'Invalid email', 'error');
+    return;
+  }
+
+  if (!validateFutureTime(body.eventStartTime)) {
+    swal('Error', 'Cannot reserve in past time', 'error');
     return;
   }
 
@@ -92,11 +101,11 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2"
   >
-    <div class="bg-white rounded-3xl h-5/6 w-10/12 xs:w-8/12 sm:w-8/12 md:w-8/12 lg:w-6/12  flex flex-col shadow-lg p-2">
+    <div
+      class="bg-white rounded-3xl h-5/6 w-10/12 xs:w-8/12 sm:w-8/12 md:w-8/12 lg:w-6/12 flex flex-col shadow-lg p-2"
+    >
       <ReserveStepBar :step="currentStep" />
-      <div
-        class=" overflow-auto clinic-scollbar"
-      >
+      <div class="overflow-auto clinic-scollbar">
         <SelectCategoryForm
           v-if="currentStep === 1"
           :categories="categoriesData"
@@ -109,7 +118,10 @@ onBeforeMount(async () => {
           :info="reserverInformation"
           :category="categoriesData[selectedCategoryIndex]"
         />
-        <ReserveFinish v-else-if="currentStep === 3" :reserveData="createdReserveData" />
+        <ReserveFinish
+          v-else-if="currentStep === 3"
+          :reserveData="createdReserveData"
+        />
       </div>
     </div>
   </div>
