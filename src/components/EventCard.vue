@@ -22,7 +22,7 @@ const props = defineProps({
     class="flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-25 min-w-full min-h-min p-2"
   >
     <img
-      class="w-4/12 md:w-3/12 lg:w-2/12 object-scale-down"
+      class="w-4/12 md:w-3/12 lg:w-2/12 xl:w-1/12"
       src="/images/person.png"
       alt=""
     />
@@ -49,7 +49,7 @@ const props = defineProps({
           {{ event.eventDuration }} Minutes</span
         >
 
-        <span class="truncate">
+        <span class="truncate xl:col-span-2">
           <span class="text-clinic-blue-300">Category: </span>
           <Badge
             :text="event.eventCategory.eventCategoryName"
