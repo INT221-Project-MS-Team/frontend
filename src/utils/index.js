@@ -42,3 +42,9 @@ export const truncateString = (string, length = 50) => {
   }
   return string;
 };
+
+export const validateFutureTime = (eventStartTime) => {
+  let date = new Date(eventStartTime);
+  let currentDate = new Date();
+  return date > currentDate;
+}
