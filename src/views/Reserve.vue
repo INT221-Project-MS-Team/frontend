@@ -2,11 +2,13 @@
 import EventCard from '../components/EventCard.vue';
 import ReserveStepBar from '../components/ReserveStepBar.vue';
 import { ref } from '@vue/reactivity';
-import { computed, onBeforeMount } from '@vue/runtime-core';
+import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import SelectCategoryForm from '../components/ReserveCategoryForm.vue';
 import ReserveForm from '../components/ReserveForm.vue';
 import ReserveFinish from '../components/ReserveFinish.vue';
-import { convertDateTimeToISOString } from '../utils';
+import { convertDateTimeToISOString, validateFutureTime } from '../utils';
+
+const swal = inject('$swal');
 
 const categoriesData = ref([]);
 const currentStep = ref(1);
@@ -56,6 +58,11 @@ const submitReserve = async () => {
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
   };
 
+  if(!validateFutureTime(body.eventStartTime)){
+     swal('Error', 'Cannot reserve in past time', 'error');
+    return;
+  }
+
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events',
     {
@@ -70,8 +77,9 @@ const submitReserve = async () => {
     currentStep.value = 3;
     createdReserveData.value = await response.json();
   } else {
+    let error = await response.json();
     console.log('Submit Reserve Error');
-    alert('Submit Reserve Error');
+    swal('Error', error.message, 'error');
   }
 };
 

@@ -1,7 +1,12 @@
 <script setup>
 import NoEvent from '../components/NoEvent.vue';
 import SmButton from '../components/SmButton.vue';
-import { getDate, getTime, convertDateTimeToISOString } from '../utils';
+import {
+  getDate,
+  getTime,
+  convertDateTimeToISOString,
+  validateFutureTime,
+} from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
@@ -97,11 +102,15 @@ const updateEvent = async () => {
           editingEventDate.value,
           editingEventTime.value
         );
+        if (!validateFutureTime(body.eventStartTime)) {
+          swal('Error', 'Cannot reserve in past time', 'error');
+          return;
+        }
       }
+
       if (editingEventNotes.value !== '') {
         body.eventNotes = editingEventNotes.value;
       }
-      console.log(body);
 
       const response = await fetch(endPointUrl.value, {
         method: 'PUT',
@@ -208,7 +217,10 @@ onBeforeMount(async () => {
           </span>
         </div>
         <div class="flex flex-col overflow-auto w-full mt-5 clinic-scollbar">
-          <div class="font-normal gap-5 flex flex-col">
+          <form
+            @submit.prevent="updateEvent"
+            class="font-normal gap-5 flex flex-col"
+          >
             <span class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl"
               ><span class="text-clinic-blue-300">Booking Name: </span>
               <span :class="{ 'text-gray-400': isEditing }">
@@ -225,8 +237,10 @@ onBeforeMount(async () => {
             </span>
 
             <div class="flex flex-row items-center gap-x-2">
-              <span class="text-clinic-blue-300" >Date: </span>
-              <span :class="{ 'text-gray-400': isEditing }"> {{ getDate(eventData.eventStartTime) }}</span>
+              <span class="text-clinic-blue-300">Date: </span>
+              <span :class="{ 'text-gray-400': isEditing }">
+                {{ getDate(eventData.eventStartTime) }}</span
+              >
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
@@ -236,14 +250,16 @@ onBeforeMount(async () => {
                 type="date"
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                required=""
                 v-model="editingEventDate"
+                required
               />
             </div>
 
             <div class="flex flex-row items-center gap-x-2">
-              <span class="text-clinic-blue-300" >Start Time: </span>
-              <span :class="{ 'text-gray-400': isEditing }"> {{ getTime(eventData.eventStartTime) }}</span>
+              <span class="text-clinic-blue-300">Start Time: </span>
+              <span :class="{ 'text-gray-400': isEditing }">
+                {{ getTime(eventData.eventStartTime) }}</span
+              >
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
@@ -309,12 +325,10 @@ onBeforeMount(async () => {
                 @click="gotoschedules"
                 v-if="!isEditing"
               />
-              <SmButton
-                text="Save"
-                btnType="events"
-                @click="updateEvent"
-                v-if="isEditing"
-              />
+              <button type="submit">
+                <SmButton text="Save" btnType="events" v-if="isEditing" />
+              </button>
+
               <SmButton
                 text="Edit Event"
                 btnType="edit"
@@ -328,7 +342,7 @@ onBeforeMount(async () => {
                 v-if="isEditing"
               />
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
