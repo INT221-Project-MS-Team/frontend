@@ -177,15 +177,8 @@ onBeforeMount(async () => {
   >
     <p
       class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white"
-      v-if="!isEditing"
     >
-      Event Detail
-    </p>
-    <p
-      class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white"
-      v-else
-    >
-      Edit Event Detail
+      {{ isEditing ? 'Edit Event Detail' : 'Event Detail' }}
     </p>
     <div
       class="bg-white rounded-3xl h-4/6 lg:h-4/6 w-11/12 lg:w-8/12 flex shadow-lg"
