@@ -61,16 +61,22 @@ export const isOverlapTime = (insertEvent, allEvents) => {
   let isOverlap = false;
   let insertEventStart = new Date(insertEvent.eventStartTime);
   let insertEventEnd = new Date(insertEvent.eventStartTime);
-  insertEventEnd.setMinutes(insertEventEnd.getMinutes() + insertEvent.eventDuration);
+  let insertEventId = insertEvent?.id ? insertEvent.id : -1;
+  insertEventEnd.setMinutes(
+    insertEventEnd.getMinutes() + insertEvent.eventDuration
+  );
   allEvents
-    .filter((event) => event.eventCategory.id === insertEvent.eventCategoryId)
+    .filter(
+      (event) =>
+        event.eventCategory.id === insertEvent.eventCategoryId &&
+        event.id !== insertEventId
+    )
     .forEach((event) => {
       let eventDateStart = new Date(event.eventStartTime);
       let eventDateEnd = new Date(event.eventStartTime);
       eventDateEnd.setMinutes(eventDateEnd.getMinutes() + event.eventDuration);
       if (
-        eventDateStart <=
-          insertEventEnd &&
+        eventDateStart <= insertEventEnd &&
         eventDateEnd >= insertEventStart
       ) {
         isOverlap = true;
