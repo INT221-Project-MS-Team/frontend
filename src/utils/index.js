@@ -56,3 +56,25 @@ export const validateEmail = (email) => {
       .match(/^(.+)@(\S+).(\S+)$/) !== null
   );
 };
+
+export const isOverlapTime = (insertEvent, allEvents) => {
+  let isOverlap = false;
+  let insertEventStart = new Date(insertEvent.eventStartTime);
+  let insertEventEnd = new Date(insertEvent.eventStartTime);
+  insertEventEnd.setMinutes(insertEventEnd.getMinutes() + insertEvent.eventDuration);
+  allEvents
+    .filter((event) => event.eventCategory.id === insertEvent.eventCategoryId)
+    .forEach((event) => {
+      let eventDateStart = new Date(event.eventStartTime);
+      let eventDateEnd = new Date(event.eventStartTime);
+      eventDateEnd.setMinutes(eventDateEnd.getMinutes() + event.eventDuration);
+      if (
+        eventDateStart <=
+          insertEventEnd &&
+        eventDateEnd >= insertEventStart
+      ) {
+        isOverlap = true;
+      }
+    });
+  return isOverlap;
+};

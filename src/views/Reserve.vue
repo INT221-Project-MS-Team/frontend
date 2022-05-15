@@ -10,11 +10,13 @@ import {
   convertDateTimeToISOString,
   validateFutureTime,
   validateEmail,
+  isOverlapTime,
 } from '../utils';
 
 const swal = inject('$swal');
 
 const categoriesData = ref([]);
+const schedulesData = ref([])
 const currentStep = ref(1);
 const selectedCategoryIndex = ref(-1);
 const reserverInformation = ref({});
@@ -30,6 +32,19 @@ const getCategoriesData = async () => {
     console.log(data);
   } else {
     console.log('Fetch Category Error');
+  }
+};
+
+const getSchedulesData = async () => {
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + '/api/events'
+  );
+  if (response.status === 200) {
+    const data = await response.json();
+    schedulesData.value = data;
+    console.log(data);
+  } else {
+    console.log('Fetch Scheduled events Error');
   }
 };
 
@@ -59,6 +74,7 @@ const submitReserve = async () => {
       reserverInformation.value.startTime
     ),
     eventNotes: reserverInformation.value.note,
+    eventDuration:  categoriesData.value[selectedCategoryIndex.value].eventDuration,
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
   };
 
@@ -69,6 +85,13 @@ const submitReserve = async () => {
 
   if (!validateFutureTime(body.eventStartTime)) {
     swal('Error', 'Cannot reserve in past time', 'error');
+    return;
+  }
+
+  console.log(body);
+
+  if(isOverlapTime(body, schedulesData.value)) {
+    swal('Error', 'Cannot reserve in overlap time', 'error');
     return;
   }
 
@@ -93,6 +116,7 @@ const submitReserve = async () => {
 };
 
 onBeforeMount(async () => {
+  await getSchedulesData();
   await getCategoriesData();
 });
 </script>

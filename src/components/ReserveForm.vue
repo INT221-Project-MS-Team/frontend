@@ -1,6 +1,7 @@
 <script setup>
 import Divider from '../components/Divider.vue';
 import { ref } from '@vue/reactivity';
+import { getDate, getTime } from '../utils/index';
 import SmButton from './SmButton.vue';
 import { computed } from '@vue/runtime-core';
 const emits = defineEmits(['back', 'next']);
@@ -22,7 +23,6 @@ const reserverInformation = computed(() => ({
   startTime: props.info.startTime,
   note: props.info.note,
 }));
-
 </script>
 
 <template>
@@ -30,7 +30,10 @@ const reserverInformation = computed(() => ({
     <div class="text-sm md:text-base lg:text-xl text-center text-gray-900">
       Reserve Information
     </div>
-    <form @submit.prevent="$emit('next', reserverInformation)" class="w-8/12 mt-10">
+    <form
+      @submit.prevent="$emit('next', reserverInformation)"
+      class="w-8/12 mt-10"
+    >
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
@@ -130,8 +133,11 @@ const reserverInformation = computed(() => ({
         ></textarea>
       </div>
       <div class="flex gap-2 justify-center">
-       
-        <SmButton @click="$emit('back',reserverInformation)" type="submit" text="Back" />
+        <SmButton
+          @click="$emit('back', reserverInformation)"
+          type="submit"
+          text="Back"
+        />
         <button type="submit">
           <SmButton btnType="secondary" text="Submit" />
         </button>
