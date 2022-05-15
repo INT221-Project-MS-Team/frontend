@@ -66,6 +66,8 @@ const nextToThirdStep = async (info) => {
 };
 
 const submitReserve = async () => {
+  await getSchedulesData();
+
   let body = {
     bookingName: reserverInformation.value.name,
     bookingEmail: reserverInformation.value.email,
@@ -116,7 +118,6 @@ const submitReserve = async () => {
 };
 
 onBeforeMount(async () => {
-  await getSchedulesData();
   await getCategoriesData();
 });
 </script>

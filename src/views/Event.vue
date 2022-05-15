@@ -6,6 +6,7 @@ import {
   getTime,
   convertDateTimeToISOString,
   validateFutureTime,
+  isOverlapTime,
 } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
@@ -21,21 +22,21 @@ const route = useRoute();
 const eventId = ref('');
 const eventData = ref(null);
 const isEditing = ref(false);
+const schedulesData = ref([]);
 
 const editingEventDate = ref('');
 const editingEventTime = ref('');
 const editingEventNotes = ref('');
 
-const endPointUrl = computed(() => {
-  return import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`;
-});
-
 //event methods
 const getEventData = async () => {
-  const response = await fetch(endPointUrl.value);
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`
+  );
   if (response.status == 200) {
     const data = await response.json();
     eventData.value = data;
+    console.log(eventData.value);
   } else {
     console.log('error');
   }
@@ -81,6 +82,8 @@ const deleteEvent = async () => {
 };
 
 const updateEvent = async () => {
+  await getSchedulesData();
+
   await swal({
     title: '<p class="text-lg">Are you sure to <b>Update</b> this event ?</p>',
     text: "You won't be able to revert this!",
@@ -93,8 +96,11 @@ const updateEvent = async () => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       let body = {
+        id: eventId.value,
         eventStartTime: undefined,
         eventNotes: undefined,
+        eventDuration: eventData.value.eventDuration,
+        eventCategoryId: eventData.value.eventCategory.id,
       };
 
       if (editingEventDate.value !== '' && editingEventTime.value !== '') {
@@ -112,13 +118,26 @@ const updateEvent = async () => {
         body.eventNotes = editingEventNotes.value;
       }
 
-      const response = await fetch(endPointUrl.value, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
+      console.log(body);
+      if (isOverlapTime(body, schedulesData.value)) {
+        swal(
+          'Error',
+          'Cannot reserve time that overlaps with other events',
+          'error'
+        );
+        return;
+      }
+
+      const response = await fetch(
+        import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      );
       if (response.status === 200) {
         swal({
           title: 'Success',
@@ -152,6 +171,17 @@ const cancelEdit = () => {
   editingEventNotes.value = '';
 };
 
+const getSchedulesData = async () => {
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + `/api/events`);
+  if (response.status === 200) {
+    const data = await response.json();
+    schedulesData.value = data;
+    console.log(data);
+  } else {
+    console.log('Fetch Scheduled events Error');
+  }
+};
+
 // route
 const gotoHome = () => {
   router.push({ name: 'home' });
@@ -175,9 +205,7 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2"
   >
-    <p
-      class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white"
-    >
+    <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white">
       {{ isEditing ? 'Edit Event Detail' : 'Event Detail' }}
     </p>
     <div

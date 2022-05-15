@@ -22,12 +22,6 @@ const formatter = ref({
   month: 'MMM',
 });
 
-const endPointUrl = computed(() => {
-  return (
-    import.meta.env.VITE_SERVER_URL +
-    `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
-  );
-});
 
 const filteredSchedules = computed(() => {
   const schedules = schedulesData.value;
@@ -94,7 +88,10 @@ const resetFilter = () => {
 };
 
 const getSchedulesData = async () => {
-  const response = await fetch(endPointUrl.value);
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL +
+      `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
+  );
   if (response.status === 200) {
     const data = await response.json();
     schedulesData.value = data;
