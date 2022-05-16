@@ -38,8 +38,8 @@ const getEventData = async () => {
   if (response.status == 200) {
     const data = await response.json();
     eventData.value = data;
-    editingEventDate.value = getInputDate(data.eventStartTime);
-    editingEventTime.value = getInputTime(data.eventStartTime);
+    // editingEventDate.value = getInputDate(data.eventStartTime);
+    // editingEventTime.value = getInputTime(data.eventStartTime);
     console.log(eventData.value);
   } else {
     console.log('error');
@@ -86,8 +86,6 @@ const deleteEvent = async () => {
 };
 
 const updateEvent = async () => {
-  await getSchedulesData();
-
   await swal({
     title: '<p class="text-lg">Are you sure to <b>Update</b> this event ?</p>',
     text: "You won't be able to revert this!",
@@ -99,6 +97,9 @@ const updateEvent = async () => {
     cancelButtonText: 'No',
   }).then(async (result) => {
     if (result.isConfirmed) {
+      
+      await getSchedulesData();
+
       let body = {
         id: eventId.value,
         eventStartTime: undefined,
@@ -107,7 +108,7 @@ const updateEvent = async () => {
         eventCategoryId: eventData.value.eventCategory.id,
       };
 
-      if (editingEventDate.value !== '' && editingEventTime.value !== '') {
+      if (editingEventDate.value != '' && editingEventTime.value != '') {
         body.eventStartTime = convertDateTimeToISOString(
           editingEventDate.value,
           editingEventTime.value
@@ -122,7 +123,6 @@ const updateEvent = async () => {
         body.eventNotes = editingEventNotes.value;
       }
 
-      console.log(body);
       if (isOverlapTime(body, schedulesData.value)) {
         swal(
           'Error',
@@ -131,6 +131,13 @@ const updateEvent = async () => {
         );
         return;
       }
+
+      // remove all un using field
+      body.eventCategoryId = undefined;
+      body.eventDuration = undefined;
+      body.id = undefined;
+
+      console.log(body);
 
       const response = await fetch(
         import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
@@ -279,7 +286,7 @@ onBeforeMount(async () => {
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 v-model="editingEventDate"
-                required
+                :required="editingEventTime.length"
               />
             </div>
 
@@ -297,8 +304,8 @@ onBeforeMount(async () => {
                 type="time"
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                required=""
                 v-model="editingEventTime"
+                :required="editingEventDate.length"
               />
             </div>
             <span
