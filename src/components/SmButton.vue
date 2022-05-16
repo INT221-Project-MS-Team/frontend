@@ -32,29 +32,33 @@ const btnTypes = {
     'border-red-600',
     'border-2',
   ],
-  events: ['bg-clinic-blue-200', 
-  'text-white', 
-  'hover:bg-transparent', 
-  'hover:text-clinic-blue-200', 
-  'border-clinic-blue-200'
+  events: [
+    'bg-clinic-blue-200',
+    'text-white',
+    'hover:bg-clinic-blue-300',
+    'border-clinic-blue-200',
+    'hover:border-clinic-blue-300',
   ],
-  edit: ['bg-white', 
-   'text-clinic-blue-300',
+  edit: [
+    'bg-white',
+    'text-clinic-blue-300',
     'hover:bg-clinic-blue-200',
     'hover:text-white',
-    'border-clinic-blue-200',],
+    'border-clinic-blue-200',
+  ],
 };
 </script>
 
 <template>
   <div>
-    <button type="button"
-      class="font-medium border-2 focus:outline-none rounded-lg text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm px-1 py-1 text-center"
-      :class="[btnTypes[btnType]]">
+    <button
+      type="button"
+      class="font-medium border-2 focus:outline-none rounded-lg text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm px-1.5 py-1.5 text-center"
+      :class="[btnTypes[btnType]]"
+    >
       {{ text }}
     </button>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

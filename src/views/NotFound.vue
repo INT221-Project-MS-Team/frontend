@@ -3,8 +3,8 @@ import Button from '../components/Button.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const goBack = () => {
-  router.go(-1);
+const goHome = () => {
+  router.push({ name: 'home' });
 };
 </script>
 
@@ -20,13 +20,13 @@ const goBack = () => {
           </p>
           <p class="text-xl text-white font-medium tracking-wider">
             It's an error .<br />
-             The request url was not found on this.
+            The request url was not found on this.
           </p>
           <div class="flex flex-row">
-              <Button  text="Go back !" btnType="secondary"  @click="goBack" />
+            <Button text="Go Home" btnType="secondary" @click="goHome" />
           </div>
         </div>
-         <img
+        <img
           class="calender bounce-2 object-cover w-5/12"
           src="/images/cover-model-404.png"
           alt="404"
@@ -36,7 +36,4 @@ const goBack = () => {
   </div>
 </template>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

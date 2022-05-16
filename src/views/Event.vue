@@ -7,12 +7,14 @@ import {
   convertDateTimeToISOString,
   validateFutureTime,
   isOverlapTime,
+  getInputDate,
+  getInputTime,
 } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import Divider from '../components/Divider.vue';
-import { ArrowRightIcon } from '@heroicons/vue/outline';
+import { ArrowRightIcon, PencilIcon } from '@heroicons/vue/outline';
 
 const swal = inject('$swal');
 const router = useRouter();
@@ -36,6 +38,8 @@ const getEventData = async () => {
   if (response.status == 200) {
     const data = await response.json();
     eventData.value = data;
+    editingEventDate.value = getInputDate(data.eventStartTime);
+    editingEventTime.value = getInputTime(data.eventStartTime);
     console.log(eventData.value);
   } else {
     console.log('error');
@@ -242,13 +246,15 @@ onBeforeMount(async () => {
             @submit.prevent="updateEvent"
             class="font-normal gap-5 flex flex-col"
           >
+            <!-- <div class="flex items-center justify-end">
+              <PencilIcon class="w-5 h-5" />
+            </div> -->
             <span class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl"
               ><span class="text-clinic-blue-300">Booking Name: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 {{ eventData.bookingName }}</span
               >
             </span>
-
             <hr />
             <span
               ><span class="text-clinic-blue-300">Email: </span>
@@ -260,8 +266,8 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Date: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getDate(eventData.eventStartTime) }}</span
-              >
+                {{ getDate(eventData.eventStartTime) }}
+              </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
@@ -269,6 +275,7 @@ onBeforeMount(async () => {
               <input
                 v-if="isEditing"
                 type="date"
+                :min="getInputDate(new Date())"
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 v-model="editingEventDate"
@@ -279,8 +286,8 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Start Time: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getTime(eventData.eventStartTime) }}</span
-              >
+                {{ getTime(eventData.eventStartTime) }}
+              </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
@@ -306,11 +313,11 @@ onBeforeMount(async () => {
                 eventData.eventCategory.eventCategoryName
               }}</span>
             </span>
-            <span
-              ><span class="text-clinic-blue-300">Category Description:</span>
-              <span :class="{ 'text-gray-400': isEditing }">{{
-                eventData.eventCategory.eventCategoryDescription
-              }}</span>
+            <span>
+              <span class="text-clinic-blue-300">Category Description:</span>
+              <span :class="{ 'text-gray-400': isEditing }"
+                >{{ eventData.eventCategory.eventCategoryDescription }}
+              </span>
             </span>
             <span>
               <span class="text-clinic-blue-300">Note: </span>
@@ -325,23 +332,22 @@ onBeforeMount(async () => {
                 class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-white sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 v-else
                 maxlength="500"
-                rows="4"
+                rows="2"
               ></textarea>
 
-              <span class="mt-1" v-if="isEditing">
-                <Divider text="Danger Zone" />
+              <div class="mt-5" v-if="isEditing">
+                <!-- <Divider text="Danger Zone" /> -->
                 <button
                   class="w-full mb-3 item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
                   @click="deleteEvent"
                 >
                   Cancel event
                 </button>
-              </span>
+              </div>
             </span>
-
             <div class="flex gap-2">
               <SmButton
-                text="Back"
+                text="← Back"
                 btnType="events"
                 @click="gotoschedules"
                 v-if="!isEditing"

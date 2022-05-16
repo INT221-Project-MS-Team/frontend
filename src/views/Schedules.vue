@@ -123,6 +123,7 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
+  <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
       <div
@@ -142,7 +143,7 @@ onBeforeMount(async () => {
         </div>
 
         <div
-          class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar"
+          class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar mt-5"
         >
           <EventCard
             v-for="(event, index) in filteredSchedules"
