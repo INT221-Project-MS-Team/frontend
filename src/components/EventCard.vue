@@ -23,6 +23,11 @@ const props = defineProps({
     :to="`/event?id=${event.id}`"
     class="flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-clinic-blue-25 min-w-full min-h-min"
   >
+    <img
+      class="w-4/12 md:w-3/12 lg:w-2/12 xl:w-1/12"
+      src="/images/person.png"
+      alt=""
+    />
     <div class="flex flex-col justify-between p-5 leading-normal w-full">
       <div
         class="mb-2 font-normal overflow-auto force-overflow grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-1"
@@ -60,8 +65,7 @@ const props = defineProps({
         </router-link>
       </div> -->
     </div>
-    <div
-      class="hidden md:flex md:w-3/12 lg:w-2/12 xl:w-1/12 h-full rounded-lg rounded-l-none items-center"
+    <div class="hidden md:flex md:w-3/12 lg:w-2/12 xl:w-1/12 h-full rounded-lg rounded-l-none items-center"
       :class="categoryIdToStyleColor(event.eventCategory.id)"
     >
       <p class="rotate-90 text-xs text-center items-center">
