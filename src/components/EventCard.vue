@@ -68,9 +68,9 @@ const props = defineProps({
     <div class="hidden md:flex md:w-3/12 lg:w-2/12 xl:w-1/12 h-full rounded-lg rounded-l-none items-center"
       :class="categoryIdToStyleColor(event.eventCategory.id)"
     >
-      <p class="rotate-90 text-xs text-center items-center">
+      <!-- <p class="rotate-90 text-xs text-center items-center">
         {{ event.eventCategory.eventCategoryName }}
-      </p>
+      </p> -->
     </div>
   </router-link>
 </template>
