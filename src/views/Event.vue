@@ -97,7 +97,6 @@ const updateEvent = async () => {
     cancelButtonText: 'No',
   }).then(async (result) => {
     if (result.isConfirmed) {
-      
       await getSchedulesData();
 
       let body = {
@@ -343,38 +342,29 @@ onBeforeMount(async () => {
               ></textarea>
 
               <div class="mt-5" v-if="isEditing">
-                <!-- <Divider text="Danger Zone" /> -->
-                <button
-                  class="w-full mb-3 item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
+                <div
+                  class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
                   @click="deleteEvent"
                 >
                   Cancel event
-                </button>
+                </div>
               </div>
             </span>
-            <div class="flex gap-2">
-              <SmButton
-                text="← Back"
-                btnType="events"
-                @click="gotoschedules"
-                v-if="!isEditing"
-              />
-              <button type="submit">
-                <SmButton text="Save" btnType="events" v-if="isEditing" />
-              </button>
-
-              <SmButton
-                text="Edit Event"
-                btnType="edit"
-                @click="editEvent"
-                v-if="!isEditing"
-              />
-              <SmButton
-                text="Cancel"
-                btnType="edit"
-                @click="cancelEdit"
-                v-if="isEditing"
-              />
+            <div>
+              <div class="flex gap-2" v-if="!isEditing">
+                <SmButton
+                  text="← Back"
+                  btnType="events"
+                  @click="gotoschedules"
+                />
+                <SmButton text="Edit Event" btnType="edit" @click="editEvent" />
+              </div>
+              <div class="flex gap-2" v-else>
+                <button type="submit">
+                  <SmButton text="Save" btnType="events" />
+                </button>
+                <SmButton text="Cancel Edit" btnType="edit" @click="cancelEdit" />
+              </div>
             </div>
           </form>
         </div>
