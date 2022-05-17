@@ -272,7 +272,7 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Date: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getDate(eventData.eventStartTime) }}
+                {{ getDate(eventData.eventStartTime) }} (dd/mm/yyyy)
               </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
@@ -292,7 +292,7 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Start Time: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getTime(eventData.eventStartTime) }}
+                {{ getTime(eventData.eventStartTime) }} (24-hr)
               </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
