@@ -17,15 +17,25 @@ export const getTime = (datetime) => {
   return date.toLocaleTimeString('en-GB', option);
 };
 
-export const getInputDate = (datetime) =>{
+export const getInputDate = (datetime) => {
   let date = new Date(datetime);
-  return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-}
+  return (
+    date.getFullYear() +
+    '-' +
+    ('0' + (date.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + date.getDate()).slice(-2)
+  );
+};
 
-export const getInputTime = (datetime) =>{
+export const getInputTime = (datetime) => {
   let date = new Date(datetime);
-  return ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
-}
+  return (
+    ('0' + date.getHours()).slice(-2) +
+    ':' +
+    ('0' + date.getMinutes()).slice(-2)
+  );
+};
 
 export const convertDateTimeToISOString = (date, time) => {
   let dateTime = new Date(date + ' ' + time);
@@ -82,7 +92,7 @@ export const validateEmail = (email) => {
 };
 
 export const isOverlapTime = (insertEvent, allEvents) => {
-  let isOverlap = false;
+  let result = false;
   let insertEventStart = new Date(insertEvent.eventStartTime);
   let insertEventEnd = new Date(insertEvent.eventStartTime);
   let insertEventId = insertEvent?.id ? insertEvent.id : -1;
@@ -102,11 +112,29 @@ export const isOverlapTime = (insertEvent, allEvents) => {
       let eventDateEnd = new Date(event.eventStartTime);
       eventDateEnd.setMinutes(eventDateEnd.getMinutes() + event.eventDuration);
       if (
-        eventDateStart <= insertEventEnd &&
-        eventDateEnd >= insertEventStart
+        isOverlap(
+          eventDateStart,
+          eventDateEnd,
+          insertEventStart,
+          insertEventEnd
+        )
       ) {
-        isOverlap = true;
+        result = true;
       }
     });
-  return isOverlap;
+  return result;
+};
+
+export const isOverlap = (a_start, a_end, b_start, b_end) => {
+  // b start in a
+  if (a_start <= b_start && b_start <= a_end) return true;
+  // b end in a
+  if (a_start <= b_end && b_end <= a_end) return true;
+  // b in a
+  if (a_start <= b_start && b_end <= a_end) return true;
+  // b over a
+  if (b_start <= a_start && b_end >= a_end) return true;
+  // b start before a
+  if (b_start <= a_start && b_end >= a_start) return true;
+  return false;
 };
