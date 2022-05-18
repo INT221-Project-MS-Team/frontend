@@ -3,7 +3,7 @@ import NoEvent from '../components/NoEvent.vue';
 import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
-import { getCurrentDateTime, convertDateFormat } from '../utils';
+import { getCurrentDateTime } from '../utils';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
@@ -17,11 +17,11 @@ const selectedEventStatus = ref('All');
 const filterBookingNameEmail = ref('');
 const sortBy = ref('eventStartTime');
 const sortOrder = ref('desc');
-const formatter = ref({
+
+const dateInputFormatter = ref({
   date: 'DD/MM/YYYY',
   month: 'MMM',
 });
-
 
 const filteredSchedules = computed(() => {
   const schedules = schedulesData.value;
@@ -48,7 +48,7 @@ const filteredSchedules = computed(() => {
       let scduleDate = new Date(schedule.eventStartTime).toLocaleDateString(
         'en-GB'
       );
-      return scduleDate.includes(convertDateFormat(date));
+      return scduleDate.includes(date);
     });
   }
 
@@ -123,7 +123,7 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
-  <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
+    <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
     <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
       <!-- no event -->
       <div
@@ -155,7 +155,7 @@ onBeforeMount(async () => {
     </div>
 
     <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg px-2.5">
-      <div class="flex flex-col p-10 min-w-full overflow-auto clinic-scollbar">
+      <div class="flex flex-col p-10 min-w-full z-10 overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-lg">Event Filter</p>
 
         <Divider text="Search" />
@@ -180,21 +180,13 @@ onBeforeMount(async () => {
           </div>
         </form>
         <Divider text="Select Date" />
-        <form>
-          <div class="relative">
-            <div
-              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-            >
-              <CalendarIcon class="w-5 h-5 text-gray-500" />
-            </div>
-            <input
-              type="date"
-              v-model="selectedDate"
-              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
-            />
-          </div>
-        </form>
+
+        <litepie-datepicker
+          class="z-auto"
+          as-single
+          :formatter="dateInputFormatter"
+          v-model="selectedDate"
+        ></litepie-datepicker>
 
         <Divider text="Select Category" />
         <select

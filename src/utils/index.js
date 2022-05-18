@@ -2,9 +2,9 @@ export const getCurrentDateTime = () => {
   return new Date().toISOString();
 };
 
-export const convertDateFormat = (date) => {
-  return date.split('-').reverse().join('/');
-};
+export const convertDateFormatLitepieToInputDate = (date) => {
+  return date.split('/').reverse().join('-');
+}
 
 export const getDate = (datetime) => {
   let date = new Date(datetime);

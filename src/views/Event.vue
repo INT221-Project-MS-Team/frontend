@@ -9,6 +9,7 @@ import {
   isOverlapTime,
   getInputDate,
   getInputTime,
+  convertDateFormatLitepieToInputDate,
 } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
@@ -19,6 +20,12 @@ import { ArrowRightIcon, PencilIcon } from '@heroicons/vue/outline';
 const swal = inject('$swal');
 const router = useRouter();
 const route = useRoute();
+
+// config
+const dateInputFormatter = ref({
+  date: 'DD/MM/YYYY',
+  month: 'MMM',
+});
 
 //refs & computes
 const eventId = ref('');
@@ -109,7 +116,7 @@ const updateEvent = async () => {
 
       if (editingEventDate.value != '' && editingEventTime.value != '') {
         body.eventStartTime = convertDateTimeToISOString(
-          editingEventDate.value,
+          convertDateFormatLitepieToInputDate(editingEventDate.value),
           editingEventTime.value
         );
         if (!validateFutureTime(body.eventStartTime)) {
@@ -278,15 +285,14 @@ onBeforeMount(async () => {
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
               />
-              <input
-                v-if="isEditing"
-                type="date"
-                :min="getInputDate(new Date())"
+              <litepie-datepicker
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
+                v-if="isEditing"
+                as-single
+                :formatter="dateInputFormatter"
                 v-model="editingEventDate"
                 :required="editingEventTime.length"
-              />
+              ></litepie-datepicker>
             </div>
 
             <div class="flex flex-row items-center gap-x-2">
@@ -363,7 +369,11 @@ onBeforeMount(async () => {
                 <button type="submit">
                   <SmButton text="Save" btnType="events" />
                 </button>
-                <SmButton text="Cancel Edit" btnType="edit" @click="cancelEdit" />
+                <SmButton
+                  text="Cancel Edit"
+                  btnType="edit"
+                  @click="cancelEdit"
+                />
               </div>
             </div>
           </form>
