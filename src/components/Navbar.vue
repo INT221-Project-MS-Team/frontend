@@ -57,6 +57,14 @@ import { MenuIcon } from '@heroicons/vue/outline';
             </router-link>
           </li>
           <li>
+            <router-link :to="{ name: 'category' }">
+              <a
+                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
+                >Category</a
+              >
+            </router-link>
+          </li>
+          <li>
             <router-link :to="{ name: 'about' }">
               <a
                 class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"

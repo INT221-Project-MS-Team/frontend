@@ -5,6 +5,7 @@ import Event from '../views/Event.vue';
 import NotFound from '../views/NotFound.vue';
 import About from '../views/About.vue'
 import Reserve from '../views/Reserve.vue'
+import Category from '../views/Category.vue'
 const history = createWebHashHistory();
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     component: Reserve,
   },
   {
+    path: '/category',
+    name: 'category',
+    component: Category,
+  },
+  {
     path: '/:notMatchPath(.*)',
     name: 'NotFound',
     component: NotFound,
@@ -42,3 +48,4 @@ const routes = [
 const router = createRouter({ history, routes });
 
 export default router;
+
