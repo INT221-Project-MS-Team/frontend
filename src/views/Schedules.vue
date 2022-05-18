@@ -124,7 +124,7 @@ onBeforeMount(async () => {
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
     <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
-    <div class="bg-white rounded-3xl h-2/3 w-7/12 flex shadow-lg">
+    <div class="bg-white rounded-3xl h-5/6 w-7/12 flex shadow-lg">
       <!-- no event -->
       <div
         v-if="!filteredSchedules.length"
@@ -154,8 +154,8 @@ onBeforeMount(async () => {
       </div>
     </div>
 
-    <div class="bg-white rounded-3xl h-2/3 w-3/12 flex shadow-lg px-2.5">
-      <div class="flex flex-col p-10 min-w-full z-10 overflow-auto clinic-scollbar">
+    <div class="bg-white rounded-3xl h-5/6 w-3/12 flex shadow-lg px-2.5">
+      <div class="flex flex-col p-10 min-w-full z-10 clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-lg">Event Filter</p>
 
         <Divider text="Search" />
@@ -173,7 +173,7 @@ onBeforeMount(async () => {
             <input
               type="text"
               v-model="filterBookingNameEmail"
-              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Search Name, Email..."
               required
             />
@@ -182,7 +182,7 @@ onBeforeMount(async () => {
         <Divider text="Select Date" />
 
         <litepie-datepicker
-          class="z-auto"
+          class="block z-[500] p-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           as-single
           :formatter="dateInputFormatter"
           v-model="selectedDate"
