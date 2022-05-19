@@ -9,7 +9,6 @@ import {
   isOverlapTime,
   getInputDate,
   getInputTime,
-  convertDateFormatLitepieToInputDate,
 } from '../utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
@@ -45,8 +44,8 @@ const getEventData = async () => {
   if (response.status == 200) {
     const data = await response.json();
     eventData.value = data;
-    // editingEventDate.value = getInputDate(data.eventStartTime);
-    // editingEventTime.value = getInputTime(data.eventStartTime);
+    editingEventDate.value = getInputDate(data.eventStartTime);
+    editingEventTime.value = getInputTime(data.eventStartTime);
     console.log(eventData.value);
   } else {
     console.log('error');
@@ -116,7 +115,7 @@ const updateEvent = async () => {
 
       if (editingEventDate.value != '' && editingEventTime.value != '') {
         body.eventStartTime = convertDateTimeToISOString(
-          convertDateFormatLitepieToInputDate(editingEventDate.value),
+          editingEventDate.value,
           editingEventTime.value
         );
         if (!validateFutureTime(body.eventStartTime)) {
@@ -292,19 +291,12 @@ onBeforeMount(async () => {
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
               />
-              <!-- <litepie-datepicker
-                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                v-if="isEditing"
-                as-single
-                :formatter="dateInputFormatter"
-                v-model="editingEventDate"
-                :required="editingEventTime.length"
-              ></litepie-datepicker> -->
               <input
                 v-if="isEditing"
                 type="date"
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                :min="getInputDate(eventData.eventStartTime)"
                 v-model="editingEventDate"
                 :required="editingEventTime.length"
               />

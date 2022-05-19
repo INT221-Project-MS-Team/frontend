@@ -2,10 +2,6 @@ export const getCurrentDateTime = () => {
   return new Date().toISOString();
 };
 
-export const convertDateFormatLitepieToInputDate = (date) => {
-  return date.split('/').reverse().join('-');
-}
-
 export const getDate = (datetime) => {
   let date = new Date(datetime);
   return date.toLocaleDateString('en-GB');

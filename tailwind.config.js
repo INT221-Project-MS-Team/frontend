@@ -1,12 +1,8 @@
-const path = require('path');
-const colors = require('tailwindcss/colors');
-
 module.exports = {
   content: [
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
     './node_modules/flowbite/**/*.js',
-    './node_modules/litepie-datepicker/**/*.js'
   ],
   theme: {
     extend: {
@@ -25,15 +21,7 @@ module.exports = {
         'clinic-blue-50': '#B7C2FF',
         'clinic-blue-30': '#c7d0ff',
         'clinic-blue-25': '#edf0ff',
-        'litepie-primary': colors.sky, 
       },
-    },
-  },
-  variants: {
-    extend: {
-      cursor: ['disabled'],
-      textOpacity: ['disabled'],
-      textColor: ['disabled'],
     },
   },
   plugins: [require('flowbite/plugin')],
