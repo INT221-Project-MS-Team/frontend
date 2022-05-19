@@ -143,11 +143,11 @@ const updateCategory = async () => {
               >Description</label
             >
           </div>
-          <div class="flex justify-end">
+          <div class="flex justify-end gap-2">
             <button type="submit">
               <SmButton text="Save" btnType="events" />
             </button>
-            <SmButton text="Cancle" @click="$emit('closeModal')" />
+            <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
           </div>
         </form>
       </div>

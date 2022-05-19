@@ -47,7 +47,7 @@ onBeforeMount(async () => {
     <div
       class="w-10/12 h-5/6 bg-white flex shadow-md rounded-lg clinic-scollbar"
     >
-      <div class="text-center md:text-lg flex flex-col lg:text-lg">
+      <div class="text-center md:text-lg flex flex-col lg:text-lg min-w-full">
         <span class="text-gray-600 text-2xl p-3 bg-clinic-blue-25 rounded-t-lg">
           Category List</span
         >
