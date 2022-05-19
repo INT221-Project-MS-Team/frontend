@@ -279,26 +279,48 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Date: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getDate(eventData.eventStartTime) }}
+                <!-- {{ getDate(eventData.eventStartTime) }} -->
+                <input
+                type="date"
+                class="border-0 p-0"
+                placeholder=" "
+                :value="getInputDate(eventData.eventStartTime)"
+                disabled
+              />
               </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
                 v-if="isEditing"
               />
-              <litepie-datepicker
+              <!-- <litepie-datepicker
                 class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 v-if="isEditing"
                 as-single
                 :formatter="dateInputFormatter"
                 v-model="editingEventDate"
                 :required="editingEventTime.length"
-              ></litepie-datepicker>
+              ></litepie-datepicker> -->
+              <input
+                v-if="isEditing"
+                type="date"
+                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                v-model="editingEventDate"
+                :required="editingEventTime.length"
+              />
             </div>
 
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Start Time: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-                {{ getTime(eventData.eventStartTime) }} (24-hr)
+              <input
+                type="time"
+                class="border-0 p-0"
+                placeholder=" "
+                :value="getTime(eventData.eventStartTime)"
+                disabled
+              />
+                <!-- {{ getTime(eventData.eventStartTime) }} (24-hr) -->
               </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"

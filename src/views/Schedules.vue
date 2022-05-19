@@ -155,7 +155,7 @@ onBeforeMount(async () => {
     </div>
 
     <div class="bg-white rounded-3xl h-5/6 w-3/12 flex shadow-lg px-2.5">
-      <div class="flex flex-col p-10 min-w-full z-10 clinic-scollbar">
+      <div class="flex flex-col p-10 min-w-full z-10 overflow-auto clinic-scollbar">
         <p class="text-gray-400 text-sm md:text-lg lg:text-lg">Event Filter</p>
 
         <Divider text="Search" />
@@ -180,13 +180,21 @@ onBeforeMount(async () => {
           </div>
         </form>
         <Divider text="Select Date" />
-
-        <litepie-datepicker
-          class="block z-[500] p-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          as-single
-          :formatter="dateInputFormatter"
-          v-model="selectedDate"
-        ></litepie-datepicker>
+        <form>
+          <div class="relative">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <CalendarIcon class="w-5 h-5 text-gray-500" />
+            </div>
+            <input
+              type="date"
+              v-model="selectedDate"
+              class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </div>
+        </form>
 
         <Divider text="Select Category" />
         <select

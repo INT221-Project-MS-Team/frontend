@@ -6,6 +6,8 @@ import {
   categoryIdToBadgeColor,
   truncateString,
   categoryIdToStyleColor,
+  getInputDate,
+  getInputTime
 } from '../utils';
 import SmButton from './SmButton.vue';
 import Badge from './Badge.vue';
@@ -38,12 +40,26 @@ const props = defineProps({
         >
         <span class="truncate"
           ><span class="text-clinic-blue-300">Date:</span>
-          {{ getDate(event.eventStartTime) }}
+          <!-- {{ getDate(event.eventStartTime) }} -->
+          <input
+            type="date"
+            class="border-0 p-0 mx-auto bg-transparent"
+            placeholder=" "
+            :value="getInputDate(event.eventStartTime)"
+            disabled
+          />
         </span>
 
         <span class="truncate"
           ><span class="text-clinic-blue-300">Start Time:</span>
-          {{ getTime(event.eventStartTime) }}
+          <!-- {{ getTime(event.eventStartTime) }} -->
+          <input
+            type="time"
+            class="border-0 p-0 mx-auto bg-transparent"
+            placeholder=" "
+            :value="getInputTime(event.eventStartTime)"
+            disabled
+          />
         </span>
 
         <span class="truncate"
@@ -65,7 +81,8 @@ const props = defineProps({
         </router-link>
       </div> -->
     </div>
-    <div class="hidden md:flex md:w-3/12 lg:w-2/12 xl:w-1/12 h-full rounded-lg rounded-l-none items-center"
+    <div
+      class="hidden md:flex md:w-3/12 lg:w-2/12 xl:w-1/12 h-full rounded-lg rounded-l-none items-center"
       :class="categoryIdToStyleColor(event.eventCategory.id)"
     >
       <!-- <p class="rotate-90 text-xs text-center items-center">
