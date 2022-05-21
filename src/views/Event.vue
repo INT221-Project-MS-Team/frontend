@@ -384,7 +384,7 @@ onBeforeMount(async () => {
                   <SmButton text="Save" btnType="events" />
                 </button>
                 <SmButton
-                  text="Cancel Edit"
+                  text="Cancel"
                   btnType="edit"
                   @click="cancelEdit"
                 />
