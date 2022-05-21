@@ -3,7 +3,7 @@ import NoEvent from '../components/NoEvent.vue';
 import EventCard from '../components/EventCard.vue';
 import SmButton from '../components/SmButton.vue';
 import Divider from '../components/Divider.vue';
-import { getCurrentDateTime } from '../utils';
+import { getCurrentDateTime, getInputDate } from '../utils';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
@@ -42,16 +42,6 @@ const filteredSchedules = computed(() => {
     });
   }
 
-  // filter date
-  if (date) {
-    result = result.filter((schedule) => {
-      let scduleDate = new Date(schedule.eventStartTime).toLocaleDateString(
-        'en-GB'
-      );
-      return scduleDate.includes(date);
-    });
-  }
-
   // filter bookingNameEmail
   if (bookingNameEmail) {
     result = result.filter((schedule) => {
@@ -77,6 +67,15 @@ const filteredSchedules = computed(() => {
     });
   }
 
+  // filter date
+  if (date) {
+    result = result.filter((schedule) => {
+      let scduleDate = getInputDate(schedule.eventStartTime);
+      return scduleDate.includes(date);
+    });
+    result = result.sort((a, b) => new Date(a.eventStartTime) - new Date(b.eventStartTime));
+  }
+
   return result;
 });
 
@@ -90,7 +89,7 @@ const resetFilter = () => {
 const getSchedulesData = async () => {
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL +
-      `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
+    `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
   );
   if (response.status === 200) {
     const data = await response.json();
@@ -121,15 +120,11 @@ onBeforeMount(async () => {
 
 <template>
   <div
-    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
-  >
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2">
     <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
     <div class="bg-white rounded-3xl h-5/6 w-7/12 flex shadow-lg">
       <!-- no event -->
-      <div
-        v-if="!filteredSchedules.length"
-        class="flex flex-col items-center justify-center"
-      >
+      <div v-if="!filteredSchedules.length" class="flex flex-col items-center justify-center">
         <NoEvent />
       </div>
 
@@ -142,14 +137,8 @@ onBeforeMount(async () => {
           </span>
         </div>
 
-        <div
-          class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar mt-5"
-        >
-          <EventCard
-            v-for="(event, index) in filteredSchedules"
-            :event="event"
-            :key="index"
-          />
+        <div class="flex flex-col gap-2 overflow-auto min-w-full clinic-scollbar mt-5">
+          <EventCard v-for="(event, index) in filteredSchedules" :event="event" :key="index" />
         </div>
       </div>
     </div>
@@ -160,47 +149,31 @@ onBeforeMount(async () => {
 
         <Divider text="Search" />
         <form>
-          <label
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
-            >Search</label
-          >
+          <label class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
           <div class="relative">
-            <div
-              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-            >
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
               <SearchIcon class="w-5 h-5 text-gray-500" />
             </div>
-            <input
-              type="text"
-              v-model="filterBookingNameEmail"
+            <input type="text" v-model="filterBookingNameEmail"
               class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Search Name, Email..."
-              required
-            />
+              placeholder="Search Name, Email..." required />
           </div>
         </form>
         <Divider text="Select Date" />
         <form>
           <div class="relative">
-            <div
-              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-            >
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
               <CalendarIcon class="w-5 h-5 text-gray-500" />
             </div>
-            <input
-              type="date"
-              v-model="selectedDate"
+            <input type="date" v-model="selectedDate"
               class="block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
-            />
+              required />
           </div>
         </form>
 
         <Divider text="Select Category" />
-        <select
-          v-model="selectedEventCategoryName"
-          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+        <select v-model="selectedEventCategoryName"
+          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option selected>All</option>
           <option v-for="(value, index) in categoriesData" :key="index">
             {{ value.eventCategoryName }}
@@ -208,10 +181,8 @@ onBeforeMount(async () => {
         </select>
 
         <Divider text="Event Status" />
-        <select
-          v-model="selectedEventStatus"
-          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+        <select v-model="selectedEventStatus"
+          class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option v-for="(value, index) in allEventStatus" :key="index">
             {{ value }}
           </option>
@@ -224,4 +195,5 @@ onBeforeMount(async () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
