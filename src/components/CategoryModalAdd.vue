@@ -13,14 +13,14 @@ const props = defineProps({
     default: false,
   },
 });
-const addNewData = computed(() => ({
+
+const newCategoryData = computed(() => ({
   id: props.category.id,
   eventCategoryName: props.category.eventCategoryName,
   eventDuration: props.category.eventDuration,
   eventCategoryDescription: props.category.eventCategoryDescription,
 }));
 
-const addedCategory = ref({});
 
 
 //create
@@ -33,14 +33,19 @@ const addCategory = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        eventCategoryName: addNewData.value.eventCategoryName,
-        eventDuration: addNewData.value.eventDuration,
-        eventCategoryDescription: addNewData.value.eventCategoryDescription,
+        eventCategoryName: newCategoryData.value.eventCategoryName.trim(),
+        eventDuration: newCategoryData.value.eventDuration,
+        eventCategoryDescription: newCategoryData.value.eventCategoryDescription,
       }),
     }
   );
   if (response.status === 201) {
-    addedCategory.value = await response.json();
+    swal({
+      title: 'Success',
+      text: 'Category Added',
+      icon: 'success',
+      button: 'OK',
+    });
     emits('closeModal');
     emits('forceUpdate');
   } else {
@@ -80,7 +85,7 @@ const addCategory = async () => {
           <div class="relative z-0 w-full mb-6 group">
             <input
               type="text"
-              v-model="addNewData.eventCategoryName"
+              v-model="newCategoryData.eventCategoryName"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
@@ -95,7 +100,7 @@ const addCategory = async () => {
           <div class="relative z-0 w-full mb-6 group">
             <input
               type="number"
-              v-model="addNewData.eventDuration"
+              v-model="newCategoryData.eventDuration"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
@@ -111,7 +116,7 @@ const addCategory = async () => {
           <div class="relative z-0 w-full mb-6 group">
             <textarea
               type="text"
-              v-model="addNewData.eventCategoryDescription"
+              v-model="newCategoryData.eventCategoryDescription"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               maxlength="500"
