@@ -2,11 +2,17 @@
 import CategoryTable from '../components/CategoryTable.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { ref } from 'vue';
-import CategoryModal from '../components/CategoryModal.vue';
+import CategoryModalEdit from '../components/CategoryModalEdit.vue';
+import SmButton from '../components/SmButton.vue';
+import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
+import ButtonAddCategory from '../components/ButtonAddCategory.vue';
+import CategoryModalAdd from '../components/CategoryModalAdd.vue';
 
 const categoriesData = ref([]);
 const editModalShow = ref(false);
+const addModalShow = ref(false);
 const editCategoryObj = ref({});
+const addCategoryObj = ref({});
 
 const getCategoriesData = async () => {
   const response = await fetch(
@@ -14,7 +20,9 @@ const getCategoriesData = async () => {
   );
   if (response.status === 200) {
     const data = await response.json();
-    categoriesData.value = data;
+    categoriesData.value = data.sort((a, b) => {
+      return b.id - a.id;
+    })
     console.log(data);
   } else {
     console.log('Fetch Category Error');
@@ -26,9 +34,16 @@ const editCategory = async (category) => {
   editModalShow.value = true;
 };
 
+const addCategory = async (category) => {
+  addCategoryObj.value = category;
+  addModalShow.value = true;
+};
+
 const closeModal = () => {
   editModalShow.value = false;
+  addModalShow.value = false;
   editCategoryObj.value = {};
+  addCategoryObj.value = {};
 };
 
 const forceUpdate = async () => {
@@ -42,28 +57,23 @@ onBeforeMount(async () => {
 
 <template>
   <div
-    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-lg"
-  >
-    <div
-      class="w-10/12 h-5/6 bg-white flex shadow-md rounded-lg clinic-scollbar"
-    >
-      <div class="text-center md:text-lg flex flex-col lg:text-lg min-w-full">
-        <span class="text-gray-600 text-2xl p-3 bg-clinic-blue-25 rounded-t-lg">
-          Category List</span
-        >
-        <CategoryTable
-          :categories="categoriesData"
-          @editCategory="editCategory"
-        />
-        <CategoryModal
-          :category="editCategoryObj"
-          :isShow="editModalShow"
-          @closeModal="closeModal"
-          @forceUpdate="forceUpdate"
-        />
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl">
+    <div class="w-7/12 h-5/6 bg-white flex shadow-md rounded-xl clinic-scollbar">
+      <div class="md:text-lg flex flex-col lg:text-lg min-w-full">
+        <div class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5">
+         <p class="text-gray-800 text-2xl">Category</p>
+        <ButtonAddCategory :categories="categoriesData" @addCategory="addCategory"/>
+        <CategoryModalAdd  :category="addCategoryObj" :isShow="addModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate"  />
+        </div>
+
+        <CategoryTable :categories="categoriesData" @editCategory="editCategory"/>
+        <CategoryModalEdit :category="editCategoryObj" :isShow="editModalShow" @closeModal="closeModal"
+          @forceUpdate="forceUpdate" />
+
       </div>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+</style>

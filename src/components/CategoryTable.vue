@@ -17,10 +17,10 @@ const props = defineProps({
     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 flex-col rounded-lg clinic-scollbar overflow-auto"
   >
     <table
-      class="h-4/6 sm:rounded-lg text-sm text-left text-gray-500 dark:text-gray-400"
+      class="text-sm xs:text-xs sm:text-xs md:text-sm lg:text-sm h-4/6 sm:rounded-lg text-left text-gray-500 dark:text-gray-400"
     >
       <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
           <th scope="col" class="px-6 py-3">#</th>
@@ -53,7 +53,7 @@ const props = defineProps({
           </th>
           <th class="px-6 py-3 text-clinic-blue-300">
             <PencilIcon
-              class="w-5 h-5"
+              class="w-5 h-5 cursor-pointer"
               @click="$emit('editCategory', category)"
             />
           </th>
