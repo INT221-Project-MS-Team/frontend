@@ -1,4 +1,4 @@
-import { createWebHashHistory, createRouter, createWebHistory } from 'vue-router';
+import { createWebHashHistory, createRouter } from 'vue-router';
 import Home from '../views/Home.vue';
 import Schedules from '../views/Schedules.vue';
 import Event from '../views/Event.vue';
@@ -6,7 +6,7 @@ import NotFound from '../views/NotFound.vue';
 import About from '../views/About.vue'
 import Reserve from '../views/Reserve.vue'
 import Category from '../views/Category.vue'
-const history = createWebHistory();
+const history = createWebHashHistory();
 const routes = [
   {
     path: '/',
