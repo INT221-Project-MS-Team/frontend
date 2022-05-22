@@ -1,5 +1,5 @@
 export const getCurrentDateTime = () => {
-  return new Date().toISOString();
+  return new Date();
 };
 
 export const getDate = (datetime) => {
