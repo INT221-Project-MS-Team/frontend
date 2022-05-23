@@ -35,7 +35,7 @@ const addCategory = async () => {
       body: JSON.stringify({
         eventCategoryName: newCategoryData.value.eventCategoryName.trim(),
         eventDuration: newCategoryData.value.eventDuration,
-        eventCategoryDescription: newCategoryData.value.eventCategoryDescription,
+        eventCategoryDescription: newCategoryData.value.eventCategoryDescription.trim(),
       }),
     }
   );
