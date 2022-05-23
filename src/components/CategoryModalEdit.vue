@@ -42,7 +42,7 @@ const updateCategory = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        eventCategoryName: editingData.value.eventCategoryName,
+        eventCategoryName: editingData.value.eventCategoryName.trim(),
         eventDuration: editingData.value.eventDuration,
         eventCategoryDescription: editingData.value.eventCategoryDescription,
       }),
