@@ -1,9 +1,10 @@
 <script setup>
-import Button from '../components/Button.vue';
+import UserTable from '../components/UserTable.vue';
+
 </script>
  
 <template>
-
+<UserTable />
 </template>
  
 <style>
