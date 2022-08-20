@@ -1,10 +1,19 @@
 <script setup>
-import { computed,inject,ref } from '@vue/runtime-core';
+import {
+  computed,
+  inject,
+  onBeforeMount,
+  onBeforeUpdate,
+  ref,
+} from '@vue/runtime-core';
 import SmButton from './SmButton.vue';
-const emits = defineEmits(['closeModal','forceUpdate']);
+
 const swal = inject('$swal');
+
+const emits = defineEmits(['closeModal', 'forceUpdate']);
+
 const props = defineProps({
-  category: {
+  user: {
     type: Object,
     required: true,
   },
@@ -14,48 +23,54 @@ const props = defineProps({
   },
 });
 
-const newCategoryData = computed(() => ({
-  id: props.category.id,
-  eventCategoryName: props.category.eventCategoryName,
-  eventDuration: props.category.eventDuration,
-  eventCategoryDescription: props.category.eventCategoryDescription,
+const usersData = ref('');
+const editingData = computed(() => ({
+  id: props.user.id,
+  name: props.user.name,
+  email: props.user.email,
+  role: props.user.role,
 }));
 
-
-
-//create
-const addCategory = async () => {
+const updateUser = async () => {
   const response = await fetch(
-    import.meta.env.VITE_SERVER_URL + '/api/events-categories/',
+    import.meta.env.VITE_SERVER_URL +
+      '/api/users/' +
+      editingData.value.id,
     {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        eventCategoryName: newCategoryData.value.eventCategoryName.trim(),
-        eventDuration: newCategoryData.value.eventDuration,
-        eventCategoryDescription: newCategoryData.value.eventCategoryDescription,
+        name: editingData.value.name.trim(),
+        email: editingData.value.email,
+        role: editingData.value.role,
       }),
     }
   );
-  if (response.status === 201) {
+  const data = await response.json();
+  if (response.status === 200) {
     swal({
       title: 'Success',
-      text: 'Category Added',
+      text: 'User Updated',
       icon: 'success',
       button: 'OK',
     });
-    emits('closeModal');
     emits('forceUpdate');
-  } else {
-    let error = await response.json();
-    console.log('Add Category Error');
-    swal('Error', error.message, 'error');
+    emits('closeModal');
+  }
+   else {
+   swal({
+     title: 'Update Failed',
+     text: data.message,
+     icon: 'error',
+     button: 'OK',
+    });
+    console.log('Update User Error');
   }
 };
 </script>
- 
+
 <template>
   <div class="fixed inset-0 z-10 overflow-y-auto" role="dialog" v-if="isShow">
     <div
@@ -75,17 +90,17 @@ const addCategory = async () => {
       >
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center text-base">Add New Category</div>
+            <div class="mt-3 text-center text-base">Edit User</div>
           </div>
         </div>
         <form
-          @submit.prevent="addCategory"
+          @submit.prevent="updateUser"
           class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex-col justify-center gap-1 text-sm"
         >
           <div class="relative z-0 w-full mb-6 group">
             <input
               type="text"
-              v-model="newCategoryData.eventCategoryName"
+              v-model="editingData.name"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
@@ -99,13 +114,11 @@ const addCategory = async () => {
           </div>
           <div class="relative z-0 w-full mb-6 group">
             <input
-              type="number"
-              v-model="newCategoryData.eventDuration"
+              type="email"
+              v-model="editingData.email"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
-              min="1"
-              max="480"
             />
             <label
               for=""
@@ -114,14 +127,11 @@ const addCategory = async () => {
             >
           </div>
           <div class="relative z-0 w-full mb-6 group">
-            <input
-              type="number"
-              v-model="newCategoryData.eventDuration"
+            <textarea
+              type="text"
+              v-model="editingData.role"
               class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required=""
-              min="1"
-              max="480"
             />
             <label
               for=""
@@ -131,7 +141,7 @@ const addCategory = async () => {
           </div>
           <div class="flex justify-end gap-2">
             <button type="submit">
-              <SmButton text="Add" btnType="events" />
+              <SmButton text="Save" btnType="events" />
             </button>
             <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
           </div>
@@ -140,7 +150,5 @@ const addCategory = async () => {
     </div>
   </div>
 </template>
- 
-<style>
 
-</style>
+<style scoped></style>
