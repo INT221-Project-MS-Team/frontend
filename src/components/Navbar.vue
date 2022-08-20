@@ -14,9 +14,9 @@
                 <!-- <button type="button"
                     class="py-2 px-3 m-1 text-xs font-medium text-center text-white bg-clinic-blue-300 rounded-2xl focus:ring-4 
             focus:outline-none border border-white focus:ring-blue-300 hover:bg-white hover:text-clinic-blue-300">Login</button> -->
-            <router-link :to="{ name: 'signup' }">
-                <button type="button" class="m-1 py-2 px-3 text-sm font-medium text-center text-clinic-blue-300 bg-white rounded-2xl hover:bg-gray-100  focus:ring-4 
-            focus:outline-none  focus:ring-blue-300">Sign up</button></router-link>
+            <router-link :to="{ name: 'login' }">
+                <button disabled type="button" class=" m-1 py-2 px-3 text-sm font-medium text-center text-clinic-blue-300 bg-white rounded-2xl hover:bg-gray-100  focus:ring-4 
+            focus:outline-none  focus:ring-blue-300">Login</button></router-link>
 
                 <button data-collapse-toggle="navbar-sticky" type="button"
                     class="inline-flex items-center p-2 text-sm text-white rounded-lg md:hidden hover:bg-transparent focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
