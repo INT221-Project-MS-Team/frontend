@@ -7,7 +7,7 @@ import About from '../views/About.vue'
 import Reserve from '../views/Reserve.vue'
 import Category from '../views/Category.vue'
 import User from '../views/User.vue'
-import Signup from '../views/Signup.vue'
+import Login from '../views/Login.vue'
 const history = createWebHashHistory();
 const routes = [
   {
@@ -46,9 +46,9 @@ const routes = [
     component: User,
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component: Signup,
+    path: '/login',
+    name: 'login',
+    component: Login,
   },
   {
     path: '/:notMatchPath(.*)',
