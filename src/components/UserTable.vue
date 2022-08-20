@@ -1,18 +1,25 @@
 <script setup>
-import { PencilIcon } from '@heroicons/vue/outline';
+import { PencilIcon, PlusCircleIcon } from '@heroicons/vue/outline';
+const emits = defineEmits(['editUser']);
+
+const props = defineProps({
+  categories: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
  
 <template>
     <div
-        class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl">
+        class="bg-schedules  w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl">
 
-        <div class="w-7/12 h-5/6 overflow-x-auto  bg-white relative shadow-md sm:rounded-lg">
+        <div class="w-7/12 h-5/6 rounded-lg clinic-scollbar overflow-auto bg-white relative shadow-md sm:rounded-xl">
             <div class="flex justify-between items-center dark:bg-gray-900">
-
-                <div class="p-5 text-2xl">User</div>
-                <label for="table-search" class="sr-only">Search</label>
+                <div class="p-5 text-2xl">User
+                </div>
                 <div class="relative pr-5">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <!-- <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -22,7 +29,15 @@ import { PencilIcon } from '@heroicons/vue/outline';
                     </div>
                     <input type="text" id="table-search-users"
                         class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users">
+                        placeholder="Search for users"> -->
+
+                    <button class="flex  gap-2 align-middle items-center text-white bg-gradient-to-r from-blue-500 via-clinic-blue-500  
+         to-clinic-blue-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-clinic-blue-500 
+         dark:focus:ring-clinic-blue-200  dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg 
+         text-sm px-5 py-2.5 text-center">
+                        <PlusCircleIcon class="w-5 h-5" />
+                        Add User
+                    </button>
                 </div>
             </div>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -62,7 +77,7 @@ import { PencilIcon } from '@heroicons/vue/outline';
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            React Developer
+                            8/20/2022 
                         </td>
                         <td class="py-4 px-6">
                             <div class="flex items-center">
@@ -70,9 +85,8 @@ import { PencilIcon } from '@heroicons/vue/outline';
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a> -->
-                            <PencilIcon class="w-5 h-5 text-blue-600 cursor-pointer"/>
+                          
+                            <PencilIcon class="w-5 h-5 text-blue-600 cursor-pointer"  @click="$emit('editUser', user)" />
                         </td>
                     </tr>
 
