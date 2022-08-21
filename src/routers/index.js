@@ -6,6 +6,8 @@ import NotFound from '../views/NotFound.vue';
 import About from '../views/About.vue'
 import Reserve from '../views/Reserve.vue'
 import Category from '../views/Category.vue'
+import User from '../views/User.vue'
+import Login from '../views/Login.vue'
 const history = createWebHashHistory();
 const routes = [
   {
@@ -37,6 +39,16 @@ const routes = [
     path: '/category',
     name: 'category',
     component: Category,
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: User,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
   },
   {
     path: '/:notMatchPath(.*)',
