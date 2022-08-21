@@ -10,5 +10,5 @@ export default defineConfig({
     },
     port: 8080,
   },
-  base: './',
+  base: '/sy2/',
 });
