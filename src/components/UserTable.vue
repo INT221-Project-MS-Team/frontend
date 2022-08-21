@@ -1,5 +1,14 @@
 <script setup>
 import { PencilIcon, TrashIcon } from '@heroicons/vue/outline';
+import {
+    getDate,
+    getTime,
+    categoryIdToBadgeColor,
+    truncateString,
+    categoryIdToStyleColor,
+    getInputDate,
+    getInputTime
+} from '../utils';
 const emits = defineEmits(['editUser', 'deleteUser']);
 
 const props = defineProps({
@@ -32,7 +41,7 @@ const props = defineProps({
                         {{ index + 1 }}
                     </th>
                     <th scope="row" class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="../../public/images/bew.jpg" alt="Jese image">
+                        <img class="w-10 h-10 rounded-full" src="/images/person.png" alt="Jese image">
                         <div class="pl-3">
                             <div class="text-base font-semibold"> {{ user.name }}</div>
                             <div class="font-normal text-gray-500">{{ user.email }}</div>
@@ -42,10 +51,18 @@ const props = defineProps({
                         {{ user.role }}
                     </td>
                     <td scope="col" class="px-6 py-3">
-                        {{ user.createdOn }}
+                        <input type="date" class="text-base border-0 p-0 mx-auto bg-transparent" placeholder=" "
+                            :value="getInputDate(user.createdOn)" disabled />
+                                    <input type="time" class="border-0 p-0 mx-auto bg-transparent" placeholder=" "
+                            :value="getInputTime(user.createdOn)" disabled />
+                        <!-- {{ user.createdOn }} -->
                     </td>
                     <td scope="col" class="px-6 py-3">
-                        {{ user.updatedOn }}
+                        <input type="date" class="border-0 p-0 mx-auto bg-transparent" placeholder=" "
+                            :value="getInputDate(user.updatedOn)" disabled />
+                        <input type="time" class="border-0 p-0 mx-auto bg-transparent" placeholder=" "
+                            :value="getInputTime(user.updatedOn)" disabled />
+                        <!-- {{ user.updatedOn }} -->
                     </td>
                     <td class="px-6 py-3 text-clinic-blue-300">
                         <PencilIcon class="w-5 h-5 cursor-pointer" @click="$emit('editUser', user)" />
