@@ -20,9 +20,10 @@ const props = defineProps({
                 <tr>
                     <th scope="col" class="px-6 py-3">#</th>
                     <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Role</th>
                     <th scope="col" class="px-6 py-3">Created Date</th>
                     <th scope="col" class="px-6 py-3">Modified Date</th>
-                    <th scope="col" colspan="2" class="px-6 py-3">Action</th>
+                    <th scope="col" colspan="2" class="px-6 py-3"></th>
                 </tr>
             </thead>
             <tbody class="relative overflow-auto">
@@ -37,19 +38,21 @@ const props = defineProps({
                             <div class="font-normal text-gray-500">{{ user.email }}</div>
                         </div>
                     </th>
-
-                    <th scope="col" class="px-6 py-3">
+                    <td scope="col" class="px-6 py-3">
+                        {{ user.role }}
+                    </td>
+                    <td scope="col" class="px-6 py-3">
                         {{ user.createdOn }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
+                    </td>
+                    <td scope="col" class="px-6 py-3">
                         {{ user.updatedOn }}
-                    </th>
-                    <th class="px-6 py-3 text-clinic-blue-300">
+                    </td>
+                    <td class="px-6 py-3 text-clinic-blue-300">
                         <PencilIcon class="w-5 h-5 cursor-pointer" @click="$emit('editUser', user)" />
-                    </th>
-                    <th class="px-6 py-3 text-clinic-blue-300">
+                    </td>
+                    <td class="px-6 py-3 text-clinic-blue-300">
                         <TrashIcon class="w-5 h-5 cursor-pointer" @click="$emit('deleteUser', user)" />
-                    </th>
+                    </td>
                 </tr>
             </tbody>
         </table>
