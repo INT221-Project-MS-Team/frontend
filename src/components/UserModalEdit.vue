@@ -45,7 +45,7 @@ const updateUser = async () => {
       },
       body: JSON.stringify({
         name: editingData.value.name.trim(),
-        email: editingData.value.email,
+        email: editingData.value.email.trim(),
         role: editingData.value.role,
       }),
     }

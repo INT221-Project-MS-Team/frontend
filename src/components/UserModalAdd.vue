@@ -35,7 +35,7 @@ const addUser = async () => {
       },
       body: JSON.stringify({
         name: newUserData.value.name.trim(),
-        email: newUserData.value.email,
+        email: newUserData.value.email.trim(),
         role: newUserData.value.role,
       }),
     }
