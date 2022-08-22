@@ -249,7 +249,7 @@ onBeforeMount(async () => {
           >
             Event ID : {{ eventData.id }}
           </p>
-          <span v-show="isEditing" class="text-clinic-blue-300 text-sm">
+          <span v-show="isEditing" class="text-red-700 text-sm">
             Edit start time, date and note only
           </span>
         </div>

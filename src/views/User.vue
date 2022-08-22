@@ -99,7 +99,7 @@ onBeforeMount(async () => {
 <template>
     <div
         class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl">
-        <div class="w-7/12 h-5/6 bg-white flex shadow-md rounded-xl clinic-scollbar">
+        <div class="w-9/12 h-5/6 bg-white flex shadow-md rounded-xl clinic-scollbar p-2">
             <div class="md:text-lg flex flex-col lg:text-lg min-w-full">
                 <div class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5">
                     <p class="text-gray-800 text-2xl">User</p>
