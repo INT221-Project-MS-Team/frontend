@@ -12,6 +12,8 @@ const swal = inject('$swal');
 
 const emits = defineEmits(['closeModal', 'forceUpdate']);
 
+const userRoles = ref(['ADMIN', 'STUDENT', 'LECTURER']);
+
 const props = defineProps({
   user: {
     type: Object,
@@ -127,17 +129,27 @@ const updateUser = async () => {
             >
           </div>
           <div class="relative z-0 w-full mb-6 group">
-            <textarea
-              type="text"
-              v-model="editingData.role"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-            />
+            <label for="underline_select" class="sr-only">select</label>
             <label
               for=""
-              class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              class="mb-10 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >Role</label
             >
+            <select
+              id="underline_select"
+              required
+              v-model="editingData.role"
+              class="block py-2.5 px-0 w-full text-sm text-gray-800 bg-transparent border-0 border-b-2 border-gray-100 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+            >
+              <option
+                v-for="(value, index) in userRoles"
+                :value="value"
+                :key="index"
+                :selected="editingData.role === value"
+              >
+                {{ value }}
+              </option>
+            </select>
           </div>
           <div class="flex justify-end gap-2">
             <button type="submit">
