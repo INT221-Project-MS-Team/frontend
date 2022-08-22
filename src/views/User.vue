@@ -21,9 +21,9 @@ const getUsersData = async () => {
   if (response.status === 200) {
     const data = await response.json();
     usersData.value = data.sort((a, b) => {
-      return b.id - a.id;
+      return a.name.localeCompare(b.name);
     });
-    console.log(data);
+    console.log(usersData.value);
   } else {
     console.log('Fetch User Error');
   }
