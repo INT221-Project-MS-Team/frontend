@@ -1,5 +1,5 @@
 <script setup>
-import { PencilIcon, TrashIcon } from '@heroicons/vue/outline';
+import { PencilIcon, TrashIcon, EyeIcon } from '@heroicons/vue/outline';
 import {
   getDate,
   getTime,
@@ -31,11 +31,9 @@ const props = defineProps({
       >
         <tr>
           <th scope="col" class="px-6 py-3">#</th>
-          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">User</th>
           <th scope="col" class="px-6 py-3">Role</th>
-          <th scope="col" class="px-6 py-3">Created Date</th>
-          <th scope="col" class="px-6 py-3">Modified Date</th>
-          <th scope="col" colspan="2" class="px-6 py-3"></th>
+          <th scope="col" class="px-6 py-3">Action</th>
         </tr>
       </thead>
       <tbody class="relative overflow-auto">
@@ -64,51 +62,11 @@ const props = defineProps({
           <td scope="col" class="px-6 py-3">
             {{ user.role }}
           </td>
-          <td scope="col" class="px-6 py-3">
-            <input
-              type="date"
-              class="text-sm border-0 p-0 bg-transparent"
-              placeholder=" "
-              :value="getInputDate(user.createdOn)"
-              disabled
-              readonly
-            />
-            <input
-              type="time"
-              class="border-0 p-0 mx-auto bg-transparent text-sm"
-              placeholder=" "
-              :value="getInputTime(user.createdOn)"
-              disabled
-              readonly
-            />
-            <!-- {{ user.createdOn }} -->
-          </td>
-          <td scope="col" class="px-6 py-3">
-            <input
-              type="date"
-              class="text-sm border-0 p-0 bg-transparent"
-              placeholder=" "
-              :value="getInputDate(user.updatedOn)"
-              disabled
-              readonly
-            />
-            <input
-              type="time"
-              class="border-0 p-0 mx-auto bg-transparent text-sm"
-              placeholder=" "
-              :value="getInputTime(user.updatedOn)"
-              disabled
-              readonly
-            />
-            <!-- {{ user.updatedOn }} -->
-          </td>
-          <td class="px-6 py-3 text-clinic-blue-300">
-            <PencilIcon
+          <td class="px-6 py-3 text-clinic-blue-300 flex gap-4">
+            <EyeIcon
               class="w-5 h-5 cursor-pointer"
               @click="$emit('editUser', user)"
             />
-          </td>
-          <td class="px-6 py-3 text-clinic-blue-300">
             <TrashIcon
               class="w-5 h-5 cursor-pointer"
               @click="$emit('deleteUser', user)"

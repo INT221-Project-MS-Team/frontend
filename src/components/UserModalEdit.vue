@@ -6,6 +6,15 @@ import {
   onBeforeUpdate,
   ref,
 } from '@vue/runtime-core';
+import {
+  getDate,
+  getTime,
+  categoryIdToBadgeColor,
+  truncateString,
+  categoryIdToStyleColor,
+  getInputDate,
+  getInputTime,
+} from '../utils';
 import SmButton from './SmButton.vue';
 
 const swal = inject('$swal');
@@ -25,7 +34,8 @@ const props = defineProps({
   },
 });
 
-const usersData = ref('');
+const isEditing = ref(false);
+
 const editingData = computed(() => ({
   id: props.user.id,
   name: props.user.name,
@@ -34,10 +44,9 @@ const editingData = computed(() => ({
 }));
 
 const updateUser = async () => {
+  cancleEditing();
   const response = await fetch(
-    import.meta.env.VITE_SERVER_URL +
-      '/api/users/' +
-      editingData.value.id,
+    import.meta.env.VITE_SERVER_URL + '/api/users/' + editingData.value.id,
     {
       method: 'PUT',
       headers: {
@@ -54,23 +63,37 @@ const updateUser = async () => {
   if (response.status === 200) {
     swal({
       title: 'Success',
-      text: 'User Updated',
+      text: 'Updated user',
       icon: 'success',
       button: 'OK',
     });
     emits('forceUpdate');
-    emits('closeModal');
-  }
-   else {
-   swal({
-     title: 'Update Failed',
-     text: data.message,
-     icon: 'error',
-     button: 'OK',
+  } else {
+    swal({
+      title: 'Update Failed',
+      text: data.message,
+      icon: 'error',
+      button: 'OK',
     });
     console.log('Update User Error');
   }
 };
+
+const closeModal = async () => {
+  cancleEditing();
+  emits('closeModal');
+};
+
+const cancleEditing = async () => {
+  isEditing.value = false;
+};
+
+const resetEditingData = async () =>{
+  editingData.value.name = props.user.name;
+  editingData.value.email = props.user.email;
+  editingData.value.role = props.user.role;
+  cancleEditing();
+}
 </script>
 
 <template>
@@ -92,7 +115,9 @@ const updateUser = async () => {
       >
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center text-base">Edit User</div>
+            <div class="mt-3 text-center text-base">
+              {{ isEditing ? 'Edit User' : 'View User' }}
+            </div>
           </div>
         </div>
         <form
@@ -103,24 +128,27 @@ const updateUser = async () => {
             <input
               type="text"
               v-model="editingData.name"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
               placeholder=" "
               required=""
               maxlength="100"
+              :disabled="!isEditing"
             />
             <label
               for=""
               class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >User Name</label
+              >Fullname</label
             >
           </div>
           <div class="relative z-0 w-full mb-6 group">
             <input
               type="email"
               v-model="editingData.email"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
+              class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0  peer"
+              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
               required=""
+              :disabled="!isEditing"
             />
             <label
               for=""
@@ -129,7 +157,6 @@ const updateUser = async () => {
             >
           </div>
           <div class="relative z-0 w-full mb-6 group">
-            <label for="underline_select" class="sr-only">select</label>
             <label
               for=""
               class="mb-10 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -139,7 +166,9 @@ const updateUser = async () => {
               id="underline_select"
               required
               v-model="editingData.role"
-              class="block py-2.5 px-0 w-full text-sm text-gray-800 bg-transparent border-0 border-b-2 border-gray-100 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+              class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0"
+              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
+              :disabled="!isEditing"
             >
               <option
                 v-for="(value, index) in userRoles"
@@ -151,11 +180,55 @@ const updateUser = async () => {
               </option>
             </select>
           </div>
-          <div class="flex justify-end gap-2">
+          <div class="relative z-0 w-full mb-6 group">
+            <label for="" class="text-sm text-gray-500">Created Date</label>
+            <div class="flex">
+              <input
+                type="date"
+                class="px-0 text-xs text-gray-500 bg-transparent border-0 appearance-none"
+                disabled
+                readonly
+                :value="getInputDate(user.createdOn)"
+              /><input
+                type="time"
+                class="px-0 text-xs text-gray-500 bg-transparent border-0 appearance-none"
+                disabled
+                readonly
+                :value="getInputTime(user.createdOn)"
+              />
+            </div>
+          </div>
+          <div class="relative z-0 w-full mb-6 group">
+            <label for="" class="text-sm text-gray-500">Modified Date</label>
+            <div class="flex">
+              <input
+                type="date"
+                class="px-0 text-xs text-gray-500 bg-transparent border-0 appearance-none"
+                disabled
+                readonly
+                :value="getInputDate(user.updatedOn)"
+              /><input
+                type="time"
+                class="px-0 text-xs text-gray-500 bg-transparent border-0 appearance-none"
+                disabled
+                readonly
+                :value="getInputTime(user.updatedOn)"
+              />
+            </div>
+          </div>
+          <div v-if="isEditing" class="flex justify-end gap-2">
             <button type="submit">
               <SmButton text="Save" btnType="events" />
             </button>
-            <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
+            <SmButton btnType="primary" text="Cancle" @click="resetEditingData" />
+          </div>
+          <div v-else class="flex justify-end gap-2">
+            <SmButton
+              text="Edit"
+              btnType="secondary"
+              @click="isEditing = true"
+            />
+            <SmButton text="Close" btnType="primary" @click="closeModal" />
           </div>
         </form>
       </div>
