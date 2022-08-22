@@ -55,8 +55,8 @@ const props = defineProps({
               alt="Jese image"
             />
             <div class="pl-3">
-              <div class="text-base font-semibold">{{ user.name }}</div>
-              <div class="font-normal text-gray-500">{{ user.email }}</div>
+              <div class="text-base font-semibold">{{ truncateString(user.name) }}</div>
+              <div class="font-normal text-gray-500">{{ truncateString(user.email) }}</div>
             </div>
           </th>
           <td scope="col" class="px-6 py-3">
