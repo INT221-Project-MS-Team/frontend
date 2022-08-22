@@ -16,25 +16,25 @@ const goBack = () => {
   >
     <div>
       <div
-        class="container mt-6 text-center text-2xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-4xl uppercase font-black text-white tracking-widest mb-8"
+        class="container mt-6 text-center text-xl sm:text-xl md:text-xl lg:text-xl xl:text-2xl uppercase font-black text-white tracking-widest mb-8"
       >
         about
       </div>
       <div class="mx-auto min-w-full container justify-center items-center">
         <div
-          class="text-center text-sm sm:text-xl md:text-xl lg:text-xl xl:text-xl text-white font-medium tracking-wider mb-8"
+          class="text-center text-xs sm:text-xs md:text-xs lg:text-xs xl:text-xl text-white tracking-wider mb-8"
         >
-          We are SY-2 (advisor: Siam Yamsaengsung) proud to present this project "Booking" <br />
-          which is part of the INT221 subject at the school of information technology KMUTT.<br />
-          Let's introduce ourselves. <br />
+          We are SY-2 (advisor: Siam Yamsaengsung) proud to present this project
+          "Booking" <br />
+          which is part of the INT221 subject at the school of information
+          technology KMUTT.<br />
+          Let's introduce ourselves.
         </div>
       </div>
-      <div
-        class="grid grid-cols-3 pb-10 min-w-full container text-center"
-      >
+      <div class="grid grid-cols-3 pb-10 min-w-full container text-center">
         <div>
           <img
-            class="mb-3 h-90 rounded-full shadow-lg w-7/12 mx-auto"
+            class="mb-3 h-90 rounded-full shadow-lg w-6/12 mx-auto"
             src="/images/bew.jpg"
             alt="bew"
           />
@@ -51,7 +51,7 @@ const goBack = () => {
         </div>
         <div>
           <img
-            class="mb-3 rounded-full shadow-lg w-7/12 mx-auto"
+            class="mb-3 rounded-full shadow-lg w-6/12 mx-auto"
             src="/images/tan.jpg"
           />
           <div class="mt-5 mb-1 text-xl font-medium text-white">
@@ -64,7 +64,7 @@ const goBack = () => {
         </div>
         <div>
           <img
-            class="mb-3 rounded-full shadow-lg w-7/12 mx-auto"
+            class="mb-3 rounded-full shadow-lg w-6/12 mx-auto"
             src="/images/aom.jpg"
           />
           <div class="mt-5 mb-1 text-xl font-medium text-white">
@@ -76,9 +76,6 @@ const goBack = () => {
           </a>
         </div>
       </div>
-    </div>
-    <div class="flex flex-row">
-      <Button  text="Go back !" btnType="secondary"  @click="goBack" />
     </div>
   </div>
 </template>
