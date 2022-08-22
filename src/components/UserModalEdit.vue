@@ -4,7 +4,9 @@ import {
   inject,
   onBeforeMount,
   onBeforeUpdate,
+  reactive,
   ref,
+  watch,
 } from '@vue/runtime-core';
 import {
   getDate,
@@ -68,6 +70,7 @@ const updateUser = async () => {
       button: 'OK',
     });
     emits('forceUpdate');
+    emits('closeModal');
   } else {
     swal({
       title: 'Update Failed',
@@ -88,12 +91,20 @@ const cancleEditing = async () => {
   isEditing.value = false;
 };
 
-const resetEditingData = async () =>{
+const resetEditingData = async () => {
   editingData.value.name = props.user.name;
   editingData.value.email = props.user.email;
   editingData.value.role = props.user.role;
   cancleEditing();
-}
+};
+
+// this function compare original data and editing data to check if there is any change
+const isEditingDataChanged = reactive(
+  () =>
+    editingData.value.name != props.user.name ||
+    editingData.value.email != props.user.email ||
+    editingData.value.role != props.user.role
+);
 </script>
 
 <template>
@@ -145,7 +156,7 @@ const resetEditingData = async () =>{
             <input
               type="email"
               v-model="editingData.email"
-              class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0  peer"
+              class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0 peer"
               :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
               required=""
               :disabled="!isEditing"
@@ -218,9 +229,13 @@ const resetEditingData = async () =>{
           </div>
           <div v-if="isEditing" class="flex justify-end gap-2">
             <button type="submit">
-              <SmButton text="Save" btnType="events" />
+              <SmButton text="Save" btnType="secondary" />
             </button>
-            <SmButton btnType="primary" text="Cancle" @click="resetEditingData" />
+            <SmButton
+              btnType="primary"
+              text="Cancle"
+              @click="resetEditingData"
+            />
           </div>
           <div v-else class="flex justify-end gap-2">
             <SmButton
