@@ -128,7 +128,7 @@ onBeforeMount(async () => {
             @forceUpdate="forceUpdate"
           />
         </div>
-        <div v-else class="text-center text-gray-800 text-lg">
+        <div v-else class="text-center text-gray-800 text-lg align-middle">
            <NoUser />
         </div>
       </div>

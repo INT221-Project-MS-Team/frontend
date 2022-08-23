@@ -37,6 +37,7 @@ const props = defineProps({
 });
 
 const isEditing = ref(false);
+const isEditingDataChanged = ref(false);
 
 const editingData = computed(() => ({
   id: props.user.id,
@@ -47,6 +48,9 @@ const editingData = computed(() => ({
 
 const updateUser = async () => {
   cancleEditing();
+  if (!isEditingDataChanged.value) {
+    return;
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/users/' + editingData.value.id,
     {
@@ -80,6 +84,7 @@ const updateUser = async () => {
     });
     console.log('Update User Error');
   }
+  resetIsEditingDataChanged();
 };
 
 const closeModal = async () => {
@@ -91,20 +96,32 @@ const cancleEditing = async () => {
   isEditing.value = false;
 };
 
+const resetIsEditingDataChanged = async () => {
+  isEditingDataChanged.value = false;
+};
+
 const resetEditingData = async () => {
   editingData.value.name = props.user.name;
   editingData.value.email = props.user.email;
   editingData.value.role = props.user.role;
   cancleEditing();
+  resetIsEditingDataChanged();
 };
 
 // this function compare original data and editing data to check if there is any change
-const isEditingDataChanged = reactive(
-  () =>
-    editingData.value.name != props.user.name ||
-    editingData.value.email != props.user.email ||
-    editingData.value.role != props.user.role
-);
+const checkIsEditDataChanged = () => {
+  console.log('checkIsEditDataChanged');
+  if (
+    editingData.value.name !== props.user.name ||
+    editingData.value.email !== props.user.email ||
+    editingData.value.role !== props.user.role
+  ) {
+    isEditingDataChanged.value = true;
+  } else {
+    isEditingDataChanged.value = false;
+  }
+  console.log('isEditingDataChanged', isEditingDataChanged.value);
+};
 </script>
 
 <template>
@@ -145,6 +162,7 @@ const isEditingDataChanged = reactive(
               required=""
               maxlength="100"
               :disabled="!isEditing"
+              @change="checkIsEditDataChanged"
             />
             <label
               for=""
@@ -160,6 +178,7 @@ const isEditingDataChanged = reactive(
               :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
               required=""
               :disabled="!isEditing"
+              @change="checkIsEditDataChanged"
             />
             <label
               for=""
@@ -180,6 +199,7 @@ const isEditingDataChanged = reactive(
               class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0"
               :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
               :disabled="!isEditing"
+              @change="checkIsEditDataChanged"
             >
               <option
                 v-for="(value, index) in userRoles"
