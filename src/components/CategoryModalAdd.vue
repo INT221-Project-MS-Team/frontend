@@ -42,7 +42,7 @@ const addCategory = async () => {
   if (response.status === 201) {
     swal({
       title: 'Success',
-      text: 'Category Added',
+      text: 'Add category successfully',
       icon: 'success',
       button: 'OK',
     });

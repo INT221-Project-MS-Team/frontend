@@ -69,7 +69,7 @@ const updateUser = async () => {
   if (response.status === 200) {
     swal({
       title: 'Success',
-      text: 'Updated user',
+      text: 'Update user successfully',
       icon: 'success',
       button: 'OK',
     });
@@ -77,7 +77,7 @@ const updateUser = async () => {
     emits('closeModal');
   } else {
     swal({
-      title: 'Update Failed',
+      title: 'Update user failed',
       text: data.message,
       icon: 'error',
       button: 'OK',

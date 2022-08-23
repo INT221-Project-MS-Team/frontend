@@ -43,7 +43,7 @@ const addUser = async () => {
   if (response.status === 201) {
     swal({
       title: 'Success',
-      text: 'User Added',
+      text: 'Add user successfully',
       icon: 'success',
       button: 'OK',
     });
@@ -51,7 +51,7 @@ const addUser = async () => {
     emits('forceUpdate');
   } else {
     let error = await response.json();
-    console.log('Add User Error');
+    console.log('Add User failure');
     swal('Error', error.message, 'error');
   }
 };
