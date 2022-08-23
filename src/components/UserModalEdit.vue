@@ -49,6 +49,11 @@ const editingData = computed(() => ({
 const updateUser = async () => {
   cancleEditing();
   if (!isEditingDataChanged.value) {
+    swal({
+      title: 'Success',
+      text: 'No changes were made',
+      icon: 'success',
+    });
     return;
   }
   const response = await fetch(
@@ -110,17 +115,10 @@ const resetEditingData = async () => {
 
 // this function compare original data and editing data to check if there is any change
 const checkIsEditDataChanged = () => {
-  console.log('checkIsEditDataChanged');
-  if (
+  isEditingDataChanged.value =
     editingData.value.name !== props.user.name ||
     editingData.value.email !== props.user.email ||
-    editingData.value.role !== props.user.role
-  ) {
-    isEditingDataChanged.value = true;
-  } else {
-    isEditingDataChanged.value = false;
-  }
-  console.log('isEditingDataChanged', isEditingDataChanged.value);
+    editingData.value.role !== props.user.role;
 };
 </script>
 
