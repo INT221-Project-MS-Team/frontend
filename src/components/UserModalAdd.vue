@@ -1,5 +1,6 @@
 <script setup>
 import { computed, inject, ref } from '@vue/runtime-core';
+import { validateEmail } from '../utils';
 import SmButton from './SmButton.vue';
 const emits = defineEmits(['closeModal', 'forceUpdate']);
 const swal = inject('$swal');
@@ -26,6 +27,16 @@ const newUserData = computed(() => ({
 
 //create
 const addUser = async () => {
+  // check email
+  if (!validateEmail(newUserData.value.email)) {
+    swal({
+      title: 'Error',
+      text: 'Email is invalid',
+      icon: 'error',
+      button: 'OK',
+    });
+    return;
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/users/',
     {
