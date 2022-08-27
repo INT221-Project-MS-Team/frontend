@@ -13,6 +13,7 @@ module.exports = {
       backgroundImage: {
         home: "url('../images/home-bg-new-1.png')",
         schedules: "url('../images/schedules-bg.png')",
+        login: "url('../images/test.png')",
       },
       colors: {
         'clinic-blue-300': '#5f72ff',
