@@ -11,10 +11,9 @@ import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue'
 
 const swal = inject('$swal');
 const usersData = ref([]);
-const editModalShow = ref(false);
-const addModalShow = ref(false);
+const isEditUserModalShow = ref(false);
+const isAddUserModalShow = ref(false);
 const editUserObj = ref({});
-const addUserObj = ref({});
 
 const getUsersData = async () => {
   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users');
@@ -31,19 +30,17 @@ const getUsersData = async () => {
 
 const editUser = async (user) => {
   editUserObj.value = user;
-  editModalShow.value = true;
+  isEditUserModalShow.value = true;
 };
 
-const addUser = async (user) => {
-  addUserObj.value = user;
-  addModalShow.value = true;
+const openAddUserModal = async () => {
+  isAddUserModalShow.value = true;
 };
 
 const closeModal = () => {
-  editModalShow.value = false;
-  addModalShow.value = false;
+  isEditUserModalShow.value = false;
+  isAddUserModalShow.value = false;
   editUserObj.value = {};
-  addUserObj.value = {};
 };
 
 const deleteUser = async (user) => {
@@ -108,7 +105,7 @@ onBeforeMount(async () => {
           <dropdown text="Manage">
             <list-group>
               <list-group-item>
-                <button class="flex gap-2" @click="addUser">
+                <button class="flex gap-2" @click="openAddUserModal">
                   <UserAddIcon class="w-5 h-5" />
                   Add User
                 </button>
@@ -121,11 +118,11 @@ onBeforeMount(async () => {
               </list-group-item>
             </list-group>
           </dropdown>
-          <UserModalAdd :user="addUserObj" :isShow="addModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
+          <UserModalAdd :isShow="isAddUserModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
         </div>
         <div v-if="usersData.length">
           <UserTable :users="usersData" @editUser="editUser" @deleteUser="deleteUser" />
-          <UserModalEdit :user="editUserObj" :isShow="editModalShow" @closeModal="closeModal"
+          <UserModalEdit :user="editUserObj" :isShow="isEditUserModalShow" @closeModal="closeModal"
             @forceUpdate="forceUpdate" />
         </div>
         <div v-else class="text-center text-gray-800 text-lg align-middle">

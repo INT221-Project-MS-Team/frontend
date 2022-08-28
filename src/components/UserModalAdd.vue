@@ -8,22 +8,17 @@ const swal = inject('$swal');
 const userRoles = ref(['ADMIN', 'STUDENT', 'LECTURER']);
 
 const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
   isShow: {
     type: Boolean,
     default: false,
   },
 });
 
-const newUserData = computed(() => ({
-  id: props.user.id,
-  name: props.user.name,
-  email: props.user.email,
+const newUserData = ref({
+  name: '',
+  email: '',
   role: userRoles.value[1],
-}));
+})
 
 //create
 const addUser = async () => {
