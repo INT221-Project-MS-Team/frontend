@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, ref } from '@vue/runtime-core';
-import { validateEmail } from '../utils';
+import { validateEmail } from '@/utils';
 import SmButton from './SmButton.vue';
 const emits = defineEmits(['closeModal', 'forceUpdate']);
 const swal = inject('$swal');

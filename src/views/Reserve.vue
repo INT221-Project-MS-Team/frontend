@@ -1,17 +1,17 @@
 <script setup>
-import EventCard from '../components/EventCard.vue';
-import ReserveStepBar from '../components/ReserveStepBar.vue';
+import EventCard from '@/components/EventCard.vue';
+import ReserveStepBar from '@/components/ReserveStepBar.vue';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
-import SelectCategoryForm from '../components/ReserveCategoryForm.vue';
-import ReserveForm from '../components/ReserveForm.vue';
-import ReserveFinish from '../components/ReserveFinish.vue';
+import SelectCategoryForm from '@/components/ReserveCategoryForm.vue';
+import ReserveForm from '@/components/ReserveForm.vue';
+import ReserveFinish from '@/components/ReserveFinish.vue';
 import {
   convertDateTimeToISOString,
   validateFutureTime,
   validateEmail,
   isOverlapTime,
-} from '../utils';
+} from '@/utils';
 
 const swal = inject('$swal');
 

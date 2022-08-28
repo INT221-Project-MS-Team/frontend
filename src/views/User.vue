@@ -1,13 +1,14 @@
 <script setup>
-import UserTable from '../components/UserTable.vue';
+import UserTable from '@/components/UserTable.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { ref, inject } from 'vue';
-import UserModalEdit from '../components/UserModalEdit.vue';
-import SmButton from '../components/SmButton.vue';
-import { SearchIcon, CalendarIcon, LoginIcon,LogoutIcon  } from '@heroicons/vue/outline';
-import UserModalAdd from '../components/UserModalAdd.vue';
-import ButtonAddUser from '../components/ButtonAddUser.vue';
-import NoUser from '../components/NoUser.vue';
+import UserModalEdit from '@/components/UserModalEdit.vue';
+import SmButton from '@/components/SmButton.vue';
+import { SearchIcon, CalendarIcon, LoginIcon, LogoutIcon, UserAddIcon } from '@heroicons/vue/outline';
+import UserModalAdd from '@/components/UserModalAdd.vue';
+import ButtonAddUser from '@/components/ButtonAddUser.vue';
+import NoUser from '@/components/NoUser.vue';
+import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue'
 
 const swal = inject('$swal');
 const usersData = ref([]);
@@ -136,13 +137,29 @@ onBeforeMount(async () => {
                  <LogoutIcon class="w-5 h-5" />
                 Sign out
                 </a> -->
-               <router-link :to="{ name: 'login' }"
+              <router-link :to="{ name: 'login' }"
                 class="flex gap-2 py-2 px-4 text-sm text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 <LoginIcon class="w-5 h-5" />
                 Sign in
               </router-link>
             </div>
           </div>
+
+          <!-- Dropdown menu 2 -->
+          <dropdown text="Manage">
+            <list-group>
+              <list-group-item>
+                <button class="flex gap-2" @click="addUser">
+                  <UserAddIcon class="w-5 h-5" />
+                  Add User
+                </button>
+              </list-group-item>
+              <list-group-item>
+                <LoginIcon class="w-5 h-5" />
+                Sign in
+              </list-group-item>
+            </list-group>
+          </dropdown>
 
           <!-- <ButtonAddUser :users="usersData" @addUser="addUser" /> -->
           <UserModalAdd :user="addUserObj" :isShow="addModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />

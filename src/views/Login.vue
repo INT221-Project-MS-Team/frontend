@@ -1,5 +1,5 @@
 <script setup>
-import SmButton from '../components/SmButton.vue';
+import SmButton from '@/components/SmButton.vue';
 </script>
  
 <template>

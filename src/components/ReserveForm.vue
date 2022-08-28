@@ -1,7 +1,7 @@
 <script setup>
-import Divider from '../components/Divider.vue';
+import Divider from '@/components/Divider.vue';
 import { ref } from '@vue/reactivity';
-import { getDate, getTime, getInputDate } from '../utils/index';
+import { getDate, getTime, getInputDate } from '@/utils/index';
 import SmButton from './SmButton.vue';
 import { computed } from '@vue/runtime-core';
 const emits = defineEmits(['back', 'next']);

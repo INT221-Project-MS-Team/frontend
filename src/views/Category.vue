@@ -1,12 +1,12 @@
 <script setup>
-import CategoryTable from '../components/CategoryTable.vue';
+import CategoryTable from '@/components/CategoryTable.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { ref } from 'vue';
-import CategoryModalEdit from '../components/CategoryModalEdit.vue';
-import SmButton from '../components/SmButton.vue';
+import CategoryModalEdit from '@/components/CategoryModalEdit.vue';
+import SmButton from '@/components/SmButton.vue';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
-import ButtonAddCategory from '../components/ButtonAddCategory.vue';
-import CategoryModalAdd from '../components/CategoryModalAdd.vue';
+import ButtonAddCategory from '@/components/ButtonAddCategory.vue';
+import CategoryModalAdd from '@/components/CategoryModalAdd.vue';
 
 const categoriesData = ref([]);
 const editModalShow = ref(false);

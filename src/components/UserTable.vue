@@ -8,7 +8,7 @@ import {
   categoryIdToStyleColor,
   getInputDate,
   getInputTime,
-} from '../utils';
+} from '@/utils';
 const emits = defineEmits(['editUser', 'deleteUser']);
 
 const props = defineProps({
