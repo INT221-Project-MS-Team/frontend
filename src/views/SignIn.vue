@@ -39,7 +39,8 @@ const checkSignIn = async () => {
             <div
                 class="flex flex-wrap-reverse justify-center items-center w-10/12 mx-auto gap-3 bg-white/90 rounded-lg border shadow-md md:flex-row md:max-w-fit  dark:border-gray-700 dark:bg-gray-800 ">
                 <img class="m-4 mr-10 hidden object-cover 2 sm:w-3/12 lg:w-3/12 md:w-3/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
-                    src="/images/logo-color.png" alt="element-home" />
+                    src="/images/sign-cover.png" alt="element-home" />
+                    
 
                 <div class="m-14 flex flex-col gap-4">
                     <div class="flex flex-col items-center">
