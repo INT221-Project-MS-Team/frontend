@@ -120,7 +120,7 @@ onBeforeMount(async () => {
           </dropdown>
           <UserModalAdd :isShow="isAddUserModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
         </div>
-        <div v-if="usersData.length">
+        <div class="overflow-auto min-w-full clinic-scollbar" v-if="usersData.length">
           <UserTable :users="usersData" @editUser="editUser" @deleteUser="deleteUser" />
           <UserModalEdit :user="editUserObj" :isShow="isEditUserModalShow" @closeModal="closeModal"
             @forceUpdate="forceUpdate" />

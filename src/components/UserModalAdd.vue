@@ -5,7 +5,7 @@ import SmButton from './SmButton.vue';
 const emits = defineEmits(['closeModal', 'forceUpdate']);
 const swal = inject('$swal');
 
-const userRoles = ref(['ADMIN', 'STUDENT', 'LECTURER']);
+const userRoles = ref(['STUDENT', 'LECTURER', 'ADMIN']);
 
 const props = defineProps({
   isShow: {
@@ -19,7 +19,7 @@ const newUserData = ref({
   email: '',
   password: '',
   confirmPassword: '',
-  role: userRoles.value[1],
+  role: userRoles.value[0],
 })
 
 
@@ -28,7 +28,7 @@ const resetData = () => {
   newUserData.value.email = '';
   newUserData.value.password = '';
   newUserData.value.confirmPassword = '';
-  newUserData.value.role = userRoles.value[1];
+  newUserData.value.role = userRoles.value[0];
 }
 
 //create
@@ -134,7 +134,7 @@ const addUser = async () => {
             <button type="submit">
               <SmButton text="Add" btnType="events" />
             </button>
-            <SmButton btnType="edit" text="Cancle" @click="resetData();$emit('closeModal')" />
+            <SmButton btnType="edit" text="Cancle" @click="resetData(); $emit('closeModal')" />
           </div>
         </form>
       </div>
