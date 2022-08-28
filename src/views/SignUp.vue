@@ -84,10 +84,10 @@ const signup = async () => {
                 class="flex flex-wrap-reverse justify-center items-center w-10/12 mx-auto gap-3 bg-white/90 rounded-lg border shadow-md md:flex-row md:max-w-fit  dark:border-gray-700 dark:bg-gray-800 ">
                 <img class="m-4 mr-10 hidden object-cover 2 sm:w-3/12 lg:w-3/12 md:w-3/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
                     src="/images/logo-color.png" alt="element-home" />
-                <div class="m-14 flex flex-col gap-4">
-                    <div class="flex flex-col items-center">
+                <div class="xl:mt-10 flex flex-col gap-4">
+                    <div class="items-center">
 
-                        <div class="flex flex-col pt-10 justify-center items-center">
+                        <div class="xl:pl-10 pt-10 justify-center items-center">
                             <div class="text-3xl font-bold md:text-4xl lg:text-4xl text-center mb-10 text-gray-900">
                                 SIGN UP
                             </div>
@@ -154,7 +154,7 @@ const signup = async () => {
                                 </button>
                             </form>
                         </div>
-                        <div class="flex gap-2 mt-6 mb-6 w-full justify-center">
+                        <div class="flex xl:pl-10 gap-2 mt-6 mb-6 w-full justify-center">
 
                             <div class="text-center text-sm">Do you have an account ?
                                 <span class="text-blue-700 underline">
