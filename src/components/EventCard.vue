@@ -8,7 +8,7 @@ import {
   categoryIdToStyleColor,
   getInputDate,
   getInputTime
-} from '../utils';
+} from '@/utils';
 import SmButton from './SmButton.vue';
 import Badge from './Badge.vue';
 const emits = defineEmits([]);

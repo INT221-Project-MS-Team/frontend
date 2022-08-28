@@ -1,6 +1,6 @@
 <script setup>
 import { MenuIcon } from '@heroicons/vue/outline';
-import Button from '../components/Button.vue';
+import Button from '@/components/Button.vue';
 </script>
 
 <template>

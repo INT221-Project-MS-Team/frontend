@@ -1,0 +1,9 @@
+{
+  "include": ["./src/**/*"],
+  "vueCompilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

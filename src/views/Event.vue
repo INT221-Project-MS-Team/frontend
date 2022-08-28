@@ -1,6 +1,6 @@
 <script setup>
-import NoEvent from '../components/NoEvent.vue';
-import SmButton from '../components/SmButton.vue';
+import NoEvent from '@/components/NoEvent.vue';
+import SmButton from '@/components/SmButton.vue';
 import {
   getDate,
   getTime,
@@ -9,11 +9,11 @@ import {
   isOverlapTime,
   getInputDate,
   getInputTime,
-} from '../utils';
+} from '@/utils';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
-import Divider from '../components/Divider.vue';
+import Divider from '@/components/Divider.vue';
 import { ArrowRightIcon, PencilIcon } from '@heroicons/vue/outline';
 
 const swal = inject('$swal');

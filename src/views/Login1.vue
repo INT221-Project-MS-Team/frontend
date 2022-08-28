@@ -1,5 +1,5 @@
 <script setup>
-import SmButton from '../components/SmButton.vue';
+import SmButton from '@/components/SmButton.vue';
 </script>
  
 <template>
@@ -7,7 +7,7 @@ import SmButton from '../components/SmButton.vue';
         <div class="container mx-auto px-4 pt-16">
             <div class="flex flex-wrap-reverse justify-center items-center gap-3">
                 <!-- <img class="m-4 mr-10 hidden ig bounce-2 object-cover 2 sm:w-3/12 lg:w-3/12 md:w-3/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
-                    src="../../public/images/account.png" alt="element-home" /> -->
+                    src="@/@/public/images/account.png" alt="element-home" /> -->
                 <div class="m-14 flex flex-col gap-4">
                     <!-- <div class="bg-white/50 rounded-3xl h-full w-full lg:min-w-full flex flex-col shadow-lg p-2"> -->
                     <div class="bg-white/50 rounded-3xl h-full  w-screen  flex flex-col shadow-lg p-2">

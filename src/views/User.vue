@@ -1,20 +1,19 @@
 <script setup>
-import UserTable from '../components/UserTable.vue';
+import UserTable from '@/components/UserTable.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { ref, inject } from 'vue';
-import UserModalEdit from '../components/UserModalEdit.vue';
-import SmButton from '../components/SmButton.vue';
-import { SearchIcon, CalendarIcon, LoginIcon,LogoutIcon  } from '@heroicons/vue/outline';
-import UserModalAdd from '../components/UserModalAdd.vue';
-import ButtonAddUser from '../components/ButtonAddUser.vue';
-import NoUser from '../components/NoUser.vue';
+import UserModalEdit from '@/components/UserModalEdit.vue';
+import SmButton from '@/components/SmButton.vue';
+import { SearchIcon, CalendarIcon, LoginIcon, LogoutIcon, UserAddIcon } from '@heroicons/vue/outline';
+import UserModalAdd from '@/components/UserModalAdd.vue';
+import NoUser from '@/components/NoUser.vue';
+import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue'
 
 const swal = inject('$swal');
 const usersData = ref([]);
-const editModalShow = ref(false);
-const addModalShow = ref(false);
+const isEditUserModalShow = ref(false);
+const isAddUserModalShow = ref(false);
 const editUserObj = ref({});
-const addUserObj = ref({});
 
 const getUsersData = async () => {
   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users');
@@ -31,19 +30,17 @@ const getUsersData = async () => {
 
 const editUser = async (user) => {
   editUserObj.value = user;
-  editModalShow.value = true;
+  isEditUserModalShow.value = true;
 };
 
-const addUser = async (user) => {
-  addUserObj.value = user;
-  addModalShow.value = true;
+const openAddUserModal = async () => {
+  isAddUserModalShow.value = true;
 };
 
 const closeModal = () => {
-  editModalShow.value = false;
-  addModalShow.value = false;
+  isEditUserModalShow.value = false;
+  isAddUserModalShow.value = false;
   editUserObj.value = {};
-  addUserObj.value = {};
 };
 
 const deleteUser = async (user) => {
@@ -104,52 +101,28 @@ onBeforeMount(async () => {
       <div class="md:text-lg flex flex-col lg:text-lg min-w-full">
         <div class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5">
           <p class="text-gray-800 text-2xl">User</p>
-
-          <button id="dropdownSmallButton" data-dropdown-toggle="dropdownSmall"
-            class="inline-flex items-center py-2 px-3 mr-3 mb-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg md:mb-0 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button">Manage<svg class="ml-2 w-3 h-3" aria-hidden="true" fill="none" stroke="currentColor"
-              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg></button>
-
-          <!-- Dropdown menu -->
-          <div id="dropdownSmall"
-            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-            <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
-              <!-- <div>User Name</div> -->
-              <div class="font-medium text-gray-500">No Login</div>
-              <!-- <div class="font-medium truncate">user@email</div> -->
-              <div class="font-normal text-gray-400">(not sign in)</div>
-            </div>
-            <ul class="py-1 text-sm dark:text-gray-200" aria-labelledby="dropdownSmallButton">
-              <li>
-                <ButtonAddUser :users="usersData" @addUser="addUser"
-                  class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Add User</ButtonAddUser>
-
-              </li>
-
-            </ul>
-            <div class="py-1">
-              <!-- <a href="#"
-                class="flex gap-2 py-2 px-4 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                 <LogoutIcon class="w-5 h-5" />
-                Sign out
-                </a> -->
-               <router-link :to="{ name: 'login' }"
-                class="flex gap-2 py-2 px-4 text-sm text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                <LoginIcon class="w-5 h-5" />
-                Sign in
-              </router-link>
-            </div>
-          </div>
-
-          <!-- <ButtonAddUser :users="usersData" @addUser="addUser" /> -->
-          <UserModalAdd :user="addUserObj" :isShow="addModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
+          <!-- Dropdown menu  -->
+          <dropdown text="Manage">
+            <list-group>
+              <list-group-item>
+                <button class="flex gap-2" @click="openAddUserModal">
+                  <UserAddIcon class="w-5 h-5" />
+                  Add User
+                </button>
+              </list-group-item>
+              <list-group-item>
+                <router-link :to="{ name: 'sign-in' }" class="flex gap-2">
+                  <LoginIcon class="w-5 h-5" />
+                  Sign In
+                </router-link>
+              </list-group-item>
+            </list-group>
+          </dropdown>
+          <UserModalAdd :isShow="isAddUserModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
         </div>
-        <div v-if="usersData.length">
+        <div class="overflow-auto min-w-full clinic-scollbar" v-if="usersData.length">
           <UserTable :users="usersData" @editUser="editUser" @deleteUser="deleteUser" />
-          <UserModalEdit :user="editUserObj" :isShow="editModalShow" @closeModal="closeModal"
+          <UserModalEdit :user="editUserObj" :isShow="isEditUserModalShow" @closeModal="closeModal"
             @forceUpdate="forceUpdate" />
         </div>
         <div v-else class="text-center text-gray-800 text-lg align-middle">

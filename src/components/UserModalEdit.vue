@@ -16,7 +16,7 @@ import {
   categoryIdToStyleColor,
   getInputDate,
   getInputTime,
-} from '../utils';
+} from '@/utils';
 import SmButton from './SmButton.vue';
 
 const swal = inject('$swal');

@@ -1,9 +1,9 @@
 <script setup>
-import NoEvent from '../components/NoEvent.vue';
-import EventCard from '../components/EventCard.vue';
-import SmButton from '../components/SmButton.vue';
-import Divider from '../components/Divider.vue';
-import { getCurrentDateTime, getInputDate } from '../utils';
+import NoEvent from '@/components/NoEvent.vue';
+import EventCard from '@/components/EventCard.vue';
+import SmButton from '@/components/SmButton.vue';
+import Divider from '@/components/Divider.vue';
+import { getCurrentDateTime, getInputDate } from '@/utils';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
 import { computed, onBeforeMount } from '@vue/runtime-core';
