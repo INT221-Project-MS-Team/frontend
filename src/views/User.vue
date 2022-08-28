@@ -104,7 +104,6 @@ onBeforeMount(async () => {
       <div class="md:text-lg flex flex-col lg:text-lg min-w-full">
         <div class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5">
           <p class="text-gray-800 text-2xl">User</p>
-
           <!-- Dropdown menu  -->
           <dropdown text="Manage">
             <list-group>
@@ -115,14 +114,13 @@ onBeforeMount(async () => {
                 </button>
               </list-group-item>
               <list-group-item>
-                <router-link :to="{name: 'sign-in'}" class="flex gap-2">
+                <router-link :to="{ name: 'sign-in' }" class="flex gap-2">
                   <LoginIcon class="w-5 h-5" />
                   Sign In
                 </router-link>
               </list-group-item>
             </list-group>
           </dropdown>
-
           <UserModalAdd :user="addUserObj" :isShow="addModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
         </div>
         <div v-if="usersData.length">
