@@ -1,13 +1,11 @@
-import { createWebHashHistory, createRouter } from 'vue-router';
-import Home from '../views/Home.vue';
-import Schedules from '../views/Schedules.vue';
-import Event from '../views/Event.vue';
-import NotFound from '../views/NotFound.vue';
-import About from '../views/About.vue'
-import Reserve from '../views/Reserve.vue'
-import Category from '../views/Category.vue'
-import User from '../views/User.vue'
-import Login from '../views/Login.vue'
+import {
+  createWebHashHistory,
+  createRouter,
+  createWebHistory,
+} from 'vue-router';
+
+import Home from '@/views/Home.vue';
+
 const history = createWebHashHistory();
 const routes = [
   {
@@ -18,46 +16,51 @@ const routes = [
   {
     path: '/schedules',
     name: 'schedules',
-    component: Schedules,
+    component: () => import('@/views/Schedules.vue'),
   },
   {
     path: '/event',
     name: 'event',
-    component: Event,
+    component: () => import('@/views/Event.vue'),
   },
   {
     path: '/about',
     name: 'about',
-    component: About,
+    component: () => import('@/views/About.vue'),
   },
   {
     path: '/reserve',
     name: 'reserve',
-    component: Reserve,
+    component: () => import('@/views/Reserve.vue'),
   },
   {
     path: '/category',
     name: 'category',
-    component: Category,
+    component: () => import('@/views/Category.vue'),
   },
   {
     path: '/user',
     name: 'user',
-    component: User,
+    component: () => import('@/views/User.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: Login,
+    component: () => import('@/views/Login.vue'),
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('@/views/Test.vue'),
   },
   {
     path: '/:notMatchPath(.*)',
     name: 'NotFound',
-    component: NotFound,
-  }
+    component: () => import('@/views/NotFound.vue'),
+  },
+  
 ];
 
 const router = createRouter({ history, routes });
 
 export default router;
-
