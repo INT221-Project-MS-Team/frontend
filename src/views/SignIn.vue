@@ -1,8 +1,11 @@
 <script setup>
 import SmButton from '@/components/SmButton.vue';
+import { ArrowRightIcon } from '@heroicons/vue/outline';
 import { inject, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const swal = inject('$swal');
+const router = useRouter();
 const signInData = ref({
     email: '',
     password: ''
@@ -20,6 +23,7 @@ const checkSignIn = async () => {
     if (response.status === 200) {
         let data = await response.json();
         swal('Success', data.message, 'success');
+        // router.push({ name: 'user' })
     } else {
         let error = await response.json();
         swal('Error', error.message, 'error');
@@ -64,12 +68,7 @@ const checkSignIn = async () => {
                                 <button type="submit"
                                     class=" mt-5 text-white justify-center w-full text-sm bg-clinic-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded  px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Sign in
-                                    <svg aria-hidden="true" class="ml-2 w-5 h-5 " fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
+                                    <ArrowRightIcon class="w-5 h-5 ml-2" />
                                 </button>
                             </form>
                         </div>
@@ -77,7 +76,7 @@ const checkSignIn = async () => {
 
                             <div class="text-center text-sm">Don't have an account ?
                                 <span class="text-blue-700 underline">
-                                    <router-link :to="{ name: 'home' }">
+                                    <router-link :to="{ name: 'sign-up' }">
                                         Sign Up</router-link>
                                 </span>
                             </div>
