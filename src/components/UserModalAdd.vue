@@ -17,8 +17,19 @@ const props = defineProps({
 const newUserData = ref({
   name: '',
   email: '',
+  password: '',
+  confirmPassword: '',
   role: userRoles.value[1],
 })
+
+
+const resetData = () => {
+  newUserData.value.name = '';
+  newUserData.value.email = '';
+  newUserData.value.password = '';
+  newUserData.value.confirmPassword = '';
+  newUserData.value.role = userRoles.value[1];
+}
 
 //create
 const addUser = async () => {
@@ -42,6 +53,7 @@ const addUser = async () => {
       body: JSON.stringify({
         name: newUserData.value.name.trim(),
         email: newUserData.value.email.trim(),
+        password: newUserData.value.password,
         role: newUserData.value.role,
       }),
     }
@@ -53,6 +65,7 @@ const addUser = async () => {
       icon: 'success',
       button: 'OK',
     });
+    resetData();
     emits('closeModal');
     emits('forceUpdate');
   } else {
@@ -69,7 +82,6 @@ const addUser = async () => {
       <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"></div>
 
       <span class="hidden sm:inline-block sm:h-screen sm:align-middle align-middle">&#8203;</span>
-
       <div
         class="relative inline-block transform overflow-hidden rounded-lg bg-white py-1 px-4 text-left align-middle shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle">
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -93,6 +105,21 @@ const addUser = async () => {
               class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
           </div>
           <div class="relative z-0 w-full mb-6 group">
+            <input type="password" v-model="newUserData.password"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" " required minlength="8" maxlength="14" />
+            <label for=""
+              class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+          </div>
+          <div class="relative z-0 w-full mb-6 group">
+            <input type="password" v-model="newUserData.confirmPassword"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" " required="" minlength="8" maxlength="14" />
+            <label for=""
+              class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
+              Password</label>
+          </div>
+          <div class="relative z-0 w-full mb-6 group">
             <label for="underline_select" class="sr-only">select</label>
             <label for=""
               class="mb-10 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Role</label>
@@ -107,7 +134,7 @@ const addUser = async () => {
             <button type="submit">
               <SmButton text="Add" btnType="events" />
             </button>
-            <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
+            <SmButton btnType="edit" text="Cancle" @click="resetData();$emit('closeModal')" />
           </div>
         </form>
       </div>
