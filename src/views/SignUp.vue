@@ -28,8 +28,10 @@ const resetData = () => {
 }
 
 const isPasswordMatch = computed(()=>{
-    if(signUpData.value.confirmPassword != '' && signUpData.value.confirmPassword != signUpData.value.password) return false;
-    return true;
+    if(signUpData.value.password === signUpData.value.confirmPassword && signUpData.value.password !== ''){
+        return true;
+    }
+    return false;
 })
 
 //create
@@ -39,6 +41,16 @@ const signup = async () => {
         swal({
             title: 'Error',
             text: 'Email is invalid',
+            icon: 'error',
+            button: 'OK',
+        });
+        return;
+    }
+    // check password match
+    if (!isPasswordMatch.value) {
+        swal({
+            title: 'Error',
+            text: 'Password does not match',
             icon: 'error',
             button: 'OK',
         });
@@ -131,7 +143,7 @@ const signup = async () => {
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Confirm Password
                                     </label>
-                                    <p class="text-red-500 text-sm" v-if="!isPasswordMatch">Password NOT Match</p>
+                                    <p class="text-red-500 text-sm" v-if="!isPasswordMatch&&signUpData.confirmPassword&&signUpData.password">Password NOT Match</p>
                                 </div>
 
                                 <div class="relative z-0 w-full mb-6 group">
