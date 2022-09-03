@@ -13,7 +13,7 @@ const signInData = ref({
 
 const checkSignIn = async () => {
     const response = await fetch(
-        import.meta.env.VITE_SERVER_URL + `/api/match`, {
+        import.meta.env.VITE_SERVER_URL + `/api/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,8 +22,8 @@ const checkSignIn = async () => {
     })
     if (response.status === 200) {
         let data = await response.json();
+        localStorage.setItem('access_token', data.access_token);
         swal('Success', data.message, 'success');
-        // router.push({ name: 'user' })
     } else {
         let error = await response.json();
         swal('Error', error.message, 'error');
