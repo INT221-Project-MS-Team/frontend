@@ -4,11 +4,19 @@ import { onBeforeMount } from '@vue/runtime-core';
 import { ref, inject } from 'vue';
 import UserModalEdit from '@/components/UserModalEdit.vue';
 import SmButton from '@/components/SmButton.vue';
-import { SearchIcon, CalendarIcon, LoginIcon, LogoutIcon, UserAddIcon } from '@heroicons/vue/outline';
+import {
+  SearchIcon,
+  CalendarIcon,
+  LoginIcon,
+  LogoutIcon,
+  UserAddIcon,
+} from '@heroicons/vue/outline';
 import UserModalAdd from '@/components/UserModalAdd.vue';
 import NoUser from '@/components/NoUser.vue';
-import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue'
+import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue';
+import router from '../routers';
 
+const isLoggedIn = ref(false);
 const swal = inject('$swal');
 const usersData = ref([]);
 const isEditUserModalShow = ref(false);
@@ -16,13 +24,36 @@ const isAddUserModalShow = ref(false);
 const editUserObj = ref({});
 
 const getUsersData = async () => {
-  const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users');
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
+    },
+  });
+  console.log(response);
   if (response.status === 200) {
+    isLoggedIn.value = true;
     const data = await response.json();
     usersData.value = data.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
     console.log(usersData.value);
+  } else if (response.status === 401) {
+    isLoggedIn.value = false;
+    swal
+      .fire({
+        title: 'Error!',
+        text: 'You are not Signed in',
+        icon: 'error',
+        confirmButtonText: 'Sign In',
+        allowOutsideClick: false,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          router.push({ name: 'sign-in' });
+        }
+      });
   } else {
     console.log('Fetch User Error');
   }
@@ -59,6 +90,10 @@ const deleteUser = async (user) => {
         import.meta.env.VITE_SERVER_URL + `/api/users/${user.id}`,
         {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+          },
         }
       );
       if (response.status === 200) {
@@ -90,16 +125,19 @@ const forceUpdate = async () => {
 onBeforeMount(async () => {
   await getUsersData();
 });
-
-
 </script>
 
 <template>
   <div
-    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl">
-    <div class="w-9/12 h-5/6 bg-white flex shadow-md rounded-xl clinic-scollbar p-2">
+    class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2 rounded-xl"
+  >
+    <div
+      class="w-9/12 h-5/6 bg-white flex shadow-md rounded-xl clinic-scollbar p-2"
+    >
       <div class="md:text-lg flex flex-col lg:text-lg min-w-full">
-        <div class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5">
+        <div
+          class="flex justify-between flex-wrap items-center align-middle pl-5 pr-5 mt-5 rounded-t-lg mb-5"
+        >
           <p class="text-gray-800 text-2xl">User</p>
           <!-- Dropdown menu  -->
           <dropdown text="Manage">
@@ -118,12 +156,27 @@ onBeforeMount(async () => {
               </list-group-item>
             </list-group>
           </dropdown>
-          <UserModalAdd :isShow="isAddUserModalShow" @closeModal="closeModal" @forceUpdate="forceUpdate" />
+          <UserModalAdd
+            :isShow="isAddUserModalShow"
+            @closeModal="closeModal"
+            @forceUpdate="forceUpdate"
+          />
         </div>
-        <div class="overflow-auto min-w-full clinic-scollbar" v-if="usersData.length">
-          <UserTable :users="usersData" @editUser="editUser" @deleteUser="deleteUser" />
-          <UserModalEdit :user="editUserObj" :isShow="isEditUserModalShow" @closeModal="closeModal"
-            @forceUpdate="forceUpdate" />
+        <div
+          class="overflow-auto min-w-full clinic-scollbar"
+          v-if="usersData.length"
+        >
+          <UserTable
+            :users="usersData"
+            @editUser="editUser"
+            @deleteUser="deleteUser"
+          />
+          <UserModalEdit
+            :user="editUserObj"
+            :isShow="isEditUserModalShow"
+            @closeModal="closeModal"
+            @forceUpdate="forceUpdate"
+          />
         </div>
         <div v-else class="text-center text-gray-800 text-lg align-middle">
           <NoUser />
@@ -133,5 +186,4 @@ onBeforeMount(async () => {
   </div>
 </template>
 
-<style>
-</style>
+<style></style>

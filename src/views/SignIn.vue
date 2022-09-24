@@ -24,6 +24,7 @@ const checkSignIn = async () => {
         let data = await response.json();
         localStorage.setItem('access_token', data.access_token);
         swal('Success', data.message, 'success');
+        router.push({ name: 'user' });
     } else {
         let error = await response.json();
         swal('Error', error.message, 'error');
