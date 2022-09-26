@@ -79,7 +79,7 @@ const signup = async () => {
             button: 'OK',
         });
         resetData();
-        router.push({ name: 'user' })
+        router.push({ name: 'sign-in' })
     } else {
         let error = await response.json();
         console.log('Sign Up failure');
