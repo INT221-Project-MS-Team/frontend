@@ -4,6 +4,9 @@ import { ref } from '@vue/reactivity';
 import { getDate, getTime, getInputDate } from '@/utils/index';
 import SmButton from './SmButton.vue';
 import { computed } from '@vue/runtime-core';
+import { useStatusStore } from '../store/status';
+
+const storeStatus = useStatusStore();
 const emits = defineEmits(['back', 'next']);
 const props = defineProps({
   category: {
@@ -17,8 +20,8 @@ const props = defineProps({
 });
 
 const reserverInformation = computed(() => ({
-  name: props.info.name,
-  email: props.info.email,
+  name: storeStatus.loggedInUser?.name ?? props.info.name,
+  email: storeStatus.loggedInUser?.email ?? props.info.email,
   date: props.info.date,
   startTime: props.info.startTime,
   note: props.info.note,
