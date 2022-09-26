@@ -6,7 +6,11 @@ import Divider from '@/components/Divider.vue';
 import { getCurrentDateTime, getInputDate } from '@/utils';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
-import { computed, onBeforeMount } from '@vue/runtime-core';
+import { computed, inject, onBeforeMount } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+
+const swal = inject('$swal');
+const router = useRouter();
 
 const schedulesData = ref([]);
 const categoriesData = ref([]);
@@ -105,12 +109,41 @@ const resetFilter = () => {
 const getSchedulesData = async () => {
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL +
-      `/api/events?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`
+      `/api/events/me?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+      },
+    }
   );
   if (response.status === 200) {
     const data = await response.json();
     schedulesData.value = data;
     console.log(data);
+  } else if (response.status === 401) {
+    swal.fire({
+      title: 'Error!',
+      text: 'You are not Signed in',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+      allowOutsideClick: false,
+    });
+    router.push({ name: 'sign-in' });
+  } else if (response.status === 403) {
+    swal
+      .fire({
+        title: 'Error!',
+        text: 'Access Denied',
+        icon: 'error',
+        confirmButtonText: 'Accept',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          router.push(-1);
+        }
+      });
   } else {
     console.log('Fetch Scheduled events Error');
   }

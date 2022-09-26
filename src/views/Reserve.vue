@@ -16,7 +16,7 @@ import {
 const swal = inject('$swal');
 
 const categoriesData = ref([]);
-const schedulesData = ref([])
+const schedulesData = ref([]);
 const currentStep = ref(1);
 const selectedCategoryIndex = ref(-1);
 const reserverInformation = ref({});
@@ -36,9 +36,7 @@ const getCategoriesData = async () => {
 };
 
 const getSchedulesData = async () => {
-  const response = await fetch(
-    import.meta.env.VITE_SERVER_URL + '/api/events'
-  );
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/events');
   if (response.status === 200) {
     const data = await response.json();
     schedulesData.value = data;
@@ -76,7 +74,8 @@ const submitReserve = async () => {
       reserverInformation.value.startTime
     ),
     eventNotes: reserverInformation.value.note,
-    eventDuration:  categoriesData.value[selectedCategoryIndex.value].eventDuration,
+    eventDuration:
+      categoriesData.value[selectedCategoryIndex.value].eventDuration,
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
   };
 
@@ -92,7 +91,7 @@ const submitReserve = async () => {
 
   console.log(body);
 
-  if(isOverlapTime(body, schedulesData.value)) {
+  if (isOverlapTime(body, schedulesData.value)) {
     swal('Error', 'Cannot reserve in overlap time', 'error');
     return;
   }
@@ -103,6 +102,7 @@ const submitReserve = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
       },
       body: JSON.stringify(body),
     }

@@ -39,7 +39,14 @@ const editingEventNotes = ref('');
 //event methods
 const getEventData = async () => {
   const response = await fetch(
-    import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`
+    import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+      },
+    }
   );
   if (response.status == 200) {
     const data = await response.json();
@@ -47,6 +54,28 @@ const getEventData = async () => {
     editingEventDate.value = getInputDate(data.eventStartTime);
     editingEventTime.value = getInputTime(data.eventStartTime);
     console.log(eventData.value);
+  } else if (response.status === 401) {
+    swal.fire({
+      title: 'Error!',
+      text: 'You are not Signed in',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+      allowOutsideClick: false,
+    });
+    router.push({ name: 'sign-in' });
+  } else if (response.status === 403) {
+    swal
+      .fire({
+        title: 'Error!',
+        text: 'Access Denied',
+        icon: 'error',
+        confirmButtonText: 'Accept',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          router.push(-1);
+        }
+      });
   } else {
     console.log('error');
   }
@@ -68,6 +97,10 @@ const deleteEvent = async () => {
         import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
         {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+          },
         }
       );
       if (response.status === 200) {
@@ -78,6 +111,28 @@ const deleteEvent = async () => {
           confirmButtonColor: '#5f72ff',
         });
         router.push({ name: 'schedules' });
+      } else if (response.status === 401) {
+        swal.fire({
+          title: 'Error!',
+          text: 'You are not Signed in',
+          icon: 'error',
+          confirmButtonText: 'Confirm',
+          allowOutsideClick: false,
+        });
+        router.push({ name: 'sign-in' });
+      } else if (response.status === 403) {
+        swal
+          .fire({
+            title: 'Error!',
+            text: 'Access Denied',
+            icon: 'error',
+            confirmButtonText: 'Accept',
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              router.push(-1);
+            }
+          });
       } else {
         swal({
           title: 'Failure',
@@ -150,6 +205,7 @@ const updateEvent = async () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
           },
           body: JSON.stringify(body),
         }
@@ -163,6 +219,28 @@ const updateEvent = async () => {
         });
         cancelEdit();
         getEventData();
+      } else if (response.status === 401) {
+        swal.fire({
+          title: 'Error!',
+          text: 'You are not Signed in',
+          icon: 'error',
+          confirmButtonText: 'Confirm',
+          allowOutsideClick: false,
+        });
+        router.push({ name: 'sign-in' });
+      } else if (response.status === 403) {
+        swal
+          .fire({
+            title: 'Error!',
+            text: 'Access Denied',
+            icon: 'error',
+            confirmButtonText: 'Accept',
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              router.push(-1);
+            }
+          });
       } else {
         swal({
           title: 'Failure',
@@ -188,11 +266,43 @@ const cancelEdit = () => {
 };
 
 const getSchedulesData = async () => {
-  const response = await fetch(import.meta.env.VITE_SERVER_URL + `/api/events`);
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + `/api/events`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+      },
+    }
+  );
+  console.log(response.status);
   if (response.status === 200) {
     const data = await response.json();
     schedulesData.value = data;
     console.log(data);
+  } else if (response.status === 401) {
+    swal.fire({
+      title: 'Error!',
+      text: 'You are not Signed in',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+      allowOutsideClick: false,
+    });
+    router.push({ name: 'sign-in' });
+  } else if (response.status === 403) {
+    swal
+      .fire({
+        title: 'Error!',
+        text: 'Access Denied',
+        icon: 'error',
+        confirmButtonText: 'Accept',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          router.push(-1);
+        }
+      });
   } else {
     console.log('Fetch Scheduled events Error');
   }
@@ -280,12 +390,12 @@ onBeforeMount(async () => {
               <span :class="{ 'text-gray-400': isEditing }">
                 <!-- {{ getDate(eventData.eventStartTime) }} -->
                 <input
-                type="date"
-                class="border-0 p-0"
-                placeholder=" "
-                :value="getInputDate(eventData.eventStartTime)"
-                disabled
-              />
+                  type="date"
+                  class="border-0 p-0"
+                  placeholder=" "
+                  :value="getInputDate(eventData.eventStartTime)"
+                  disabled
+                />
               </span>
               <ArrowRightIcon
                 class="w-4 h-4 text-clinic-blue-300"
@@ -305,13 +415,13 @@ onBeforeMount(async () => {
             <div class="flex flex-row items-center gap-x-2">
               <span class="text-clinic-blue-300">Start Time: </span>
               <span :class="{ 'text-gray-400': isEditing }">
-              <input
-                type="time"
-                class="border-0 p-0"
-                placeholder=" "
-                :value="getTime(eventData.eventStartTime)"
-                disabled
-              />
+                <input
+                  type="time"
+                  class="border-0 p-0"
+                  placeholder=" "
+                  :value="getTime(eventData.eventStartTime)"
+                  disabled
+                />
                 <!-- {{ getTime(eventData.eventStartTime) }} (24-hr) -->
               </span>
               <ArrowRightIcon
@@ -383,11 +493,7 @@ onBeforeMount(async () => {
                 <button type="submit">
                   <SmButton text="Save" btnType="events" />
                 </button>
-                <SmButton
-                  text="Cancel"
-                  btnType="edit"
-                  @click="cancelEdit"
-                />
+                <SmButton text="Cancel" btnType="edit" @click="cancelEdit" />
               </div>
             </div>
           </form>
