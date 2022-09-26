@@ -1,0 +1,25 @@
+<script setup>
+import { inject, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStatusStore } from '../store/status';
+
+const storeStatus = useStatusStore();
+const swal = inject('$swal');
+const router = useRouter();
+
+localStorage.removeItem('access_token');
+localStorage.removeItem('refresh_token');
+
+swal('Success', 'You have been logged out', 'success');
+
+storeStatus.setIsLoggedIn(false);
+storeStatus.setLoggedInUser(null);
+
+router.push({ name: 'sign-in' });
+</script>
+
+<template>
+    <div>
+        Logging out...
+    </div>
+</template>
