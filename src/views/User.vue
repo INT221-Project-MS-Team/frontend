@@ -54,6 +54,20 @@ const getUsersData = async () => {
           router.push({ name: 'sign-in' });
         }
       });
+  } else if (response.status === 403) {
+    isLoggedIn.value = false;
+    swal
+      .fire({
+        title: 'Error!',
+        text: 'Access Denied',
+        icon: 'error',
+        confirmButtonText: 'Accept',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          router.push(-1);
+        }
+      });
   } else {
     console.log('Fetch User Error');
   }
@@ -147,12 +161,6 @@ onBeforeMount(async () => {
                   <UserAddIcon class="w-5 h-5" />
                   Add User
                 </button>
-              </list-group-item>
-              <list-group-item>
-                <router-link :to="{ name: 'sign-in' }" class="flex gap-2">
-                  <LoginIcon class="w-5 h-5" />
-                  Sign In
-                </router-link>
               </list-group-item>
             </list-group>
           </dropdown>
