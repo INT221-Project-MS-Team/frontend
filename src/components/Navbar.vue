@@ -32,73 +32,150 @@ const storeStatus = useStatusStore();
         <MenuIcon class="w-4 h-4" />
         <MenuIcon class="hidden w-4 h-4" />
       </button>
-      <div class="hidden w-full min-h-full lg:block lg:w-auto" id="mobile-menu">
+      <div
+        class="hidden justify-between items-center w-full min-h-full lg:block lg:w-auto"
+        id="mobile-menu"
+      >
         <ul
           class="flex flex-col mt-4 text-xs lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-white text-center"
         >
           <li>
             <router-link :to="{ name: 'home' }">
               <div
-                class="block py-4 pr-2 pl-2 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
+                class="block mt-2 py-4 pr-2 pl-2 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
               >
                 Home
               </div>
             </router-link>
           </li>
+
           <li>
-            <router-link :to="{ name: 'schedules' }">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >Check</a
+            <button
+              id="dropdownNavbarLink2"
+              data-dropdown-toggle="dropdownNavbar2"
+              class="flex justify-between items-center m-2 py-2 pr-4 pl-3 w-full font-medium text-white rounded hover:bg-gray-100 hover:text-clinic-blue-100 md:hover:bg-transparent md:border-0 md:hover:text-clinic-blue-100 md:p-0 md:w-auto"
+            >
+              Services
+              <svg
+                class="ml-1 w-5 h-5"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-            </router-link>
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div
+              id="dropdownNavbar2"
+              class="justify-between items-center hidden z-10 w-44 font-normal bg-white border border-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            >
+              <ul
+                class="py-1 text-sm text-gray-700 dark:text-gray-400"
+                aria-labelledby="dropdownLargeButton"
+              >
+                <li>
+                  <router-link :to="{ name: 'schedules' }">
+                    <a
+                      class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Check
+                    </a>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{ name: 'reserve' }">
+                    <a
+                      class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Reserve
+                    </a>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
           </li>
+
+          <!-- Manage Navbar -->
           <li>
-            <router-link :to="{ name: 'reserve' }">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >Reserve</a
+            <button
+              id="dropdownNavbarLink"
+              data-dropdown-toggle="dropdownNavbar"
+              class="flex justify-between items-center mt-2 py-2 pr-4 pl-3 w-full font-medium text-white rounded hover:bg-gray-100 hover:text-clinic-blue-100 md:hover:bg-transparent md:border-0 md:hover:text-clinic-blue-100 md:p-0 md:w-auto"
+            >
+              Manages
+              <svg
+                class="ml-1 w-5 h-5"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'category' }">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >Category</a
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div
+              id="dropdownNavbar"
+              class="justify-between items-center hidden z-10 w-44 font-normal bg-white border border-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            >
+              <ul
+                class="py-1 text-sm text-gray-700 dark:text-gray-400"
+                aria-labelledby="dropdownLargeButton"
               >
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/user">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >User</a
-              >
-            </router-link>
+                <li>
+                  <router-link :to="{ name: 'category' }">
+                    <a
+                      class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Category
+                    </a>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{ name: 'user' }">
+                    <a
+                      class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >User
+                    </a>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <router-link :to="{ name: 'about' }">
               <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
+                class="block mt-2 py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
                 >About</a
               >
             </router-link>
           </li>
-          <li v-if="storeStatus.isLoggedIn">
-            <router-link to="/sign-out">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >Sign Out </a
+          <li v-if="!storeStatus.isLoggedIn">
+            <router-link :to="{ name: 'sign-in' }">
+              <button
+                type="button"
+                class="py-2 px-3 text-xs font-medium text-center text-white bg-clinic-blue-300 rounded-2xl focus:ring-4 focus:outline-none border border-white focus:ring-blue-300 hover:bg-white hover:text-clinic-blue-300"
               >
+                Sign In
+              </button>
             </router-link>
           </li>
-          <li v-else>
-            <router-link to="/sign-in">
-              <a
-                class="block py-4 pr-2 pl-2 rounded-full md:hover:bg-white lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
-                >Sign In</a
+          <li v-else class="flex items-center align-middle gap-2">
+            <p>{{storeStatus.loggedInUser?.email}} | {{storeStatus.loggedInUser?.role}}</p>
+            <router-link :to="{ name: 'sign-out' }">
+              <button
+                type="button"
+                class="py-2 px-3 text-xs font-medium text-center text-clinic-blue-300 bg-white rounded-2xl hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300"
               >
+                Sign Out
+              </button>
             </router-link>
           </li>
         </ul>
