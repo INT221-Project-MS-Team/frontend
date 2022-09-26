@@ -41,19 +41,14 @@ const getUsersData = async () => {
     console.log(usersData.value);
   } else if (response.status === 401) {
     isLoggedIn.value = false;
-    swal
-      .fire({
-        title: 'Error!',
-        text: 'You are not Signed in',
-        icon: 'error',
-        confirmButtonText: 'Sign In',
-        allowOutsideClick: false,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          router.push({ name: 'sign-in' });
-        }
-      });
+    swal.fire({
+      title: 'Error!',
+      text: 'You are not Signed in',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+      allowOutsideClick: false,
+    });
+    router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
     isLoggedIn.value = false;
     swal
