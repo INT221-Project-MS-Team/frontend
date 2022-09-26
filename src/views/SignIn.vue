@@ -3,7 +3,9 @@ import SmButton from '@/components/SmButton.vue';
 import { ArrowRightIcon } from '@heroicons/vue/outline';
 import { inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStatusStore } from '../store/status';
 
+const storeStatus = useStatusStore();
 const swal = inject('$swal');
 const router = useRouter();
 const signInData = ref({
@@ -24,7 +26,11 @@ const checkSignIn = async () => {
         let data = await response.json();
         localStorage.setItem('access_token', data.access_token);
         swal('Success', data.message, 'success');
-        router.push({ name: 'user' });
+
+        storeStatus.setIsLoggedIn(true);
+        storeStatus.setLoggedInUser(data.user);
+
+        router.push({ name: 'home' });
     } else {
         let error = await response.json();
         swal('Error', error.message, 'error');
