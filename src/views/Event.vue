@@ -64,18 +64,13 @@ const getEventData = async () => {
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
-    swal
-      .fire({
-        title: 'Error!',
-        text: 'Access Denied',
-        icon: 'error',
-        confirmButtonText: 'Accept',
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          router.push(-1);
-        }
-      });
+    swal.fire({
+      title: 'Error!',
+      text: 'Access Denied',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+    router.push({ name: 'home' });
   } else {
     console.log('error');
   }
@@ -121,18 +116,13 @@ const deleteEvent = async () => {
         });
         router.push({ name: 'sign-in' });
       } else if (response.status === 403) {
-        swal
-          .fire({
-            title: 'Error!',
-            text: 'Access Denied',
-            icon: 'error',
-            confirmButtonText: 'Accept',
-          })
-          .then((result) => {
-            if (result.isConfirmed) {
-              router.push(-1);
-            }
-          });
+        swal.fire({
+          title: 'Error!',
+          text: 'Access Denied',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+        router.push({ name: 'home' });
       } else {
         swal({
           title: 'Failure',
@@ -234,7 +224,7 @@ const updateEvent = async () => {
             title: 'Error!',
             text: 'Access Denied',
             icon: 'error',
-            confirmButtonText: 'Accept',
+            confirmButtonText: 'OK',
           })
           .then((result) => {
             if (result.isConfirmed) {
@@ -296,7 +286,7 @@ const getSchedulesData = async () => {
         title: 'Error!',
         text: 'Access Denied',
         icon: 'error',
-        confirmButtonText: 'Accept',
+        confirmButtonText: 'OK',
       })
       .then((result) => {
         if (result.isConfirmed) {
