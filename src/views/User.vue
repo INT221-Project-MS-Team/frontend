@@ -16,7 +16,6 @@ import NoUser from '@/components/NoUser.vue';
 import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue';
 import router from '../routers';
 
-const isLoggedIn = ref(false);
 const swal = inject('$swal');
 const usersData = ref([]);
 const isEditUserModalShow = ref(false);
@@ -33,36 +32,28 @@ const getUsersData = async () => {
   });
   console.log(response);
   if (response.status === 200) {
-    isLoggedIn.value = true;
     const data = await response.json();
     usersData.value = data.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
     console.log(usersData.value);
   } else if (response.status === 401) {
-    isLoggedIn.value = false;
     swal.fire({
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
       confirmButtonText: 'Confirm',
-      allowOutsideClick: false,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
-    isLoggedIn.value = false;
     swal
       .fire({
         title: 'Error!',
         text: 'Access Denied',
         icon: 'error',
-        confirmButtonText: 'Accept',
+        confirmButtonText: 'OK',
       })
-      .then((result) => {
-        if (result.isConfirmed) {
-          router.push(-1);
-        }
-      });
+      router.push({ name: 'home' });
   } else {
     console.log('Fetch User Error');
   }
