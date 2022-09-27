@@ -8,6 +8,7 @@ export const useStatusStore = defineStore({
   }),
   getters: {
     getIsLoggedIn: (state) => state.isLoggedIn,
+    getLoggedInUser: (state) => state.loggedInUser,
   },
   actions: {
     setIsLoggedIn(bool) {
