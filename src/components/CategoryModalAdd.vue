@@ -1,7 +1,7 @@
 <script setup>
-import { computed,inject,ref } from '@vue/runtime-core';
+import { computed, inject, ref } from '@vue/runtime-core';
 import SmButton from './SmButton.vue';
-const emits = defineEmits(['closeModal','forceUpdate']);
+const emits = defineEmits(['closeModal', 'forceUpdate']);
 const swal = inject('$swal');
 const props = defineProps({
   category: {
@@ -21,8 +21,6 @@ const newCategoryData = computed(() => ({
   eventCategoryDescription: props.category.eventCategoryDescription,
 }));
 
-
-
 //create
 const addCategory = async () => {
   const response = await fetch(
@@ -31,11 +29,13 @@ const addCategory = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
       },
       body: JSON.stringify({
         eventCategoryName: newCategoryData.value.eventCategoryName.trim(),
         eventDuration: newCategoryData.value.eventDuration,
-        eventCategoryDescription: newCategoryData.value.eventCategoryDescription,
+        eventCategoryDescription:
+          newCategoryData.value.eventCategoryDescription,
       }),
     }
   );
@@ -55,7 +55,7 @@ const addCategory = async () => {
   }
 };
 </script>
- 
+
 <template>
   <div class="fixed inset-0 z-10 overflow-y-auto" role="dialog" v-if="isShow">
     <div
@@ -132,14 +132,16 @@ const addCategory = async () => {
             <button type="submit">
               <SmButton text="Add" btnType="events" />
             </button>
-            <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
+            <SmButton
+              btnType="edit"
+              text="Cancle"
+              @click="$emit('closeModal')"
+            />
           </div>
         </form>
       </div>
     </div>
   </div>
 </template>
- 
-<style>
 
-</style>
+<style></style>
