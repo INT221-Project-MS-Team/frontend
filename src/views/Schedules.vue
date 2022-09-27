@@ -137,7 +137,7 @@ const getSchedulesData = async () => {
         title: 'Error!',
         text: 'Access Denied',
         icon: 'error',
-        confirmButtonText: 'Accept',
+        confirmButtonText: 'OK',
       })
       .then((result) => {
         if (result.isConfirmed) {
