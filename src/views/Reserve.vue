@@ -62,8 +62,17 @@ const nextToThirdStep = async (info) => {
   reserverInformation.value = info;
   await submitReserve();
 };
-
 const submitReserve = async () => {
+  let loadingPopup = swal({
+    icon: 'info',
+    title: 'Pending Transaction',
+    text: 'Please wait...',
+    showConfirmButton: false,
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+    timer: 10000,
+    timerProgressBar: true,
+  });
   await getSchedulesData();
 
   let body = {
@@ -109,8 +118,10 @@ const submitReserve = async () => {
   );
   if (response.status === 201) {
     currentStep.value = 3;
+    loadingPopup.close();
     createdReserveData.value = await response.json();
   } else {
+    loadingPopup.close();
     let error = await response.json();
     console.log('Submit Reserve Error');
     swal('Error', error.message, 'error');
