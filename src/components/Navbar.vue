@@ -60,7 +60,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
             <button
               id="dropdownNavbarLink2"
               data-dropdown-toggle="dropdownNavbar2"
-              class="flex justify-between items-center m-2 py-2 pr-4 pl-3 w-full font-medium text-white rounded hover:bg-gray-100 hover:text-clinic-blue-100 md:hover:bg-transparent md:border-0 md:hover:text-clinic-blue-100 md:p-0 md:w-auto"
+              class="flex w-full text-center justify-center items-center mt-2 py-4 pr-2 pl-2 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
             >
               Services
               <svg
@@ -110,7 +110,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
             <button
               id="dropdownNavbarLink"
               data-dropdown-toggle="dropdownNavbar"
-              class="flex justify-between items-center mt-2 py-2 pr-4 pl-3 w-full font-medium text-white rounded hover:bg-gray-100 hover:text-clinic-blue-100 md:hover:bg-transparent md:border-0 md:hover:text-clinic-blue-100 md:p-0 md:w-auto"
+              class="flex w-full text-center justify-center items-center mt-2 py-4 pr-2 pl-2 rounded-full lg:p-0 hover:text-clinic-blue-100 hover:bg-white lg:hover:bg-transparent text-sm"
             >
               Manages
               <svg
@@ -173,8 +173,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </button>
             </router-link>
           </li>
-          <li v-else class="flex items-center align-middle gap-2">
-            <p>
+          <li v-else class="flex items-center justify-center align-middle gap-2 w-full">
+            <p class="p-0 m-0 text-sm">
               {{ storeStatus.loggedInUser?.email }} |
               {{ storeStatus.loggedInUser?.role }}
             </p>
