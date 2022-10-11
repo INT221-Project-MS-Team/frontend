@@ -6,11 +6,12 @@ import { useStatusStore } from '@/store/status.js';
 
 const storeStatus = useStatusStore();
 
-const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'admin');
-const isLecturer = computed(() => storeStatus.loggedInUser?.role === 'lecturer');
-const isStudent = computed(() => storeStatus.loggedInUser?.role === 'student');
+const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'ADMIN');
+const isLecturer = computed(
+  () => storeStatus.loggedInUser?.role === 'LECTURER'
+);
+const isStudent = computed(() => storeStatus.loggedInUser?.role === 'STUDENT');
 const isLoggedIn = computed(() => storeStatus.isLoggedIn);
-
 </script>
 
 <template>
@@ -104,9 +105,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </ul>
             </div>
           </li>
-
           <!-- Manage Navbar -->
-          <li v-if="isLoggedIn && (isAdmin || isLecturer)">
+          <li v-show="isLoggedIn && (isAdmin || isLecturer)">
             <button
               id="dropdownNavbarLink"
               data-dropdown-toggle="dropdownNavbar"
