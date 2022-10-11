@@ -5,6 +5,12 @@ import { Dropdown, ListGroup, ListGroupItem } from 'flowbite-vue';
 import { useStatusStore } from '@/store/status.js';
 
 const storeStatus = useStatusStore();
+
+const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'admin');
+const isLecturer = computed(() => storeStatus.loggedInUser?.role === 'lecturer');
+const isStudent = computed(() => storeStatus.loggedInUser?.role === 'student');
+const isLoggedIn = computed(() => storeStatus.isLoggedIn);
+
 </script>
 
 <template>
@@ -79,7 +85,7 @@ const storeStatus = useStatusStore();
                 class="py-1 text-sm text-gray-700 dark:text-gray-400"
                 aria-labelledby="dropdownLargeButton"
               >
-                <li>
+                <li v-if="isLoggedIn">
                   <router-link :to="{ name: 'schedules' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -100,7 +106,7 @@ const storeStatus = useStatusStore();
           </li>
 
           <!-- Manage Navbar -->
-          <li>
+          <li v-if="isLoggedIn && (isAdmin || isLecturer)">
             <button
               id="dropdownNavbarLink"
               data-dropdown-toggle="dropdownNavbar"
@@ -130,7 +136,7 @@ const storeStatus = useStatusStore();
                 class="py-1 text-sm text-gray-700 dark:text-gray-400"
                 aria-labelledby="dropdownLargeButton"
               >
-                <li>
+                <li v-if="isLoggedIn && (isAdmin || isLecturer)">
                   <router-link :to="{ name: 'category' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -138,7 +144,7 @@ const storeStatus = useStatusStore();
                     </a>
                   </router-link>
                 </li>
-                <li>
+                <li v-if="isLoggedIn && isAdmin">
                   <router-link :to="{ name: 'user' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -157,7 +163,7 @@ const storeStatus = useStatusStore();
               >
             </router-link>
           </li>
-          <li v-if="!storeStatus.isLoggedIn">
+          <li v-if="!isLoggedIn">
             <router-link :to="{ name: 'sign-in' }">
               <button
                 type="button"
@@ -168,7 +174,10 @@ const storeStatus = useStatusStore();
             </router-link>
           </li>
           <li v-else class="flex items-center align-middle gap-2">
-            <p>{{storeStatus.loggedInUser?.email}} | {{storeStatus.loggedInUser?.role}}</p>
+            <p>
+              {{ storeStatus.loggedInUser?.email }} |
+              {{ storeStatus.loggedInUser?.role }}
+            </p>
             <router-link :to="{ name: 'sign-out' }">
               <button
                 type="button"
