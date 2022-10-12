@@ -94,7 +94,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
                     </a>
                   </router-link>
                 </li>
-                <li>
+                <li v-if="isLoggedIn && !isLecturer">
                   <router-link :to="{ name: 'reserve' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -173,7 +173,10 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </button>
             </router-link>
           </li>
-          <li v-else class="flex items-center justify-center align-middle gap-2 w-full">
+          <li
+            v-else
+            class="flex items-center justify-center align-middle gap-2 w-full"
+          >
             <p class="p-0 m-0 text-sm">
               {{ storeStatus.loggedInUser?.email }} |
               {{ storeStatus.loggedInUser?.role }}
