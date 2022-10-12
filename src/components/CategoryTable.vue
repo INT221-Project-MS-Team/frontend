@@ -1,15 +1,25 @@
 <script setup>
 import SmButton from './SmButton.vue';
-import { PencilIcon } from '@heroicons/vue/outline';
+import { PencilIcon, EyeIcon, XIcon } from '@heroicons/vue/outline';
+import { useStatusStore } from '../store/status';
 
 const emits = defineEmits(['editCategory']);
-
+const storeStatus = useStatusStore();
 const props = defineProps({
   categories: {
     type: Array,
     required: true,
   },
 });
+
+const isMyCategory = (category) => {
+  if (storeStatus.loggedInUser?.role == 'ADMIN') return true;
+
+  return (
+    category.users.filter((user) => user.id == storeStatus.loggedInUser?.id)
+      .length > 0
+  );
+};
 </script>
 
 <template>
@@ -27,11 +37,16 @@ const props = defineProps({
           <th scope="col" class="px-6 py-3">Name</th>
           <th scope="col" class="px-6 py-3">Duration</th>
           <th scope="col" class="px-6 py-3">Description</th>
-          <th scope="col" class="px-6 py-3"></th>
+          <!-- <tsh scope="col" class="px-6 py-3">More</tsh> -->
+          <th scope="col" class="px-6 py-3">Edit</th>
         </tr>
       </thead>
       <tbody class="relative overflow-auto">
+        <tr v-if="!categories.length" class="flex justify-center">
+          <th scope="col" class="col-span-full px-6 py-3">No data</th>
+        </tr>
         <tr
+          v-else
           v-for="(category, index) in categories"
           :key="index"
           class="bg-white border-b hover:bg-gray-50"
@@ -51,11 +66,19 @@ const props = defineProps({
           >
             {{ category.eventCategoryDescription || 'No Description' }}
           </th>
-          <th class="px-6 py-3 text-clinic-blue-300">
-            <PencilIcon
+          <!-- <th class="px-6 py-3 text-clinic-blue-300">
+            <EyeIcon
               class="w-5 h-5 cursor-pointer"
               @click="$emit('editCategory', category)"
             />
+          </th> -->
+          <th class="px-6 py-3 text-clinic-blue-300">
+            <PencilIcon
+              v-if="isMyCategory(category)"
+              class="w-5 h-5 cursor-pointer"
+              @click="$emit('editCategory', category)"
+            />
+            <XIcon v-else class="w-5 h-5 cursor-pointer text-red-600" />
           </th>
         </tr>
       </tbody>

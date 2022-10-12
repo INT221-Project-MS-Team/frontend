@@ -4,9 +4,12 @@ import {
   inject,
   onBeforeMount,
   onBeforeUpdate,
+  onMounted,
+  reactive,
   ref,
 } from '@vue/runtime-core';
 import SmButton from './SmButton.vue';
+import Divider from './Divider.vue';
 
 const swal = inject('$swal');
 
@@ -21,9 +24,56 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isOnlyView: {
+    type: Boolean,
+    default: false,
+  },
+});
+const usersData = ref([]);
+const owners = computed(() => props.category.users?.map((user) => user.id));
+
+const selectedOwner = ref([]);
+
+onBeforeMount(() => {
+  getUsersData();
 });
 
-const categoriesData = ref('');
+const getUsersData = async () => {
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
+    },
+  });
+  console.log(response);
+  if (response.status === 200) {
+    const data = await response.json();
+    usersData.value = data.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+    console.log(usersData.value);
+  } else if (response.status === 401) {
+    swal.fire({
+      title: 'Error!',
+      text: 'You are not Signed in',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+    });
+    router.push({ name: 'sign-in' });
+  } else if (response.status === 403) {
+    swal.fire({
+      title: 'Error!',
+      text: 'Access Denied',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+    router.push({ name: 'home' });
+  } else {
+    console.log('Fetch User Error');
+  }
+};
+
 const editingData = computed(() => ({
   id: props.category.id,
   eventCategoryName: props.category.eventCategoryName,
@@ -46,6 +96,7 @@ const updateCategory = async () => {
         eventCategoryName: editingData.value.eventCategoryName.trim(),
         eventDuration: editingData.value.eventDuration,
         eventCategoryDescription: editingData.value.eventCategoryDescription,
+        ownerUserIds: [...owners.value, ...selectedOwner.value],
       }),
     }
   );
@@ -57,15 +108,16 @@ const updateCategory = async () => {
       icon: 'success',
       button: 'OK',
     });
+    selectedOwner.value = [];
     emits('forceUpdate');
     emits('closeModal');
-  }
-   else {
-   swal({
-     title: 'Update Failed',
-     text: data.message,
-     icon: 'error',
-     button: 'OK',
+  } else {
+    selectedOwner.value = [];
+    swal({
+      title: 'Update Failed',
+      text: data.message,
+      icon: 'error',
+      button: 'OK',
     });
     console.log('Update Category Error');
   }
@@ -91,7 +143,9 @@ const updateCategory = async () => {
       >
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center text-base">Edit Category</div>
+            <div class="mt-3 text-center text-base">
+              {{ isOnlyView ? 'View Category' : 'Edit Category' }}
+            </div>
           </div>
         </div>
         <form
@@ -106,6 +160,7 @@ const updateCategory = async () => {
               placeholder=" "
               required=""
               maxlength="100"
+              disabled="isOnlyView"
             />
             <label
               for=""
@@ -122,6 +177,7 @@ const updateCategory = async () => {
               required=""
               min="1"
               max="480"
+              disabled="isOnlyView"
             />
             <label
               for=""
@@ -137,6 +193,7 @@ const updateCategory = async () => {
               placeholder=" "
               maxlength="500"
               rows="4"
+              disabled="isOnlyView"
             />
             <label
               for=""
@@ -144,11 +201,71 @@ const updateCategory = async () => {
               >Description</label
             >
           </div>
+          
+          <Divider text="Owner Section" />
+
+          <div class="relative z-0 w-full mb-6 group">
+            <h3 class="mb-4 text-gray-500 text-sm">Owner</h3>
+            <ul
+              class="w-auto text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            >
+              <li
+                v-for="user in usersData"
+                :key="user.id"
+                class="w-full rounded-t-lg"
+              >
+                <div class="flex items-center pl-3">
+                  <label
+                    v-if="owners.includes(user.id)"
+                    class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >{{ user.email }}</label
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="relative z-0 w-full mb-6 group">
+            <h3 class="mb-4 text-gray-500 text-sm">Add Owner</h3>
+            <ul
+              class="w-auto text-sm font-medium text-gray-900 bg-white rounded-lg border"
+            >
+              <li
+                v-for="user in usersData"
+                :key="user.id"
+                class="w-full rounded-t-lg"
+              >
+                <div
+                  class="flex items-center pl-3"
+                  v-if="!owners.includes(user.id)"
+                >
+                  <input
+                    :id="`vue-checkbox-${user.id}`"
+                    type="checkbox"
+                    :value="user.id"
+                    v-model="selectedOwner"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  />
+                  <label
+                    :for="`vue-checkbox-${user.id}`"
+                    class="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >{{ user.email }}</label
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
           <div class="flex justify-end gap-2">
-            <button type="submit">
+            <button type="submit" v-show="!isOnlyView">
               <SmButton text="Save" btnType="events" />
             </button>
-            <SmButton btnType="edit" text="Cancle" @click="$emit('closeModal')" />
+            <SmButton
+              btnType="edit"
+              :text="isOnlyView ? 'Close' : 'Cancel'"
+              @click="
+                $emit('closeModal');
+                selectedOwner = [];
+              "
+            />
           </div>
         </form>
       </div>
