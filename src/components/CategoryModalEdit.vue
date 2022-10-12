@@ -24,10 +24,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  isOnlyView: {
-    type: Boolean,
-    default: false,
-  },
 });
 const usersData = ref([]);
 const owners = computed(() => props.category.users?.map((user) => user.id));
@@ -144,7 +140,7 @@ const updateCategory = async () => {
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
             <div class="mt-3 text-center text-base">
-              {{ isOnlyView ? 'View Category' : 'Edit Category' }}
+              Edit Category
             </div>
           </div>
         </div>
@@ -160,7 +156,7 @@ const updateCategory = async () => {
               placeholder=" "
               required=""
               maxlength="100"
-              disabled="isOnlyView"
+              
             />
             <label
               for=""
@@ -177,7 +173,7 @@ const updateCategory = async () => {
               required=""
               min="1"
               max="480"
-              disabled="isOnlyView"
+              
             />
             <label
               for=""
@@ -193,7 +189,7 @@ const updateCategory = async () => {
               placeholder=" "
               maxlength="500"
               rows="4"
-              disabled="isOnlyView"
+              
             />
             <label
               for=""
@@ -255,12 +251,12 @@ const updateCategory = async () => {
             </ul>
           </div>
           <div class="flex justify-end gap-2">
-            <button type="submit" v-show="!isOnlyView">
+            <button type="submit">
               <SmButton text="Save" btnType="events" />
             </button>
             <SmButton
               btnType="edit"
-              :text="isOnlyView ? 'Close' : 'Cancel'"
+              text="Cancel"
               @click="
                 $emit('closeModal');
                 selectedOwner = [];

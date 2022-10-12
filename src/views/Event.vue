@@ -15,10 +15,12 @@ import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import Divider from '@/components/Divider.vue';
 import { ArrowRightIcon, PencilIcon } from '@heroicons/vue/outline';
+import { useStatusStore } from '../store/status';
 
 const swal = inject('$swal');
 const router = useRouter();
 const route = useRoute();
+const storeStatus = useStatusStore();
 
 // config
 const dateInputFormatter = ref({
@@ -35,6 +37,13 @@ const schedulesData = ref([]);
 const editingEventDate = ref('');
 const editingEventTime = ref('');
 const editingEventNotes = ref('');
+
+const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'ADMIN');
+const isLecturer = computed(
+  () => storeStatus.loggedInUser?.role === 'LECTURER'
+);
+const isStudent = computed(() => storeStatus.loggedInUser?.role === 'STUDENT');
+const isLoggedIn = computed(() => storeStatus.isLoggedIn);
 
 //event methods
 const getEventData = async () => {
@@ -477,7 +486,7 @@ onBeforeMount(async () => {
                   btnType="events"
                   @click="gotoschedules"
                 />
-                <SmButton text="Edit Event" btnType="edit" @click="editEvent" />
+                <SmButton text="Edit Event" btnType="edit" @click="editEvent" v-if="isLoggedIn && !isLecturer" />
               </div>
               <div class="flex gap-2" v-else>
                 <button type="submit">

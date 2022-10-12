@@ -140,7 +140,7 @@ onBeforeMount(async () => {
           :isShow="editModalShow"
           @closeModal="closeModal"
           @forceUpdate="forceUpdate"
-          :isOnlyView="false"
+          :isOnlyView="true"
         />
       </div>
     </div>
