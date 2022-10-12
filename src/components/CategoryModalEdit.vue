@@ -48,7 +48,6 @@ const getUsersData = async () => {
     usersData.value = data.sort((a, b) => {
       return a.name.localeCompare(b.name);
     });
-    console.log(usersData.value);
   } else if (response.status === 401) {
     swal.fire({
       title: 'Error!',
@@ -139,9 +138,7 @@ const updateCategory = async () => {
       >
         <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center text-base">
-              Edit Category
-            </div>
+            <div class="mt-3 text-center text-base">Edit Category</div>
           </div>
         </div>
         <form
@@ -156,7 +153,6 @@ const updateCategory = async () => {
               placeholder=" "
               required=""
               maxlength="100"
-              
             />
             <label
               for=""
@@ -173,7 +169,6 @@ const updateCategory = async () => {
               required=""
               min="1"
               max="480"
-              
             />
             <label
               for=""
@@ -189,7 +184,6 @@ const updateCategory = async () => {
               placeholder=" "
               maxlength="500"
               rows="4"
-              
             />
             <label
               for=""
@@ -197,7 +191,7 @@ const updateCategory = async () => {
               >Description</label
             >
           </div>
-          
+
           <Divider text="Owner Section" />
 
           <div class="relative z-0 w-full mb-6 group">
@@ -232,7 +226,7 @@ const updateCategory = async () => {
               >
                 <div
                   class="flex items-center pl-3"
-                  v-if="!owners.includes(user.id)"
+                  v-if="!owners.includes(user.id) && user.role == 'LECTURER'"
                 >
                   <input
                     :id="`vue-checkbox-${user.id}`"
