@@ -46,6 +46,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
         <ul
           class="flex flex-col mt-4 text-xs lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium text-white text-center"
         >
+          <!-- Home -->
           <li>
             <router-link :to="{ name: 'home' }">
               <div
@@ -56,7 +57,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
             </router-link>
           </li>
 
-          <li>
+          <!-- Service -->
+          <li v-show="isLoggedIn">
             <button
               id="dropdownNavbarLink2"
               data-dropdown-toggle="dropdownNavbar2"
@@ -105,6 +107,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </ul>
             </div>
           </li>
+          
           <!-- Manage Navbar -->
           <li v-show="isLoggedIn && (isAdmin || isLecturer)">
             <button
@@ -155,6 +158,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </ul>
             </div>
           </li>
+
+          <!-- About -->
           <li>
             <router-link :to="{ name: 'about' }">
               <a
@@ -163,6 +168,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               >
             </router-link>
           </li>
+
+          <!-- Button SignIn -->
           <li v-if="!isLoggedIn">
             <router-link :to="{ name: 'sign-in' }">
               <button
@@ -173,6 +180,8 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </button>
             </router-link>
           </li>
+
+          <!-- Button SignUp -->
           <li
             v-else
             class="flex items-center justify-center align-middle gap-2 w-full"
@@ -190,6 +199,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </button>
             </router-link>
           </li>
+          
         </ul>
       </div>
     </div>
