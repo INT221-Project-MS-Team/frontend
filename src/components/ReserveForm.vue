@@ -29,9 +29,8 @@ const validateFileSize = () => {
     swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'File size must be less than 10MB',
+      text: 'File size must be less than 10MB please select another file',
     });
-    tempFile.value = null;
     return;
   }
   file.value = tempFile.value;
