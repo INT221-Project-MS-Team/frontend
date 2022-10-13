@@ -3,9 +3,10 @@ import Divider from '@/components/Divider.vue';
 import { ref } from '@vue/reactivity';
 import { getDate, getTime, getInputDate } from '@/utils/index';
 import SmButton from './SmButton.vue';
-import { computed } from '@vue/runtime-core';
+import { computed, inject } from '@vue/runtime-core';
 import { useStatusStore } from '../store/status';
 
+const swal = inject('$swal');
 const storeStatus = useStatusStore();
 const emits = defineEmits(['back', 'next']);
 const props = defineProps({
@@ -19,13 +20,67 @@ const props = defineProps({
   },
 });
 
+const file = ref(null);
+
+const uploadFile = async () => {
+  let loadingPopup = swal({
+    icon: 'info',
+    title: 'Uploading File',
+    text: 'Please wait...',
+    showConfirmButton: false,
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+    timerProgressBar: true,
+  });
+  //Upload to server
+  const formData = new FormData();
+  formData.append('file', file.value.files[0]);
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + '/api/upload-file',
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
+  if (response.status === 201) {
+    const data = await response.json();
+    loadingPopup.close();
+    swal.fire({
+      title: 'Success!',
+      text: 'File Uploaded',
+      icon: 'success',
+      confirmButtonText: 'Confirm',
+    });
+    reserverInformation.value.file = data;
+    return data;
+  } else {
+    swal.fire({
+      title: 'Error!',
+      text: 'File Upload Failed',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+    });
+    reserverInformation.value.file = null;
+    console.log('Upload file error');
+    return null;
+  }
+};
+
 const reserverInformation = computed(() => ({
   name: storeStatus.loggedInUser?.name ?? props.info.name,
   email: storeStatus.loggedInUser?.email ?? props.info.email,
   date: props.info.date,
   startTime: props.info.startTime,
   note: props.info.note,
+  file: props.info.file,
 }));
+
+const next = async () => {
+  if (file.value.files[0]) {
+    await uploadFile();
+  }
+  await emits('next', reserverInformation.value);
+};
 </script>
 
 <template>
@@ -33,10 +88,7 @@ const reserverInformation = computed(() => ({
     <div class="text-sm md:text-base lg:text-xl text-center text-gray-900">
       Reserve Information
     </div>
-    <form
-      @submit.prevent="$emit('next', reserverInformation)"
-      class="w-8/12 mt-10"
-    >
+    <form @submit.prevent="next" class="w-8/12 mt-10">
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
@@ -129,14 +181,24 @@ const reserverInformation = computed(() => ({
       </div>
 
       <div>
-        <label class="block mb-2 text-xs font-medium text-gray-500 dark:text-gray-300" for="small_size">Upload
-          file</label>
+        <label
+          class="block mb-2 text-xs font-medium text-gray-500 dark:text-gray-300"
+          for="small_size"
+          >Upload file</label
+        >
         <input
-          class="block w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer 
-          dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-          aria-describedby="file_input_help" id="file_input"  type="file">
-        <p class="mt-1 mb-2 text-xs text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX.
-          800x400px).</p>
+          class="text-sm text-grey-500 file:mr-5 file:py-3 file:px-10 file:rounded-full file:border-0 file:text-md file:font-semibold file:text-white file:bg-gradient-to-r file:from-blue-600 file:to-amber-600 hover:file:cursor-pointer hover:file:opacity-80"
+          aria-describedby="file_input_help"
+          id="file_input"
+          type="file"
+          ref="file"
+        />
+        <p
+          class="mt-1 mb-2 text-xs text-gray-500 dark:text-gray-300"
+          id="file_input_help"
+        >
+          (MAX file size 10mb).
+        </p>
       </div>
 
       <div class="relative z-0 w-full mb-6 group">

@@ -14,7 +14,11 @@ import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import Divider from '@/components/Divider.vue';
-import { ArrowRightIcon, PencilIcon } from '@heroicons/vue/outline';
+import {
+  ArrowRightIcon,
+  PencilIcon,
+  PaperClipIcon,
+} from '@heroicons/vue/outline';
 import { useStatusStore } from '../store/status';
 
 const swal = inject('$swal');
@@ -44,6 +48,12 @@ const isLecturer = computed(
 );
 const isStudent = computed(() => storeStatus.loggedInUser?.role === 'STUDENT');
 const isLoggedIn = computed(() => storeStatus.isLoggedIn);
+
+const getDownloadUrl = (downloadUrl) => {
+  return (
+    import.meta.env.VITE_SERVER_URL + `/api/upload-file/files/${downloadUrl}`
+  );
+};
 
 //event methods
 const getEventData = async () => {
@@ -454,6 +464,7 @@ onBeforeMount(async () => {
                 >{{ eventData.eventCategory.eventCategoryDescription }}
               </span>
             </span>
+
             <span>
               <span class="text-clinic-blue-300">Note: </span>
               <span
@@ -469,16 +480,32 @@ onBeforeMount(async () => {
                 maxlength="500"
                 rows="2"
               ></textarea>
+            </span>
 
-              <div class="mt-5" v-if="isEditing">
-                <div
-                  class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
-                  @click="deleteEvent"
+            <span class="flex gap-2">
+              <span class="text-clinic-blue-300">Attach File: </span>
+              <div v-if="eventData.file" class="flex gap-1">
+                <a
+                  :href="getDownloadUrl(eventData.file.fileName)"
+                  class="text-blue-600 underline flex gap-1 align-middle justify-center"
                 >
-                  Cancel event
-                </div>
+                  {{ eventData.file.fileName }}
+                  <PaperClipIcon class="w-5 h-5" />
+                </a>
+              </div>
+              <div v-else>
+                <p class="text-gray-300">No Attach File</p>
               </div>
             </span>
+
+            <div class="mt-5" v-if="isEditing">
+              <div
+                class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
+                @click="deleteEvent"
+              >
+                Cancel event
+              </div>
+            </div>
             <div>
               <div class="flex gap-2" v-if="!isEditing">
                 <SmButton
@@ -486,7 +513,12 @@ onBeforeMount(async () => {
                   btnType="events"
                   @click="gotoschedules"
                 />
-                <SmButton text="Edit Event" btnType="edit" @click="editEvent" v-if="isLoggedIn && !isLecturer" />
+                <SmButton
+                  text="Edit Event"
+                  btnType="edit"
+                  @click="editEvent"
+                  v-if="isLoggedIn && !isLecturer"
+                />
               </div>
               <div class="flex gap-2" v-else>
                 <button type="submit">

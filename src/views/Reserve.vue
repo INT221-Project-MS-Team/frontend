@@ -63,6 +63,7 @@ const nextToThirdStep = async (info) => {
   await submitReserve();
 };
 const submitReserve = async () => {
+  console.log(reserverInformation.value);
   let loadingPopup = swal({
     icon: 'info',
     title: 'Pending Transaction',
@@ -86,6 +87,7 @@ const submitReserve = async () => {
     eventDuration:
       categoriesData.value[selectedCategoryIndex.value].eventDuration,
     eventCategoryId: categoriesData.value[selectedCategoryIndex.value].id,
+    fileId: reserverInformation.value.file?.id ?? null,
   };
 
   if (!validateEmail(body.bookingEmail)) {
