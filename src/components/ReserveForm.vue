@@ -21,6 +21,22 @@ const props = defineProps({
 });
 
 const file = ref(null);
+const tempFile = ref(null);
+
+const validateFileSize = () => {
+  const size = tempFile.value.files[0].size;
+  if (size > 1024 * 1024 * 10) {
+    swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'File size must be less than 10MB',
+    });
+    tempFile.value = null;
+    return;
+  }
+  file.value = tempFile.value;
+  return;
+};
 
 const uploadFile = async () => {
   let loadingPopup = swal({
@@ -76,7 +92,7 @@ const reserverInformation = computed(() => ({
 }));
 
 const next = async () => {
-  if (file.value.files[0]) {
+  if (file.value?.files[0]) {
     await uploadFile();
   }
   await emits('next', reserverInformation.value);
@@ -191,7 +207,8 @@ const next = async () => {
           aria-describedby="file_input_help"
           id="file_input"
           type="file"
-          ref="file"
+          @change="validateFileSize"
+          ref="tempFile"
         />
         <p
           class="mt-1 mb-2 text-xs text-gray-500 dark:text-gray-300"
