@@ -12,8 +12,19 @@ import {
   validateEmail,
   isOverlapTime,
 } from '@/utils';
+import { useStatusStore } from '../store/status';
+import { useRouter } from 'vue-router';
 
 const swal = inject('$swal');
+const storeStatus = useStatusStore();
+const router = useRouter();
+
+onBeforeMount(() => {
+  if (!storeStatus.isLoggedIn) {
+    console.log('not sigh in');
+    router.push({ name: 'sign-in' });
+  }
+});
 
 const categoriesData = ref([]);
 const schedulesData = ref([]);
@@ -42,7 +53,8 @@ const getSchedulesData = async () => {
     schedulesData.value = data;
     console.log(data);
   } else {
-    console.log('Fetch Scheduled events Error');
+    let error = await response.json();
+    console.log('Fetch Scheduled events Error', error);
   }
 };
 
@@ -71,7 +83,7 @@ const submitReserve = async () => {
     showConfirmButton: false,
     closeOnClickOutside: false,
     closeOnEsc: false,
-    timer: 10000,
+    timer: 30000,
     timerProgressBar: true,
   });
   await getSchedulesData();
@@ -113,7 +125,9 @@ const submitReserve = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: !localStorage.getItem('access_token')
+          ? null
+          : 'Bearer ' + localStorage.getItem('access_token'),
       },
       body: JSON.stringify(body),
     }
@@ -125,7 +139,7 @@ const submitReserve = async () => {
   } else {
     loadingPopup.close();
     let error = await response.json();
-    console.log('Submit Reserve Error');
+    console.log('Submit Reserve Error', error);
     swal('Error', error.message, 'error');
   }
 };
