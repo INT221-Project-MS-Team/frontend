@@ -20,21 +20,38 @@ const props = defineProps({
   },
 });
 
-const file = ref(null);
+const accept_file = ref(null);
 const tempFile = ref(null);
 
-const validateFileSize = () => {
-  const size = tempFile.value.files[0].size;
-  if (size > 1024 * 1024 * 10) {
-    swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'File size must be less than 10MB please select another file',
+const validateFileSize = async () => {
+  console.log('bf tempFile', tempFile?.value?.files);
+  console.log('bf current accept File', accept_file?.value?.files);
+  try {
+    const size = tempFile.value.files[0].size;
+    if (size > 1024 * 1024 * 10) {
+      swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'File size must be less than 10MB please select another file',
+      });
+      throw new Error(
+        'File size must be less than 10MB please select another file'
+      );
+    }
+
+    const original = tempFile.value.files[0];
+    const clone = new File([original], original.name, {
+      type: original.type,
+      lastModified: original.lastModified,
     });
-    return;
+
+    console.log(clone);
+    accept_file.value = clone;
+  } catch (e) {
+    console.log(e);
   }
-  file.value = tempFile.value;
-  return;
+  console.log('at tempFile', tempFile.value?.files);
+  console.log('at current accept File', accept_file.value);
 };
 
 const uploadFile = async () => {
@@ -49,7 +66,7 @@ const uploadFile = async () => {
   });
   //Upload to server
   const formData = new FormData();
-  formData.append('file', file.value.files[0]);
+  formData.append('file', accept_file.value);
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/upload-file',
     {
@@ -91,7 +108,7 @@ const reserverInformation = computed(() => ({
 }));
 
 const next = async () => {
-  if (file.value?.files[0]) {
+  if (accept_file.value) {
     await uploadFile();
   }
   await emits('next', reserverInformation.value);
@@ -195,7 +212,7 @@ const next = async () => {
         </div>
       </div>
 
-      <div>
+      <!-- <div>
         <label
           class="block mb-2 text-xs font-medium text-gray-500 dark:text-gray-300"
           for="small_size"
@@ -215,6 +232,55 @@ const next = async () => {
         >
           (MAX file size 10mb).
         </p>
+      </div> -->
+
+      <div id="file-upload">
+        <label
+          class="block mb-2 text-xs font-medium text-gray-500"
+          for="small_size"
+          >Upload file</label
+        >
+        <p class="text-xs text-gray-9000">
+          Current file : {{ accept_file?.name || 'No File' }}
+        </p>
+        <div class="flex justify-center items-center w-full">
+          <label
+            for="dropzone-file"
+            class="flex flex-col justify-center items-center w-full h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <div class="flex flex-col justify-center items-center pt-5 pb-6">
+              <svg
+                aria-hidden="true"
+                class="mb-3 w-10 h-10 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                ></path>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span>
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                Any file type (MAX. 10mb)
+              </p>
+              <hr />
+            </div>
+            <input
+              id="dropzone-file"
+              type="file"
+              class="hidden"
+              @change="validateFileSize"
+              ref="tempFile"
+            />
+          </label>
+        </div>
       </div>
 
       <div class="relative z-0 w-full mb-6 group">
