@@ -14,6 +14,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { ref } from '@vue/reactivity';
 import { computed, inject, onBeforeMount } from '@vue/runtime-core';
 import Divider from '@/components/Divider.vue';
+import Button from '@/components/Button.vue';
 import {
   ArrowRightIcon,
   PencilIcon,
@@ -41,6 +42,8 @@ const schedulesData = ref([]);
 const editingEventDate = ref('');
 const editingEventTime = ref('');
 const editingEventNotes = ref('');
+const accept_file = ref(null);
+const tempFile = ref(null);
 
 const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'ADMIN');
 const isLecturer = computed(
@@ -267,6 +270,7 @@ const editEvent = () => {
   isEditing.value = true;
   editingEventNotes.value = eventData.value.eventNotes;
 };
+
 const cancelEdit = () => {
   isEditing.value = false;
   editingEventDate.value = '';
@@ -317,6 +321,81 @@ const getSchedulesData = async () => {
   }
 };
 
+const validateFileSize = async () => {
+  console.log('bf tempFile', tempFile?.value?.files);
+  console.log('bf current accept File', accept_file?.value?.files);
+  try {
+    const size = tempFile.value.files[0].size;
+    if (size > 1024 * 1024 * 10) {
+      swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'File size must be less than 10MB please select another file',
+      });
+      throw new Error(
+        'File size must be less than 10MB please select another file'
+      );
+    }
+
+    const original = tempFile.value.files[0];
+    const clone = new File([original], original.name, {
+      type: original.type,
+      lastModified: original.lastModified,
+    });
+
+    console.log(clone);
+    accept_file.value = clone;
+  } catch (e) {
+    console.log(e);
+  }
+  console.log('at tempFile', tempFile.value?.files);
+  console.log('at current accept File', accept_file.value);
+};
+
+const uploadFile = async () => {
+  let loadingPopup = swal({
+    icon: 'info',
+    title: 'Uploading File',
+    text: 'Please wait...',
+    showConfirmButton: false,
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+    timerProgressBar: true,
+  });
+  //Upload to server
+  const formData = new FormData();
+  formData.append('file', accept_file.value);
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + '/api/upload-file',
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
+  if (response.status === 201) {
+    const data = await response.json();
+    loadingPopup.close();
+    swal.fire({
+      title: 'Success!',
+      text: 'File Uploaded',
+      icon: 'success',
+      confirmButtonText: 'Confirm',
+    });
+    reserverInformation.value.file = data;
+    return data;
+  } else {
+    swal.fire({
+      title: 'Error!',
+      text: 'File Upload Failed',
+      icon: 'error',
+      confirmButtonText: 'Confirm',
+    });
+    reserverInformation.value.file = null;
+    console.log('Upload file error');
+    return null;
+  }
+};
+
 // route
 const gotoHome = () => {
   router.push({ name: 'home' });
@@ -344,7 +423,7 @@ onBeforeMount(async () => {
       {{ isEditing ? 'Edit Event Detail' : 'Event Detail' }}
     </p>
     <div
-      class="bg-white rounded-3xl h-4/6 lg:h-4/6 w-11/12 lg:w-8/12 flex shadow-lg"
+      class="bg-white rounded-3xl h-5/6 lg:h-4/6 w-11/12 lg:w-8/12 flex shadow-lg"
     >
       <!-- no event -->
       <div v-if="!eventData" class="flex flex-col items-center justify-center">
@@ -386,7 +465,9 @@ onBeforeMount(async () => {
                 {{ eventData.bookingName }}</span
               >
             </span>
-            <hr />
+
+            <Divider text="Information" />
+
             <span
               ><span class="text-clinic-blue-300">Email: </span>
               <span :class="{ 'text-gray-400': isEditing }">
@@ -459,7 +540,7 @@ onBeforeMount(async () => {
               }}</span>
             </span>
             <span>
-              <span class="text-clinic-blue-300">Category Description:</span>
+              <span class="text-clinic-blue-300">Category Description: </span>
               <span :class="{ 'text-gray-400': isEditing }"
                 >{{ eventData.eventCategory.eventCategoryDescription }}
               </span>
@@ -481,24 +562,79 @@ onBeforeMount(async () => {
                 rows="2"
               ></textarea>
             </span>
-
-            <span class="flex gap-2">
-              <span class="text-clinic-blue-300">Attach File: </span>
-              <div v-if="eventData.file" class="flex gap-1">
-                <a
-                  :href="getDownloadUrl(eventData.file.fileName)"
-                  class="text-blue-600 underline flex gap-1 align-middle justify-center"
+            <div id="file-section">
+              <Divider text="Attachment" />
+              <div id="file-upload" v-if="isEditing">
+                <label
+                  class="block mb-2 text-xs font-medium text-gray-500"
+                  for="small_size"
+                  >Upload/Update file</label
                 >
-                  {{ eventData.file.fileName }}
-                  <PaperClipIcon class="w-5 h-5" />
-                </a>
+                <p class="text-xs text-gray-9000">
+                  Current file : {{ accept_file?.name || 'No File' }}
+                </p>
+                <div class="flex justify-center items-center w-full">
+                  <label
+                    for="dropzone-file"
+                    class="flex flex-col justify-center items-center w-full h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  >
+                    <div
+                      class="flex flex-col justify-center items-center pt-5 pb-6"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="mb-3 w-10 h-10 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        ></path>
+                      </svg>
+                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span class="font-semibold">Click to upload</span>
+                      </p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">
+                        Any file type (MAX. 10mb)
+                      </p>
+                      <hr />
+                    </div>
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      class="hidden"
+                      @change="validateFileSize"
+                      ref="tempFile"
+                    />
+                  </label>
+                </div>
               </div>
-              <div v-else>
-                <p class="text-gray-300">No Attach File</p>
-              </div>
-            </span>
-
+              <span class="flex gap-2">
+                <div v-if="eventData.file">
+                  <a
+                    :href="getDownloadUrl(eventData.file.fileName)"
+                    class="text-blue-600 underline flex gap-2"
+                  >
+                    <PaperClipIcon class="w-5 h-5" />
+                    {{ eventData.file.fileName }}
+                  </a>
+                  <div class="flex gap-2 mt-5" v-if="isEditing">
+                    <SmButton text="Update File" btnType="events" />
+                    <SmButton text="Remove File" btnType="danger" />
+                  </div>
+                </div>
+                <div v-else>
+                  <p class="text-gray-300">No Attach File</p>
+                </div>
+              </span>
+            </div>
             <div class="mt-5" v-if="isEditing">
+              <Divider text="Danger Zone" />
               <div
                 class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
                 @click="deleteEvent"
@@ -507,6 +643,7 @@ onBeforeMount(async () => {
               </div>
             </div>
             <div>
+              <Divider text="Action" />
               <div class="flex gap-2" v-if="!isEditing">
                 <SmButton
                   text="← Back"
