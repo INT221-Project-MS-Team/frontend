@@ -8,8 +8,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="relative flex py-5 items-center">
-    <span class="flex-shrink mx-2 text-gray-800">{{ text }}</span>
+  <div class="relative flex p-5 pl-0 items-center">
+    <span class="flex-shrink mr-2 ml-0 text-gray-800">{{ text }}</span>
     <div class="flex-grow border-t border-gray-400"></div>
   </div>
 </template>

@@ -44,6 +44,8 @@ const editingEventTime = ref('');
 const editingEventNotes = ref('');
 const accept_file = ref(null);
 const tempFile = ref(null);
+const isEditingFile = ref(false);
+const fileResponse = ref(null);
 
 const isAdmin = computed(() => storeStatus.loggedInUser?.role === 'ADMIN');
 const isLecturer = computed(
@@ -172,12 +174,16 @@ const updateEvent = async () => {
     if (result.isConfirmed) {
       await getSchedulesData();
 
+      // upload file if file is not null
+      await uploadFile();
+
       let body = {
         id: eventId.value,
         eventStartTime: undefined,
         eventNotes: undefined,
         eventDuration: eventData.value.eventDuration,
         eventCategoryId: eventData.value.eventCategory.id,
+        fileId: fileResponse.value?.id,
       };
 
       if (editingEventDate.value != '' && editingEventTime.value != '') {
@@ -273,9 +279,13 @@ const editEvent = () => {
 
 const cancelEdit = () => {
   isEditing.value = false;
+  isEditingFile.value = false;
   editingEventDate.value = '';
   editingEventTime.value = '';
   editingEventNotes.value = '';
+  accept_file.value = null;
+  tempFile.value = null;
+  fileResponse.value = null;
 };
 
 const getSchedulesData = async () => {
@@ -353,6 +363,7 @@ const validateFileSize = async () => {
 };
 
 const uploadFile = async () => {
+  if(!accept_file.value) return;
   let loadingPopup = swal({
     icon: 'info',
     title: 'Uploading File',
@@ -375,25 +386,87 @@ const uploadFile = async () => {
   if (response.status === 201) {
     const data = await response.json();
     loadingPopup.close();
-    swal.fire({
-      title: 'Success!',
-      text: 'File Uploaded',
-      icon: 'success',
-      confirmButtonText: 'Confirm',
-    });
-    reserverInformation.value.file = data;
+    fileResponse.value = data;
     return data;
   } else {
+    loadingPopup.close();
     swal.fire({
       title: 'Error!',
       text: 'File Upload Failed',
       icon: 'error',
       confirmButtonText: 'Confirm',
     });
-    reserverInformation.value.file = null;
+    fileResponse.value = null;
     console.log('Upload file error');
     return null;
   }
+};
+
+const deleteFile = async () => {
+  await swal({
+    title:
+      '<p class="text-lg">Are you sure to <b>delete file</b> from this event ?</p>',
+    text: "You won't be able to revert this!",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#5f72ff',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'No',
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const response = await fetch(
+        import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}/file`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+          },
+        }
+      );
+      if (response.status === 200) {
+        swal({
+          title: 'Success',
+          text: 'Event has been updated',
+          icon: 'success',
+          confirmButtonColor: '#5f72ff',
+        });
+        cancelEdit();
+        getEventData();
+      } else if (response.status === 401) {
+        swal.fire({
+          title: 'Error!',
+          text: 'You are not Signed in',
+          icon: 'error',
+          confirmButtonText: 'Confirm',
+          allowOutsideClick: false,
+        });
+        router.push({ name: 'sign-in' });
+      } else if (response.status === 403) {
+        swal
+          .fire({
+            title: 'Error!',
+            text: 'Access Denied',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              router.push(-1);
+            }
+          });
+      } else {
+        swal({
+          title: 'Failure',
+          text: 'Something went wrong',
+          icon: 'error',
+          confirmButtonColor: '#5f72ff',
+        });
+        console.log('error,cannot update');
+      }
+    }
+  });
 };
 
 // route
@@ -562,16 +635,93 @@ onBeforeMount(async () => {
                 rows="2"
               ></textarea>
             </span>
+
+            <!-- file -->
+            <Divider text="Attachment" />
             <div id="file-section">
-              <Divider text="Attachment" />
-              <div id="file-upload" v-if="isEditing">
+              <!-- show file name -->
+              <span class="flex gap-2 mb-3">
+                <div v-if="eventData.file">
+                  Current File
+                  <a
+                    :href="getDownloadUrl(eventData.file.fileName)"
+                    class="text-blue-600 underline flex gap-2"
+                  >
+                    <PaperClipIcon class="w-5 h-5" />
+                    {{ eventData.file.fileName }}
+                  </a>
+                  <div class="flex gap-2 mt-5" v-if="isEditing">
+                    <SmButton
+                      text="Delete File"
+                      btnType="danger"
+                      @click="deleteFile"
+                    />
+                  </div>
+                </div>
+                <div v-else>
+                  <p class="text-gray-300">No Attach File</p>
+                </div>
+              </span>
+
+              <!-- if not have file show upload -->
+              <div v-if="!eventData.file">
+                <div id="file-upload" v-if="isEditing">
+                  <p class="text-xs text-gray-9000">
+                    Current update file : {{ accept_file?.name || 'No File' }}
+                  </p>
+                  <div class="flex justify-center items-center w-full">
+                    <label
+                      for="dropzone-file"
+                      class="flex flex-col justify-center items-center w-full h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    >
+                      <div
+                        class="flex flex-col justify-center items-center pt-5 pb-6"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="mb-3 w-10 h-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          ></path>
+                        </svg>
+                        <p
+                          class="mb-2 text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          <span class="font-semibold">Click to upload</span>
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                          Any file type (MAX. 10mb)
+                        </p>
+                        <hr />
+                      </div>
+                      <input
+                        id="dropzone-file"
+                        type="file"
+                        class="hidden"
+                        @change="validateFileSize"
+                        ref="tempFile"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div id="file-upload" v-if="isEditing && isEditingFile">
                 <label
                   class="block mb-2 text-xs font-medium text-gray-500"
                   for="small_size"
                   >Upload/Update file</label
                 >
                 <p class="text-xs text-gray-9000">
-                  Current file : {{ accept_file?.name || 'No File' }}
+                  Current update file : {{ accept_file?.name || 'No File' }}
                 </p>
                 <div class="flex justify-center items-center w-full">
                   <label
@@ -614,34 +764,20 @@ onBeforeMount(async () => {
                   </label>
                 </div>
               </div>
-              <span class="flex gap-2">
-                <div v-if="eventData.file">
-                  <a
-                    :href="getDownloadUrl(eventData.file.fileName)"
-                    class="text-blue-600 underline flex gap-2"
-                  >
-                    <PaperClipIcon class="w-5 h-5" />
-                    {{ eventData.file.fileName }}
-                  </a>
-                  <div class="flex gap-2 mt-5" v-if="isEditing">
-                    <SmButton text="Update File" btnType="events" />
-                    <SmButton text="Remove File" btnType="danger" />
-                  </div>
-                </div>
-                <div v-else>
-                  <p class="text-gray-300">No Attach File</p>
-                </div>
-              </span>
             </div>
+
+            <!-- event delete -->
             <div class="mt-5" v-if="isEditing">
               <Divider text="Danger Zone" />
               <div
                 class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
                 @click="deleteEvent"
               >
-                Cancel event
+                Cancel Event
               </div>
             </div>
+
+            <!-- page control -->
             <div>
               <Divider text="Action" />
               <div class="flex gap-2" v-if="!isEditing">
