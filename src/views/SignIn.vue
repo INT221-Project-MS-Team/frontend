@@ -39,7 +39,7 @@ const checkSignIn = async () => {
         text: data.message,
         icon: 'success',
         showConfirmButton: false,
-        timer: 2000,
+        timer: 1500,
       });
       router.push({ name: 'home' });
     } else {

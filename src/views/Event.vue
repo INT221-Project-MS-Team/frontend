@@ -127,7 +127,8 @@ const deleteEvent = async () => {
           title: '<p class="text-lg">Success</p>',
           text: 'Event has been canceled',
           icon: 'success',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         router.push({ name: 'schedules' });
       } else if (response.status === 401) {
@@ -152,7 +153,8 @@ const deleteEvent = async () => {
           title: 'Failure',
           text: 'Something went wrong',
           icon: 'error',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         console.log('error,cannot delete');
       }
@@ -233,7 +235,8 @@ const updateEvent = async () => {
           title: 'Success',
           text: 'Event has been updated',
           icon: 'success',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         cancelEdit();
         getEventData();
@@ -264,7 +267,8 @@ const updateEvent = async () => {
           title: 'Failure',
           text: 'Something went wrong',
           icon: 'error',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         console.log('error,cannot update');
       }
@@ -363,7 +367,7 @@ const validateFileSize = async () => {
 };
 
 const uploadFile = async () => {
-  if(!accept_file.value) return;
+  if (!accept_file.value) return;
   let loadingPopup = swal({
     icon: 'info',
     title: 'Uploading File',
@@ -430,7 +434,8 @@ const deleteFile = async () => {
           title: 'Success',
           text: 'Event has been updated',
           icon: 'success',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         cancelEdit();
         getEventData();
@@ -461,7 +466,8 @@ const deleteFile = async () => {
           title: 'Failure',
           text: 'Something went wrong',
           icon: 'error',
-          confirmButtonColor: '#5f72ff',
+          showConfirmButton: false,
+          timer: 1500,
         });
         console.log('error,cannot update');
       }

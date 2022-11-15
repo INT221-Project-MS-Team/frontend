@@ -84,7 +84,7 @@ const uploadFile = async () => {
       text: 'File Uploaded',
       icon: 'success',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     reserverInformation.value.file = data;
     return data;
@@ -94,7 +94,7 @@ const uploadFile = async () => {
       text: 'File Upload Failed',
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     reserverInformation.value.file = null;
     console.log('Upload file error');

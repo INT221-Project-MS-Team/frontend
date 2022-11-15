@@ -45,7 +45,7 @@ const addCategory = async () => {
       text: 'Add category successfully',
       icon: 'success',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     emits('closeModal');
     emits('forceUpdate');

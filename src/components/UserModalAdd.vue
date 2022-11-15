@@ -39,7 +39,7 @@ const addUser = async () => {
       text: 'Email is invalid',
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     return;
   }
@@ -65,7 +65,7 @@ const addUser = async () => {
       text: 'Add user successfully',
       icon: 'success',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     resetData();
     emits('closeModal');

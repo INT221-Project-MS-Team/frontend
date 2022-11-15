@@ -82,7 +82,7 @@ const signup = async () => {
         text: 'Sign Up successfully',
         icon: 'success',
         showConfirmButton: false,
-        timer: 2000,
+        timer: 1500,
       });
       resetData();
       router.push({ name: 'sign-in' });

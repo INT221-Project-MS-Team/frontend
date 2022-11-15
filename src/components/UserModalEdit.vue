@@ -54,7 +54,7 @@ const updateUser = async () => {
       text: 'No changes were made',
       icon: 'success',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     return;
   }
@@ -80,7 +80,7 @@ const updateUser = async () => {
       text: 'Update user successfully',
       icon: 'success',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     emits('forceUpdate');
     emits('closeModal');
@@ -90,7 +90,7 @@ const updateUser = async () => {
       text: data.message,
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     console.log('Update User Error');
   }

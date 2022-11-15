@@ -15,7 +15,7 @@ swal({
   text: 'You have been logged out',
   icon: 'success',
   showConfirmButton: false,
-  timer: 2000,
+  timer: 1500,
 });
 
 storeStatus.setIsLoggedIn(false);

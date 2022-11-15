@@ -43,7 +43,7 @@ const getUsersData = async () => {
       text: 'You are not Signed in',
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
@@ -52,7 +52,7 @@ const getUsersData = async () => {
       text: 'Access Denied',
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
     });
     router.push({ name: 'home' });
   } else {
