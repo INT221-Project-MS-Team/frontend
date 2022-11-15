@@ -211,29 +211,7 @@ const next = async () => {
           >
         </div>
       </div>
-
-      <!-- <div>
-        <label
-          class="block mb-2 text-xs font-medium text-gray-500 dark:text-gray-300"
-          for="small_size"
-          >Upload file</label
-        >
-        <input
-          class="text-sm text-grey-500 file:mr-5 file:py-3 file:px-10 file:rounded-full file:border-0 file:text-md file:font-semibold file:text-white file:bg-gradient-to-r file:from-blue-600 file:to-amber-600 hover:file:cursor-pointer hover:file:opacity-80"
-          aria-describedby="file_input_help"
-          id="file_input"
-          type="file"
-          @change="validateFileSize"
-          ref="tempFile"
-        />
-        <p
-          class="mt-1 mb-2 text-xs text-gray-500 dark:text-gray-300"
-          id="file_input_help"
-        >
-          (MAX file size 10mb).
-        </p>
-      </div> -->
-
+      
       <div id="file-upload">
         <label
           class="block mb-2 text-xs font-medium text-gray-500"
