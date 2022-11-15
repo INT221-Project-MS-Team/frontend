@@ -53,7 +53,8 @@ const getUsersData = async () => {
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
-      confirmButtonText: 'Confirm',
+      showConfirmButton: false,
+      timer: 2000,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
@@ -61,7 +62,8 @@ const getUsersData = async () => {
       title: 'Error!',
       text: 'Access Denied',
       icon: 'error',
-      confirmButtonText: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     router.push({ name: 'home' });
   } else {
@@ -101,7 +103,8 @@ const updateCategory = async () => {
       title: 'Success',
       text: 'Category Updated',
       icon: 'success',
-      button: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     selectedOwner.value = [];
     emits('forceUpdate');
@@ -112,7 +115,8 @@ const updateCategory = async () => {
       title: 'Update Failed',
       text: data.message,
       icon: 'error',
-      button: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     console.log('Update Category Error');
   }
@@ -149,7 +153,7 @@ const updateCategory = async () => {
             <input
               type="text"
               v-model="editingData.eventCategoryName"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
               maxlength="100"
@@ -164,7 +168,7 @@ const updateCategory = async () => {
             <input
               type="number"
               v-model="editingData.eventDuration"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
               min="1"
@@ -180,7 +184,7 @@ const updateCategory = async () => {
             <textarea
               type="text"
               v-model="editingData.eventCategoryDescription"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               maxlength="500"
               rows="4"

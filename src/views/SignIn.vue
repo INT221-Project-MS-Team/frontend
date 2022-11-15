@@ -1,6 +1,7 @@
 <script setup>
 import SmButton from '@/components/SmButton.vue';
-import { ArrowRightIcon } from '@heroicons/vue/outline';
+import Divider from '@/components/Divider.vue';
+import { ArrowRightIcon, UserAddIcon } from '@heroicons/vue/outline';
 import { inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStatusStore } from '../store/status';
@@ -14,26 +15,39 @@ const signInData = ref({
 });
 
 const checkSignIn = async () => {
-  const response = await fetch(import.meta.env.VITE_SERVER_URL + `/api/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(signInData.value),
-  });
-  if (response.status === 200) {
-    let data = await response.json();
-    localStorage.setItem('access_token', data.access_token);
-    localStorage.setItem('refresh_token', data.refresh_token);
+  try {
+    const response = await fetch(
+      import.meta.env.VITE_SERVER_URL + `/api/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signInData.value),
+      }
+    );
+    if (response.status === 200) {
+      let data = await response.json();
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('refresh_token', data.refresh_token);
 
-    storeStatus.setIsLoggedIn(true);
-    storeStatus.setLoggedInUser(data.user);
+      storeStatus.setIsLoggedIn(true);
+      storeStatus.setLoggedInUser(data.user);
 
-    swal('Success', data.message, 'success');
-    router.push({ name: 'home' });
-  } else {
-    let error = await response.json();
-    swal('Error', error.message, 'error');
+      swal({
+        title: 'Success',
+        text: data.message,
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      router.push({ name: 'home' });
+    } else {
+      let error = await response.json();
+      swal('Error', error.message, 'error');
+    }
+  } catch (err) {
+    swal('Error', err.message, 'error');
   }
 };
 </script>
@@ -44,7 +58,7 @@ const checkSignIn = async () => {
   >
     <div class="container mx-auto justify-center items-center px-4">
       <div
-        class="flex flex-wrap-reverse justify-center items-center w-10/12 mx-auto gap-3 bg-white/90 rounded-lg border shadow-md md:flex-row md:max-w-fit dark:border-gray-700 dark:bg-gray-800"
+        class="flex flex-wrap-reverse justify-center items-center w-10/12 mx-auto gap-3 bg-white rounded-lg border shadow-md md:flex-row md:max-w-fit"
       >
         <img
           class="m-4 mr-10 hidden object-cover 2 sm:w-3/12 lg:w-3/12 md:w-3/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
@@ -56,7 +70,7 @@ const checkSignIn = async () => {
           <div class="flex flex-col items-center">
             <div class="flex flex-col pt-10 justify-center items-center">
               <div
-                class="text-3xl font-bold md:text-4xl lg:text-4xl text-center mb-10 text-gray-900"
+                class="text-3xl font-bold md:text-4xl lg:text-4xl text-center mb-8 text-gray-900"
               >
                 SIGN IN
               </div>
@@ -65,7 +79,7 @@ const checkSignIn = async () => {
                   <input
                     type="email"
                     name="floating_email"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
                     v-model="signInData.email"
@@ -79,7 +93,7 @@ const checkSignIn = async () => {
                 <div class="relative z-0 w-full group">
                   <input
                     type="password"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     v-model="signInData.password"
                     required
@@ -91,14 +105,28 @@ const checkSignIn = async () => {
                 </div>
                 <button
                   type="submit"
-                  class="mt-5 text-white justify-center w-full text-sm bg-clinic-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="mt-5 text-white justify-center w-full text-sm bg-clinic-blue-300 hover:bg-blue-800 font-medium rounded px-5 py-2.5 inline-flex items-center"
                 >
-                  Sign in
+                  Sign In
                   <ArrowRightIcon class="w-5 h-5 ml-2" />
                 </button>
               </form>
+              <div
+                class="text-sm font-bold md:sm lg:text-sm text-center mt-5 mb-5 text-gray-500"
+              >
+                OR
+              </div>
+              <a
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                target="_blank"
+                class="flex gap-2 align-middle justify-center"
+              >
+                <img src="/images/msteam.webp" class="w-5 h-5" alt="" />
+                <p class="text-xs">Signin with microsoft</p>
+              </a>
             </div>
-            <div class="flex gap-2 mt-6 mb-6 w-full justify-center">
+
+            <div class="flex gap-2 mt-6 w-full justify-center">
               <div class="text-center text-sm">
                 Don't have an account ?
                 <span class="text-blue-700 underline">

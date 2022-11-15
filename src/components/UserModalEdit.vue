@@ -53,6 +53,8 @@ const updateUser = async () => {
       title: 'Success',
       text: 'No changes were made',
       icon: 'success',
+      showConfirmButton: false,
+      timer: 2000,
     });
     return;
   }
@@ -62,7 +64,7 @@ const updateUser = async () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: JSON.stringify({
         name: editingData.value.name.trim(),
@@ -77,7 +79,8 @@ const updateUser = async () => {
       title: 'Success',
       text: 'Update user successfully',
       icon: 'success',
-      button: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     emits('forceUpdate');
     emits('closeModal');
@@ -86,7 +89,8 @@ const updateUser = async () => {
       title: 'Update user failed',
       text: data.message,
       icon: 'error',
-      button: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     console.log('Update User Error');
   }
@@ -156,7 +160,7 @@ const checkIsEditDataChanged = () => {
               type="text"
               v-model="editingData.name"
               class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
+              :class="isEditing ? 'text-gray-900 border-b' : 'text-gray-500'"
               placeholder=" "
               required=""
               maxlength="100"
@@ -174,7 +178,7 @@ const checkIsEditDataChanged = () => {
               type="email"
               v-model="editingData.email"
               class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0 peer"
-              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
+              :class="isEditing ? 'text-gray-900 border-b' : 'text-gray-500'"
               required=""
               :disabled="!isEditing"
               @change="checkIsEditDataChanged"
@@ -196,7 +200,7 @@ const checkIsEditDataChanged = () => {
               required
               v-model="editingData.role"
               class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-gray-100 appearance-none focus:outline-none focus:ring-0"
-              :class="isEditing ? 'text-gray-900 border-b-2' : 'text-gray-500'"
+              :class="isEditing ? 'text-gray-900 border-b' : 'text-gray-500'"
               :disabled="!isEditing"
               @change="checkIsEditDataChanged"
             >

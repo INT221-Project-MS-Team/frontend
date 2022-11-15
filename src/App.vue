@@ -13,18 +13,26 @@ const fetchLoggedInData = async () => {
   let access_token = localStorage.getItem('access_token');
   let refresh_token = localStorage.getItem('refresh_token');
   if (access_token && refresh_token) {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + `/api/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    if (response.status === 200) {
-      let data = await response.json();
-      storeStatus.setIsLoggedIn(true);
-      storeStatus.setLoggedInUser({...data});
-    } else {
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_SERVER_URL + `/api/me`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        let data = await response.json();
+        storeStatus.setIsLoggedIn(true);
+        storeStatus.setLoggedInUser({ ...data });
+      } else {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+      }
+    } catch (error) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
     }

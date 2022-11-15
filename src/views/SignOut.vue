@@ -10,7 +10,13 @@ const router = useRouter();
 localStorage.removeItem('access_token');
 localStorage.removeItem('refresh_token');
 
-swal('Success', 'You have been logged out', 'success');
+swal({
+  title: 'Success',
+  text: 'You have been logged out',
+  icon: 'success',
+  showConfirmButton: false,
+  timer: 2000,
+});
 
 storeStatus.setIsLoggedIn(false);
 storeStatus.setLoggedInUser(null);
@@ -19,7 +25,5 @@ router.push({ name: 'sign-in' });
 </script>
 
 <template>
-    <div>
-        Logging out...
-    </div>
+  <div>Logging out...</div>
 </template>

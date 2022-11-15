@@ -42,18 +42,19 @@ const getUsersData = async () => {
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
-      confirmButtonText: 'Confirm',
+      showConfirmButton: false,
+      timer: 2000,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
-    swal
-      .fire({
-        title: 'Error!',
-        text: 'Access Denied',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      })
-      router.push({ name: 'home' });
+    swal.fire({
+      title: 'Error!',
+      text: 'Access Denied',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    router.push({ name: 'home' });
   } else {
     console.log('Fetch User Error');
   }

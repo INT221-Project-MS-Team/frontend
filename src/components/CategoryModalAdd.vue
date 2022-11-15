@@ -44,7 +44,8 @@ const addCategory = async () => {
       title: 'Success',
       text: 'Add category successfully',
       icon: 'success',
-      button: 'OK',
+      showConfirmButton: false,
+      timer: 2000,
     });
     emits('closeModal');
     emits('forceUpdate');
@@ -86,7 +87,7 @@ const addCategory = async () => {
             <input
               type="text"
               v-model="newCategoryData.eventCategoryName"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
               maxlength="100"
@@ -101,7 +102,7 @@ const addCategory = async () => {
             <input
               type="number"
               v-model="newCategoryData.eventDuration"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required=""
               min="1"
@@ -117,7 +118,7 @@ const addCategory = async () => {
             <textarea
               type="text"
               v-model="newCategoryData.eventCategoryDescription"
-              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               maxlength="500"
               rows="4"

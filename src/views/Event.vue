@@ -567,7 +567,7 @@ onBeforeMount(async () => {
               <input
                 v-if="isEditing"
                 type="date"
-                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 :min="getInputDate(eventData.eventStartTime)"
                 v-model="editingEventDate"
@@ -594,7 +594,7 @@ onBeforeMount(async () => {
               <input
                 v-if="isEditing"
                 type="time"
-                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 v-model="editingEventTime"
                 :required="editingEventDate.length"

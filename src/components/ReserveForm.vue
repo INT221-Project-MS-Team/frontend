@@ -33,6 +33,8 @@ const validateFileSize = async () => {
         icon: 'error',
         title: 'Oops...',
         text: 'File size must be less than 10MB please select another file',
+        showConfirmButton: false,
+        timer: 3000,
       });
       throw new Error(
         'File size must be less than 10MB please select another file'
@@ -81,7 +83,8 @@ const uploadFile = async () => {
       title: 'Success!',
       text: 'File Uploaded',
       icon: 'success',
-      confirmButtonText: 'Confirm',
+      showConfirmButton: false,
+      timer: 2000,
     });
     reserverInformation.value.file = data;
     return data;
@@ -90,7 +93,8 @@ const uploadFile = async () => {
       title: 'Error!',
       text: 'File Upload Failed',
       icon: 'error',
-      confirmButtonText: 'Confirm',
+      showConfirmButton: false,
+      timer: 2000,
     });
     reserverInformation.value.file = null;
     console.log('Upload file error');
@@ -125,7 +129,7 @@ const next = async () => {
         <input
           type="text"
           v-model="reserverInformation.name"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required=""
           maxlength="100"
@@ -141,7 +145,7 @@ const next = async () => {
           type="email"
           v-model="reserverInformation.email"
           name="floating_email"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required=""
         />
@@ -156,7 +160,7 @@ const next = async () => {
           <input
             type="date"
             v-model="reserverInformation.date"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
             :min="getInputDate(new Date())"
@@ -169,7 +173,7 @@ const next = async () => {
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="time"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required=""
             v-model="reserverInformation.startTime"
@@ -185,7 +189,7 @@ const next = async () => {
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="text"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             disabled
             :value="category.eventCategoryName"
@@ -198,7 +202,7 @@ const next = async () => {
         <div class="relative z-0 w-full mb-6 group">
           <input
             type="number"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             disabled
             max="480"
@@ -211,7 +215,7 @@ const next = async () => {
           >
         </div>
       </div>
-      
+
       <div id="file-upload">
         <label
           class="block mb-2 text-xs font-medium text-gray-500"
