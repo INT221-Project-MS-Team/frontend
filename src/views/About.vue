@@ -42,10 +42,10 @@ const goBack = () => {
             Buratsakorn Boonma
           </div>
           <div class="text-sm text-gray-200">63130500074</div>
-          <a href="https://github.com/bewburats">
+          <a href="https://github.com/bewburats" target="_blank">
             <img
               src="/images/Github-white.png"
-              class="mx-auto object-scale-down"
+              class="mx-auto max-w-sm w-10"
             />
           </a>
         </div>
@@ -58,8 +58,8 @@ const goBack = () => {
             Rawis Noiwong
           </div>
           <span class="text-sm text-gray-200">63130500100</span>
-          <a href="https://github.com/Tttangentt">
-            <img src="/images/Github-white.png" class="mx-auto" />
+          <a href="https://github.com/Tttangentt" target="_blank">
+            <img src="/images/Github-white.png" class="mx-auto max-w-sm w-10"  />
           </a>
         </div>
         <div>
@@ -71,8 +71,8 @@ const goBack = () => {
             Siriwat Jaiyungyuen
           </div>
           <span class="text-sm text-gray-200">63130500120</span>
-          <a href="https://github.com/siraom15">
-            <img src="/images/Github-white.png" class="mx-auto" />
+          <a href="https://github.com/siraom15" class="mt-2" target="_blank">
+            <img src="/images/Github-white.png" class="mx-auto max-w-sm w-10" />
           </a>
         </div>
       </div>

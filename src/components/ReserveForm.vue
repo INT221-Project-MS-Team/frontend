@@ -222,7 +222,7 @@ const next = async () => {
           for="small_size"
           >Upload file</label
         >
-        <p class="text-xs text-gray-9000">
+        <p class="text-xs text-gray-900">
           Current file : {{ accept_file?.name || 'No File' }}
         </p>
         <div class="flex justify-center items-center w-full">

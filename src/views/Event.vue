@@ -533,7 +533,7 @@ onBeforeMount(async () => {
         <div class="flex flex-col overflow-auto w-full mt-5 clinic-scollbar">
           <form
             @submit.prevent="updateEvent"
-            class="font-normal gap-5 flex flex-col"
+            class="font-normal gap-2 flex flex-col"
           >
             <!-- <div class="flex items-center justify-end">
               <PencilIcon class="w-5 h-5" />
@@ -672,9 +672,10 @@ onBeforeMount(async () => {
               <!-- if not have file show upload -->
               <div v-if="!eventData.file">
                 <div id="file-upload" v-if="isEditing">
-                  <p class="text-xs text-gray-9000">
-                    Current update file : {{ accept_file?.name || 'No File' }}
-                  </p>
+                  <span class="text-sm text-gray-900">
+                    Current update file :
+                    <span class="text-red-500">{{ accept_file?.name || 'No input file' }}</span>
+                  </span>
                   <div class="flex justify-center items-center w-full">
                     <label
                       for="dropzone-file"
@@ -773,14 +774,19 @@ onBeforeMount(async () => {
             </div>
 
             <!-- event delete -->
-            <div class="mt-5" v-if="isEditing">
+            <div v-if="isEditing">
               <Divider text="Danger Zone" />
-              <div
+              <SmButton
+                text="Cancel Event"
+                btnType="danger"
+                @click="deleteEvent"
+              />
+              <!-- <div
                 class="w-full mb-3 text-center item-center text-white bg-red-600 min-w-fit rounded-lg p-1 hover:bg-red-700"
                 @click="deleteEvent"
               >
                 Cancel Event
-              </div>
+              </div> -->
             </div>
 
             <!-- page control -->

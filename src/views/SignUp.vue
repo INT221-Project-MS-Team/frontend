@@ -106,7 +106,7 @@ const signup = async () => {
         class="flex flex-wrap-reverse justify-center items-center w-10/12 mx-auto gap-3 bg-white/90 rounded-lg border shadow-md md:flex-row md:max-w-fit"
       >
         <img
-          class="m-4 mr-10 hidden object-cover 2 sm:w-3/12 lg:w-3/12 md:w-3/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
+          class="m-4 mr-10 hidden object-cover 2 sm:w-4/12 lg:w-4/12 md:w-4/12 xs:hidden md:block rounded-lg drop-shadow-2xl"
           src="/images/calen-phone-girl.png"
           alt="element-home"
         />
@@ -119,7 +119,8 @@ const signup = async () => {
                 SIGN UP
               </div>
               <form @submit.prevent="signup">
-                <div class="relative z-0 w-full mb-6 group">
+                
+                <div class="relative z-0 w-full mb-4 group">
                   <input
                     type="text"
                     name="floating_email"
@@ -137,7 +138,7 @@ const signup = async () => {
                     Name
                   </label>
                 </div>
-                <div class="relative z-0 w-full mb-6 group">
+                <div class="relative z-0 w-full mb-4 group">
                   <input
                     type="email"
                     name="floating_email"
@@ -155,7 +156,7 @@ const signup = async () => {
                     Email
                   </label>
                 </div>
-                <div class="relative z-0 w-full mb-6 group">
+                <div class="relative z-0 w-full mb-4 group">
                   <input
                     type="password"
                     name="floating_email"
@@ -174,7 +175,7 @@ const signup = async () => {
                     Password
                   </label>
                 </div>
-                <div class="relative z-0 w-full mb-6 group">
+                <div class="relative z-0 w-full mb-4 group">
                   <input
                     type="password"
                     name="floating_email"
@@ -203,8 +204,7 @@ const signup = async () => {
                     Password NOT Match
                   </p>
                 </div>
-
-                <div class="relative z-0 w-full mb-6 group">
+                <div class="relative z-0 w-full mb-4 group">
                   <label for="underline_select" class="sr-only">select</label>
                   <label
                     for=""
