@@ -165,7 +165,6 @@ const deleteEvent = async () => {
 const updateEvent = async () => {
   await swal({
     title: '<p class="text-lg">Are you sure to <b>Update</b> this event ?</p>',
-    text: "You won't be able to revert this!",
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#5f72ff',
@@ -368,15 +367,6 @@ const validateFileSize = async () => {
 
 const uploadFile = async () => {
   if (!accept_file.value) return;
-  let loadingPopup = swal({
-    icon: 'info',
-    title: 'Uploading File',
-    text: 'Please wait...',
-    showConfirmButton: false,
-    closeOnClickOutside: false,
-    closeOnEsc: false,
-    timerProgressBar: true,
-  });
   //Upload to server
   const formData = new FormData();
   formData.append('file', accept_file.value);
@@ -389,11 +379,9 @@ const uploadFile = async () => {
   );
   if (response.status === 201) {
     const data = await response.json();
-    loadingPopup.close();
     fileResponse.value = data;
     return data;
   } else {
-    loadingPopup.close();
     swal.fire({
       title: 'Error!',
       text: 'File Upload Failed',
@@ -410,7 +398,7 @@ const deleteFile = async () => {
   await swal({
     title:
       '<p class="text-lg">Are you sure to <b>delete file</b> from this event ?</p>',
-    text: "You won't be able to revert this!",
+    text: "Your file will permanently deleted from server and can't be recovered",
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#5f72ff',
@@ -498,11 +486,11 @@ onBeforeMount(async () => {
   <div
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap flex-col items-center justify-center gap-2"
   >
-    <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white">
+    <!-- <p class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-white">
       {{ isEditing ? 'Edit Event Detail' : 'Event Detail' }}
-    </p>
+    </p> -->
     <div
-      class="bg-white rounded-3xl h-5/6 lg:h-4/6 w-11/12 lg:w-8/12 flex shadow-lg"
+      class="bg-white rounded-3xl h-5/6 lg:h-5/6 w-11/12 lg:w-8/12 flex shadow-lg"
     >
       <!-- no event -->
       <div v-if="!eventData" class="flex flex-col items-center justify-center">
@@ -515,6 +503,11 @@ onBeforeMount(async () => {
         <div
           class="min-h-full bg-clinic-blue-50 w-6/12 rounded-lg flex flex-col justify-center items-center p-5 gap-2"
         >
+        <p
+            class="text-white text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-center uppercase"
+          >
+          {{ !isEditing ? 'Booking Detail' : 'Editing Detail' }}
+          </p>
           <img
             class="object-cover w-10/12"
             src="/images/person.png"
@@ -530,7 +523,7 @@ onBeforeMount(async () => {
             Edit start time, date and note only
           </span>
         </div>
-        <div class="flex flex-col overflow-auto w-full mt-5 clinic-scollbar">
+        <div class="flex flex-col overflow-auto w-full clinic-scollbar">
           <form
             @submit.prevent="updateEvent"
             class="font-normal gap-2 flex flex-col"
@@ -538,15 +531,19 @@ onBeforeMount(async () => {
             <!-- <div class="flex items-center justify-end">
               <PencilIcon class="w-5 h-5" />
             </div> -->
-            <span class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl"
+            <!-- <span
+              class="text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl text-clinic-blue-300 mx-auto uppercase"
+              >{{ !isEditing ? 'Booking Detail' : 'Editing Booking detail' }}
+            </span> -->
+
+            <Divider text="Information" />
+
+            <span
               ><span class="text-clinic-blue-300">Booking Name: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 {{ eventData.bookingName }}</span
               >
             </span>
-
-            <Divider text="Information" />
-
             <span
               ><span class="text-clinic-blue-300">Email: </span>
               <span :class="{ 'text-gray-400': isEditing }">
@@ -646,7 +643,7 @@ onBeforeMount(async () => {
             <Divider text="Attachment" />
             <div id="file-section">
               <!-- show file name -->
-              <span class="flex gap-2 mb-3">
+              <span class="flex gap-2">
                 <div v-if="eventData.file">
                   Current File
                   <a
@@ -656,15 +653,16 @@ onBeforeMount(async () => {
                     <PaperClipIcon class="w-5 h-5" />
                     {{ eventData.file.fileName }}
                   </a>
-                  <div class="flex gap-2 mt-5" v-if="isEditing">
+                  <div class="mt-5" v-if="isEditing">
                     <SmButton
                       text="Delete File"
                       btnType="danger"
                       @click="deleteFile"
                     />
+                    <p class="text-xs text-gray-400 mt-2">** To change file: delete old file and upload new one</p>
                   </div>
                 </div>
-                <div v-else>
+                <div v-if="!eventData.file && !isEditing">
                   <p class="text-gray-300">No Attach File</p>
                 </div>
               </span>
@@ -674,7 +672,9 @@ onBeforeMount(async () => {
                 <div id="file-upload" v-if="isEditing">
                   <span class="text-sm text-gray-900">
                     Current update file :
-                    <span class="text-red-500">{{ accept_file?.name || 'No input file' }}</span>
+                    <span class="text-clinic-blue-200">{{
+                      accept_file?.name || 'No input file'
+                    }}</span>
                   </span>
                   <div class="flex justify-center items-center w-full">
                     <label
@@ -718,6 +718,8 @@ onBeforeMount(async () => {
                       />
                     </label>
                   </div>
+                  <p class="text-xs text-gray-400 mt-2">** To complete upload: click on save event button</p>
+
                 </div>
               </div>
 

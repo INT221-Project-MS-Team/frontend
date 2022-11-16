@@ -224,6 +224,10 @@ const next = async () => {
         >
         <p class="text-xs text-gray-900">
           Current file : {{ accept_file?.name || 'No File' }}
+          ({{
+            accept_file?.size ? (accept_file?.size / 1024 / 1024).toFixed(2) : 0
+          }}
+          MB)
         </p>
         <div class="flex justify-center items-center w-full">
           <label
