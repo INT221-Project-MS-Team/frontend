@@ -69,6 +69,7 @@ const uploadFile = async () => {
   //Upload to server
   const formData = new FormData();
   formData.append('file', accept_file.value);
+  console.log('final file size before send ', accept_file.value.size);
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/upload-file',
     {
