@@ -178,7 +178,7 @@ onBeforeMount(async () => {
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
     <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
-    <div class="bg-white rounded-3xl h-5/6 w-7/12 flex shadow-lg">
+    <div class="bg-white rounded-3xl h-5/6 w-8/12 md:w-7/12 lg:w-7/12 mt-14 md:mt-0 flex shadow-lg">
       <!-- no event -->
       <div
         v-if="!filteredSchedules.length"
@@ -208,16 +208,16 @@ onBeforeMount(async () => {
       </div>
     </div>
 
-    <div class="bg-white rounded-3xl h-5/6 w-3/12 flex shadow-lg px-2.5">
+    <div class="bg-white rounded-3xl h-5/6 w-8/12 md:w-3/12 lg:w-3/12 flex shadow-lg px-2.5">
       <div
-        class="flex flex-col p-10 min-w-full z-10 overflow-auto clinic-scollbar"
+        class="flex flex-col p-5 lg:p-10 min-w-full z-10 overflow-auto clinic-scollbar"
       >
         <p class="text-gray-400 text-sm md:text-lg lg:text-lg">Event Filter</p>
 
         <Divider text="Search" />
         <form>
           <label
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+            class="mb-2 font-medium text-gray-900 sr-only text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
             >Search</label
           >
           <div class="relative">

@@ -499,30 +499,32 @@ onBeforeMount(async () => {
       </div>
 
       <!-- have event -->
+
       <div v-else class="flex flex-row min-w-full p-5 gap-6">
         <div
-          class="min-h-full bg-clinic-blue-50 w-6/12 rounded-lg flex flex-col justify-center items-center p-5 gap-2"
+          class="min-h-full bg-clinic-blue-50 w-5/12 my-auto mx-auto rounded-lg flex flex-col justify-center items-center gap-2"
         >
           <p
-            class="text-white text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-center uppercase"
+            class="text-white text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-2xl text-center uppercase"
           >
             {{ !isEditing ? 'Booking Detail' : 'Editing Detail' }}
           </p>
           <img
-            class="object-cover w-10/12"
+            class="object-cover w-7/12"
             src="/images/person.png"
             alt="cover"
           />
           <br />
           <p
-            class="text-white text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-center"
+            class="text-white text-sm xs:text-base sm:text-base md:text-xl lg:text-xl text-center"
           >
             Event ID : {{ eventData.id }}
           </p>
-          <span v-show="isEditing" class="text-red-700 text-sm">
+          <span v-show="isEditing" class="text-red-700 text-xs xs:text-sm sm:text-sm md:text-sm lg:text-sm text-center">
             Edit start time, date and note only
           </span>
         </div>
+
         <div class="flex flex-col overflow-auto w-full clinic-scollbar">
           <form
             @submit.prevent="updateEvent"
@@ -539,25 +541,29 @@ onBeforeMount(async () => {
             <Divider text="Information" />
 
             <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
               ><span class="text-clinic-blue-300">Booking Name: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 {{ eventData.bookingName }}</span
               >
             </span>
             <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
               ><span class="text-clinic-blue-300">Email: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 {{ eventData.bookingEmail }}</span
               >
             </span>
 
-            <div class="flex flex-row items-center gap-x-2">
+            <div
+              class="flex flex-row items-center gap-x-2 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+            >
               <span class="text-clinic-blue-300">Date: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 <!-- {{ getDate(eventData.eventStartTime) }} -->
                 <input
                   type="date"
-                  class="border-0 p-0"
+                  class="border-0 p-0 text-xs xs:text-xs sm:text-xs md:text-sm lg:text-sm"
                   placeholder=" "
                   :value="getInputDate(eventData.eventStartTime)"
                   disabled
@@ -570,7 +576,7 @@ onBeforeMount(async () => {
               <input
                 v-if="isEditing"
                 type="date"
-                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                class="block py-2.5 px-0 text-xs xs:text-xs sm:text-xs md:text-sm lg:text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 :min="getInputDate(eventData.eventStartTime)"
                 v-model="editingEventDate"
@@ -578,12 +584,14 @@ onBeforeMount(async () => {
               />
             </div>
 
-            <div class="flex flex-row items-center gap-x-2">
+            <div
+              class="flex flex-row items-center gap-x-2 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+            >
               <span class="text-clinic-blue-300">Start Time: </span>
               <span :class="{ 'text-gray-400': isEditing }">
                 <input
                   type="time"
-                  class="border-0 p-0"
+                  class="border-0 p-0 text-xs xs:text-xs sm:text-xs md:text-sm lg:text-sm"
                   placeholder=" "
                   :value="getTime(eventData.eventStartTime)"
                   disabled
@@ -597,32 +605,38 @@ onBeforeMount(async () => {
               <input
                 v-if="isEditing"
                 type="time"
-                class="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                class="block py-2.5 px-2 text-xs xs:text-xs sm:text-xs md:text-sm lg:text-sm text-gray-900 bg-transparent border-0 border-b border-gray-100 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 v-model="editingEventTime"
                 :required="editingEventDate.length"
               />
             </div>
             <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
               ><span class="text-clinic-blue-300">Duration: </span>
               <span :class="{ 'text-gray-400': isEditing }"
                 >{{ eventData.eventDuration }} Minutes</span
               >
             </span>
             <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
               ><span class="text-clinic-blue-300">Category Name: </span>
               <span :class="{ 'text-gray-400': isEditing }">{{
                 eventData.eventCategory.eventCategoryName
               }}</span>
             </span>
-            <span>
+            <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+            >
               <span class="text-clinic-blue-300">Category Description: </span>
               <span :class="{ 'text-gray-400': isEditing }"
                 >{{ eventData.eventCategory.eventCategoryDescription }}
               </span>
             </span>
 
-            <span>
+            <span
+              class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+            >
               <span class="text-clinic-blue-300">Note: </span>
               <span
                 v-if="!isEditing"
@@ -632,7 +646,7 @@ onBeforeMount(async () => {
               >
               <textarea
                 v-model="editingEventNotes"
-                class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-white sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-white sm:text-md focus:ring-blue-500 focus:border-blue-500 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
                 v-else
                 maxlength="500"
                 rows="2"
@@ -644,7 +658,7 @@ onBeforeMount(async () => {
             <div id="file-section">
               <!-- show file name -->
               <span class="flex gap-2">
-                <div v-if="eventData.file">
+                <div v-if="eventData.file"  class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base">
                   Current File
                   <a
                     :href="getDownloadUrl(eventData.file.fileName)"
@@ -665,7 +679,11 @@ onBeforeMount(async () => {
                   </div>
                 </div>
                 <div v-if="!eventData.file && !isEditing">
-                  <p class="text-gray-300">No Attach File</p>
+                  <p
+                    class="text-gray-300 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+                  >
+                    No Attach File
+                  </p>
                 </div>
               </span>
 
