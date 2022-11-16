@@ -21,16 +21,8 @@ const localLogout = async () => {
 if (storeStatus.isLoggedIn) {
   if (storeStatus.loggedInUser.type === 'msal') {
     await logoutWithMSAL();
-    
     storeStatus.setIsLoggedIn(false);
     storeStatus.setLoggedInUser(null);
-    swal({
-      title: 'Logout Success',
-      text: 'See you again',
-      icon: 'success',
-      timer: 2000,
-      showConfirmButton: false,
-    });
   } else {
     await localLogout();
     storeStatus.setIsLoggedIn(false);
