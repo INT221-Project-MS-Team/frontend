@@ -4,7 +4,8 @@ import Divider from '@/components/Divider.vue';
 import { ArrowRightIcon, UserAddIcon } from '@heroicons/vue/outline';
 import { inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useStatusStore } from '../store/status';
+import { useStatusStore } from '@/store/status';
+import AuthService from '@/msal/index';
 
 const storeStatus = useStatusStore();
 const swal = inject('$swal');
@@ -13,6 +14,33 @@ const signInData = ref({
   email: '',
   password: '',
 });
+
+const loginWithMSAL = async () => {
+  const instance = new AuthService();
+  let user = await instance.loginPopup();
+  if (user) {
+    swal({
+      title: 'Login Success',
+      text: 'Welcome ' + user.idToken.preferred_username,
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } else {
+    swal({
+      title: 'Login Failed',
+      text: 'Please try again',
+      icon: 'error',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
+};
+
+const logoutWithMSAL = async () => {
+  const instance = new AuthService();
+  await instance.logout();
+};
 
 const checkSignIn = async () => {
   try {
@@ -117,12 +145,19 @@ const checkSignIn = async () => {
                 OR
               </div>
               <a
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                @click="loginWithMSAL"
                 target="_blank"
                 class="flex gap-2 align-middle justify-center"
               >
                 <img src="/images/msteam.webp" class="w-5 h-5" alt="" />
                 <p class="text-xs">Signin with microsoft</p>
+              </a>
+              <a
+                @click="logoutWithMSAL"
+                target="_blank"
+                class="flex gap-2 align-middle justify-center"
+              >
+                <p class="text-xs">Logout</p>
               </a>
             </div>
 
