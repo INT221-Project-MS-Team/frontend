@@ -26,6 +26,16 @@ const loginWithMSAL = async () => {
       timer: 2000,
       showConfirmButton: false,
     });
+    router.push({ name: 'home' });
+    storeStatus.setIsLoggedIn(true);
+    let myUser = {
+      type: 'msal',
+      email: user.idToken.preferred_username,
+      id: undefined,
+      name: user.idToken.name,
+      role: user.idToken?.roles ? user.idToken.roles[0] : 'GUEST',
+    };
+    storeStatus.setLoggedInUser(myUser);
   } else {
     swal({
       title: 'Login Failed',
@@ -35,11 +45,6 @@ const loginWithMSAL = async () => {
       showConfirmButton: false,
     });
   }
-};
-
-const logoutWithMSAL = async () => {
-  const instance = new AuthService();
-  await instance.logout();
 };
 
 const checkSignIn = async () => {
@@ -60,7 +65,15 @@ const checkSignIn = async () => {
       localStorage.setItem('refresh_token', data.refresh_token);
 
       storeStatus.setIsLoggedIn(true);
-      storeStatus.setLoggedInUser(data.user);
+      let myUser = {
+        type: 'local',
+        email: data.user.email,
+        id: data.user.id,
+        name: data.user.name,
+        role: data.user.role,
+      };
+
+      storeStatus.setLoggedInUser(myUser);
 
       swal({
         title: 'Success',
@@ -147,17 +160,10 @@ const checkSignIn = async () => {
               <a
                 @click="loginWithMSAL"
                 target="_blank"
-                class="flex gap-2 align-middle justify-center"
+                class="flex gap-2 align-middle justify-center hover:underline"
               >
                 <img src="/images/msteam.webp" class="w-5 h-5" alt="" />
                 <p class="text-xs">Signin with microsoft</p>
-              </a>
-              <a
-                @click="logoutWithMSAL"
-                target="_blank"
-                class="flex gap-2 align-middle justify-center"
-              >
-                <p class="text-xs">Logout</p>
               </a>
             </div>
 

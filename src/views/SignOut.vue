@@ -2,26 +2,50 @@
 import { inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStatusStore } from '../store/status';
+import AuthService from '@/msal/index';
 
 const storeStatus = useStatusStore();
 const swal = inject('$swal');
 const router = useRouter();
 
-localStorage.removeItem('access_token');
-localStorage.removeItem('refresh_token');
+const logoutWithMSAL = async () => {
+  const instance = new AuthService();
+  await instance.logout();
+};
 
-swal({
-  title: 'Success',
-  text: 'You have been logged out',
-  icon: 'success',
-  showConfirmButton: false,
-  timer: 1500,
-});
+const localLogout = async () => {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+};
 
-storeStatus.setIsLoggedIn(false);
-storeStatus.setLoggedInUser(null);
-
-router.push({ name: 'sign-in' });
+if (storeStatus.isLoggedIn) {
+  if (storeStatus.loggedInUser.type === 'msal') {
+    await logoutWithMSAL();
+    
+    storeStatus.setIsLoggedIn(false);
+    storeStatus.setLoggedInUser(null);
+    swal({
+      title: 'Logout Success',
+      text: 'See you again',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } else {
+    await localLogout();
+    storeStatus.setIsLoggedIn(false);
+    storeStatus.setLoggedInUser(null);
+    swal({
+      title: 'Logout Success',
+      text: 'See you again',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+    router.push({ name: 'sign-in' });
+  }
+  
+}
 </script>
 
 <template>

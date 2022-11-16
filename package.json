@@ -8,9 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.31.0",
     "@heroicons/vue": "^1.0.6",
     "flowbite": "^1.4.3",
     "flowbite-vue": "^0.0.5",
+    "msal": "^1.4.17",
     "pinia": "^2.0.0-rc.10",
     "prettier": "^2.6.2",
     "vue": "^3.2.25",
