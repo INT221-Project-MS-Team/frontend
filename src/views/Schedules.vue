@@ -129,8 +129,8 @@ const getSchedulesData = async () => {
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
-      confirmButtonText: 'Confirm',
-      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 1500,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {

@@ -83,8 +83,8 @@ const getEventData = async () => {
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
-      confirmButtonText: 'Confirm',
-      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 1500,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
@@ -136,8 +136,8 @@ const deleteEvent = async () => {
           title: 'Error!',
           text: 'You are not Signed in',
           icon: 'error',
-          confirmButtonText: 'Confirm',
-          allowOutsideClick: false,
+          showConfirmButton: false,
+          timer: 1500,
         });
         router.push({ name: 'sign-in' });
       } else if (response.status === 403) {
@@ -244,8 +244,8 @@ const updateEvent = async () => {
           title: 'Error!',
           text: 'You are not Signed in',
           icon: 'error',
-          confirmButtonText: 'Confirm',
-          allowOutsideClick: false,
+          showConfirmButton: false,
+          timer: 1500,
         });
         router.push({ name: 'sign-in' });
       } else if (response.status === 403) {
@@ -312,8 +312,8 @@ const getSchedulesData = async () => {
       title: 'Error!',
       text: 'You are not Signed in',
       icon: 'error',
-      confirmButtonText: 'Confirm',
-      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 1500,
     });
     router.push({ name: 'sign-in' });
   } else if (response.status === 403) {
@@ -432,8 +432,8 @@ const deleteFile = async () => {
           title: 'Error!',
           text: 'You are not Signed in',
           icon: 'error',
-          confirmButtonText: 'Confirm',
-          allowOutsideClick: false,
+          showConfirmButton: false,
+          timer: 1500,
         });
         router.push({ name: 'sign-in' });
       } else if (response.status === 403) {
@@ -503,10 +503,10 @@ onBeforeMount(async () => {
         <div
           class="min-h-full bg-clinic-blue-50 w-6/12 rounded-lg flex flex-col justify-center items-center p-5 gap-2"
         >
-        <p
+          <p
             class="text-white text-xl xs:text-xl sm:text-xl md:text-2xl lg:text-3xl text-center uppercase"
           >
-          {{ !isEditing ? 'Booking Detail' : 'Editing Detail' }}
+            {{ !isEditing ? 'Booking Detail' : 'Editing Detail' }}
           </p>
           <img
             class="object-cover w-10/12"
@@ -659,7 +659,9 @@ onBeforeMount(async () => {
                       btnType="danger"
                       @click="deleteFile"
                     />
-                    <p class="text-xs text-gray-400 mt-2">** To change file: delete old file and upload new one</p>
+                    <p class="text-xs text-gray-400 mt-2">
+                      ** To change file: delete old file and upload new one
+                    </p>
                   </div>
                 </div>
                 <div v-if="!eventData.file && !isEditing">
@@ -718,8 +720,9 @@ onBeforeMount(async () => {
                       />
                     </label>
                   </div>
-                  <p class="text-xs text-gray-400 mt-2">** To complete upload: click on save event button</p>
-
+                  <p class="text-xs text-gray-400 mt-2">
+                    ** To complete upload: click on save event button
+                  </p>
                 </div>
               </div>
 
