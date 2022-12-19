@@ -7,7 +7,7 @@ import {
   truncateString,
   categoryIdToStyleColor,
   getInputDate,
-  getInputTime
+  getInputTime,
 } from '@/utils';
 import SmButton from './SmButton.vue';
 import Badge from './Badge.vue';
@@ -34,11 +34,16 @@ const props = defineProps({
       <div
         class="mb-2 font-normal overflow-auto force-overflow grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-1"
       >
-        <span class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+        <span
+          class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
           ><span class="text-clinic-blue-300">Name:</span>
-          {{ truncateString(event.bookingName) }}</span
-        >
-        <span class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+          <span v-if="event.bookingName">
+            {{ truncateString(event.bookingName) }}
+          </span>
+          <span v-else class="text-gray-400"> Blinded</span>
+        </span>
+        <span
+          class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
           ><span class="text-clinic-blue-300">Date:</span>
           <!-- {{ getDate(event.eventStartTime) }} -->
           <input
@@ -50,7 +55,8 @@ const props = defineProps({
           />
         </span>
 
-        <span class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+        <span
+          class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
           ><span class="text-clinic-blue-300">Start Time:</span>
           <!-- {{ getTime(event.eventStartTime) }} -->
           <input
@@ -62,12 +68,15 @@ const props = defineProps({
           />
         </span>
 
-        <span class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+        <span
+          class="truncate text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
           ><span class="text-clinic-blue-300">Duration:</span>
           {{ event.eventDuration }} Minutes</span
         >
 
-        <span class="truncate xl:col-span-2 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base">
+        <span
+          class="truncate xl:col-span-2 text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+        >
           <span class="text-clinic-blue-300">Category: </span>
           <Badge
             :text="event.eventCategory.eventCategoryName"

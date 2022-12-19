@@ -109,25 +109,30 @@ const resetFilter = () => {
 };
 
 const getSchedulesData = async () => {
-  let msalIdToken = localStorage.getItem('msal.idtoken');
-  let authorization = '';
-  if (msalIdToken) {
-    authorization = 'Bearer ' + msalIdToken;
+  let url = '';
+  if (!storeStatus.isLoggedIn || storeStatus.loggedInUser.role === 'GUEST') {
+    url = `/api/events/blind?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`;
   } else {
-    authorization = 'Bearer ' + localStorage.getItem('access_token');
+    url = `/api/events/me?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`;
   }
 
-  const response = await fetch(
-    import.meta.env.VITE_SERVER_URL +
-      `/api/events/me?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authorization,
-      },
-    }
-  );
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let token = localStorage.getItem('access_token');
+  let authorization = undefined;
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else if (token) {
+    authorization = 'Bearer ' + token;
+  } else {
+  }
+
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: authorization,
+    },
+  });
   if (response.status === 200) {
     const data = await response.json();
     schedulesData.value = data;
@@ -172,10 +177,10 @@ const getCategoriesData = async () => {
 };
 
 onBeforeMount(async () => {
-  if (!storeStatus.isLoggedIn) {
-    router.push({ name: 'sign-in' });
-    return;
-  }
+  // if (!storeStatus.isLoggedIn) {
+  //   router.push({ name: 'sign-in' });
+  //   return;
+  // }
   await getSchedulesData();
   await getCategoriesData();
 });

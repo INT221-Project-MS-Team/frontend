@@ -23,12 +23,13 @@ const newCategoryData = computed(() => ({
 
 //create
 const addCategory = async () => {
-  let msalIdToken = localStorage.getItem('msal.idtoken');
-  let authorization = '';
+   let msalIdToken = localStorage.getItem('msal.idtoken');
+  let token = localStorage.getItem('access_token');
+  let authorization = undefined;
   if (msalIdToken) {
     authorization = 'Bearer ' + msalIdToken;
-  } else {
-    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  } else if (token) {
+    authorization = 'Bearer ' + token;
   }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events-categories/',

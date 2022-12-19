@@ -11,6 +11,7 @@ const isLecturer = computed(
   () => storeStatus.loggedInUser?.role === 'LECTURER'
 );
 const isStudent = computed(() => storeStatus.loggedInUser?.role === 'STUDENT');
+const isGuest = computed(() => storeStatus.loggedInUser?.role === 'GUEST');
 const isLoggedIn = computed(() => storeStatus.isLoggedIn);
 </script>
 
@@ -58,7 +59,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
           </li>
 
           <!-- Service -->
-          <li v-show="isLoggedIn">
+          <li>
             <button
               id="dropdownNavbarLink2"
               data-dropdown-toggle="dropdownNavbar2"
@@ -88,7 +89,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
                 class="py-1 text-sm text-gray-700 dark:text-gray-400"
                 aria-labelledby="dropdownLargeButton"
               >
-                <li v-if="isLoggedIn">
+                <li>
                   <router-link :to="{ name: 'schedules' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -96,7 +97,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
                     </a>
                   </router-link>
                 </li>
-                <li v-if="isLoggedIn && !isLecturer">
+                <li v-if="isLoggedIn && !isLecturer && !isGuest">
                   <router-link :to="{ name: 'reserve' }">
                     <a
                       class="block py-2 px-4 text-clinic-blue-300 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -107,7 +108,7 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </ul>
             </div>
           </li>
-          
+
           <!-- Manage Navbar -->
           <li v-show="isLoggedIn && (isAdmin || isLecturer)">
             <button
@@ -199,7 +200,6 @@ const isLoggedIn = computed(() => storeStatus.isLoggedIn);
               </button>
             </router-link>
           </li>
-          
         </ul>
       </div>
     </div>

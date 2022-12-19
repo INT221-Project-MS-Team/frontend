@@ -66,7 +66,7 @@ export const categoryIdToStyleColor = (categoryId) => {
   return categoryId - 1 > colors.length ? 'primary' : colors[categoryId - 1];
 };
 
-export const truncateString = (string, length = 50) => {
+export const truncateString = (string = '', length = 50) => {
   if (string.length > length) {
     return string.substring(0, length) + '...';
   }
