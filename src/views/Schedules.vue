@@ -6,7 +6,13 @@ import Divider from '@/components/Divider.vue';
 import { getCurrentDateTime, getInputDate } from '@/utils';
 import { SearchIcon, CalendarIcon } from '@heroicons/vue/outline';
 import { ref } from '@vue/reactivity';
-import { computed, inject, onBeforeMount } from '@vue/runtime-core';
+import {
+  computed,
+  inject,
+  onBeforeMount,
+  onMounted,
+  watch,
+} from '@vue/runtime-core';
 import { useRouter } from 'vue-router';
 import { useStatusStore } from '../store/status';
 
@@ -176,11 +182,12 @@ const getCategoriesData = async () => {
   }
 };
 
-onBeforeMount(async () => {
-  // if (!storeStatus.isLoggedIn) {
-  //   router.push({ name: 'sign-in' });
-  //   return;
-  // }
+onMounted(async () => {
+  await getSchedulesData();
+  await getCategoriesData();
+});
+
+watch(storeStatus, async () => {
   await getSchedulesData();
   await getCategoriesData();
 });
