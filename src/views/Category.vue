@@ -31,7 +31,7 @@ const getCategoriesData = async () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' +authorization ?? '',
+        Authorization: authorization,
       },
     }
   );
@@ -130,10 +130,7 @@ onBeforeMount(async () => {
           />
         </div>
 
-        <CategoryTable
-          :categories="showData"
-          @editCategory="editCategory"
-        />
+        <CategoryTable :categories="showData" @editCategory="editCategory" />
 
         <CategoryModalAdd
           :category="addCategoryObj"
