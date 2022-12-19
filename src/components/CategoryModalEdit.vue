@@ -10,7 +10,9 @@ import {
 } from '@vue/runtime-core';
 import SmButton from './SmButton.vue';
 import Divider from './Divider.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const swal = inject('$swal');
 
 const emits = defineEmits(['closeModal', 'forceUpdate']);
