@@ -2,7 +2,7 @@
 import SmButton from '@/components/SmButton.vue';
 import Divider from '@/components/Divider.vue';
 import { ArrowRightIcon, UserAddIcon } from '@heroicons/vue/outline';
-import { inject, ref } from 'vue';
+import { inject, onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStatusStore } from '@/store/status';
 import AuthService from '@/msal/index';
@@ -91,6 +91,13 @@ const checkSignIn = async () => {
     swal('Error', err.message, 'error');
   }
 };
+
+// if loggedIn redirect to home
+onBeforeMount(() => {
+  if (storeStatus.isLoggedIn) {
+    router.push({ name: 'home' });
+  }
+});
 </script>
 
 <template>

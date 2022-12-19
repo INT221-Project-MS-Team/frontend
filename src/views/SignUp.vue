@@ -1,11 +1,13 @@
 <script setup>
 import SmButton from '@/components/SmButton.vue';
-import { inject, ref } from 'vue';
+import { inject, onBeforeMount, ref } from 'vue';
 import { validateEmail } from '@/utils';
 import { useRoute, useRouter } from 'vue-router';
 import { computed } from '@vue/reactivity';
 import { Swal } from 'sweetalert2/dist/sweetalert2';
+import { useStatusStore } from '../store/status';
 
+const storeStatus = useStatusStore();
 const swal = inject('$swal');
 
 const userRoles = ref(['STUDENT', 'LECTURER', 'ADMIN']);
@@ -95,6 +97,13 @@ const signup = async () => {
     swal('Error', error.message, 'error');
   }
 };
+
+// if loggedIn redirect to home
+onBeforeMount(() => {
+  if (storeStatus.isLoggedIn) {
+    router.push({ name: 'home' });
+  }
+});
 </script>
 
 <template>

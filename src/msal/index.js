@@ -6,12 +6,12 @@ export default class AuthService {
     this.app = new Msal.UserAgentApplication(msalConfig);
   }
 
-  // Core Functionality
   async loginPopup() {
     return this.app
       .loginPopup(loginRequest)
       .then((response) => {
         console.log(response);
+        console.log(response.idTokenClaims);
         const user = this.app.getAccount();
         if (user) {
           console.log(user);
@@ -56,7 +56,7 @@ export default class AuthService {
     );
   }
 
-  getGraphUserInfo(token) {
+  async getGraphUserInfo(token) {
     const headers = new Headers({ Authorization: `Bearer ${token}` });
     const options = {
       headers,
@@ -70,6 +70,6 @@ export default class AuthService {
 
   // Utility
   getUser() {
-    return this.app.getUser();
+    return this.app.getAccount();
   }
 }
