@@ -62,13 +62,20 @@ const getDownloadUrl = (downloadUrl) => {
 
 //event methods
 const getEventData = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: authorization,
       },
     }
   );
@@ -112,13 +119,20 @@ const deleteEvent = async () => {
     cancelButtonText: 'No',
   }).then(async (result) => {
     if (result.isConfirmed) {
+      let msalIdToken = localStorage.getItem('msal.idtoken');
+      let authorization = '';
+      if (msalIdToken) {
+        authorization = 'Bearer ' + msalIdToken;
+      } else {
+        authorization = 'Bearer ' + localStorage.getItem('access_token');
+      }
       const response = await fetch(
         import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
         {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            Authorization: authorization,
           },
         }
       );
@@ -218,13 +232,21 @@ const updateEvent = async () => {
 
       console.log(body);
 
+      let msalIdToken = localStorage.getItem('msal.idtoken');
+      let authorization = '';
+      if (msalIdToken) {
+        authorization = 'Bearer ' + msalIdToken;
+      } else {
+        authorization = 'Bearer ' + localStorage.getItem('access_token');
+      }
+
       const response = await fetch(
         import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}`,
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            Authorization: authorization,
           },
           body: JSON.stringify(body),
         }
@@ -292,13 +314,20 @@ const cancelEdit = () => {
 };
 
 const getSchedulesData = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + `/api/events`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: authorization,
       },
     }
   );
@@ -407,13 +436,20 @@ const deleteFile = async () => {
     cancelButtonText: 'No',
   }).then(async (result) => {
     if (result.isConfirmed) {
+      let msalIdToken = localStorage.getItem('msal.idtoken');
+      let authorization = '';
+      if (msalIdToken) {
+        authorization = 'Bearer ' + msalIdToken;
+      } else {
+        authorization = 'Bearer ' + localStorage.getItem('access_token');
+      }
       const response = await fetch(
         import.meta.env.VITE_SERVER_URL + `/api/events/${eventId.value}/file`,
         {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            Authorization: authorization,
           },
         }
       );
@@ -520,7 +556,10 @@ onBeforeMount(async () => {
           >
             Event ID : {{ eventData.id }}
           </p>
-          <span v-show="isEditing" class="text-red-700 text-xs xs:text-sm sm:text-sm md:text-sm lg:text-sm text-center">
+          <span
+            v-show="isEditing"
+            class="text-red-700 text-xs xs:text-sm sm:text-sm md:text-sm lg:text-sm text-center"
+          >
             Edit start time, date and note only
           </span>
         </div>
@@ -658,7 +697,10 @@ onBeforeMount(async () => {
             <div id="file-section">
               <!-- show file name -->
               <span class="flex gap-2">
-                <div v-if="eventData.file"  class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base">
+                <div
+                  v-if="eventData.file"
+                  class="text-xs xs:text-xs sm:text-sm md:text-base lg:text-base"
+                >
                   Current File
                   <a
                     :href="getDownloadUrl(eventData.file.fileName)"

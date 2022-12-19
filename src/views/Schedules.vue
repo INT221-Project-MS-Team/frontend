@@ -109,6 +109,14 @@ const resetFilter = () => {
 };
 
 const getSchedulesData = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
+
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL +
       `/api/events/me?sortBy=${sortBy.value}&sortOrder=${sortOrder.value}`,
@@ -116,7 +124,7 @@ const getSchedulesData = async () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: authorization,
       },
     }
   );
@@ -178,7 +186,9 @@ onBeforeMount(async () => {
     class="bg-schedules w-screen h-screen bg-no-repeat bg-cover bg-center flex flex-wrap items-center justify-center gap-2"
   >
     <!-- bg-gradient-to-bl from-clinic-blue-30 to-clinic-blue-25 -->
-    <div class="bg-white rounded-3xl h-5/6 w-8/12 md:w-7/12 lg:w-7/12 mt-14 md:mt-0 flex shadow-lg">
+    <div
+      class="bg-white rounded-3xl h-5/6 w-8/12 md:w-7/12 lg:w-7/12 mt-14 md:mt-0 flex shadow-lg"
+    >
       <!-- no event -->
       <div
         v-if="!filteredSchedules.length"
@@ -208,7 +218,9 @@ onBeforeMount(async () => {
       </div>
     </div>
 
-    <div class="bg-white rounded-3xl h-5/6 w-8/12 md:w-3/12 lg:w-3/12 flex shadow-lg px-2.5">
+    <div
+      class="bg-white rounded-3xl h-5/6 w-8/12 md:w-3/12 lg:w-3/12 flex shadow-lg px-2.5"
+    >
       <div
         class="flex flex-col p-5 lg:p-10 min-w-full z-10 overflow-auto clinic-scollbar"
       >

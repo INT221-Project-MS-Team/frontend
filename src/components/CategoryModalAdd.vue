@@ -23,13 +23,20 @@ const newCategoryData = computed(() => ({
 
 //create
 const addCategory = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events-categories/',
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
+        Authorization: authorization,
       },
       body: JSON.stringify({
         eventCategoryName: newCategoryData.value.eventCategoryName.trim(),

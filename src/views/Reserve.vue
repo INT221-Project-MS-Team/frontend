@@ -119,15 +119,21 @@ const submitReserve = async () => {
     return;
   }
 
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
+
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events',
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: !localStorage.getItem('access_token')
-          ? null
-          : 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: authorization,
       },
       body: JSON.stringify(body),
     }

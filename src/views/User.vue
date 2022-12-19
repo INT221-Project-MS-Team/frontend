@@ -23,11 +23,18 @@ const isAddUserModalShow = ref(false);
 const editUserObj = ref({});
 
 const getUsersData = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/api/users', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
+      Authorization: authorization,
     },
   });
   console.log(response);
@@ -87,13 +94,20 @@ const deleteUser = async (user) => {
     cancelButtonText: 'No',
   }).then(async (result) => {
     if (result.isConfirmed) {
+      let msalIdToken = localStorage.getItem('msal.idtoken');
+      let authorization = '';
+      if (msalIdToken) {
+        authorization = 'Bearer ' + msalIdToken;
+      } else {
+        authorization = 'Bearer ' + localStorage.getItem('access_token');
+      }
       const response = await fetch(
         import.meta.env.VITE_SERVER_URL + `/api/users/${user.id}`,
         {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            Authorization: authorization,
           },
         }
       );

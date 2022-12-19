@@ -18,13 +18,20 @@ const addCategoryObj = ref({});
 const isShowOnlyMyCategory = ref(false);
 
 const getCategoriesData = async () => {
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/events-categories',
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') ?? '',
+        Authorization: 'Bearer ' +authorization ?? '',
       },
     }
   );

@@ -43,13 +43,22 @@ const addUser = async () => {
     });
     return;
   }
+
+  let msalIdToken = localStorage.getItem('msal.idtoken');
+  let authorization = '';
+  if (msalIdToken) {
+    authorization = 'Bearer ' + msalIdToken;
+  } else {
+    authorization = 'Bearer ' + localStorage.getItem('access_token');
+  }
+
   const response = await fetch(
     import.meta.env.VITE_SERVER_URL + '/api/users/',
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        Authorization: authorization,
       },
       body: JSON.stringify({
         name: newUserData.value.name.trim(),
