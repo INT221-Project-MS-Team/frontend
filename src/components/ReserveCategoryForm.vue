@@ -73,6 +73,9 @@ const filterCategory = computed(() => {
         :key="index"
         @click="$emit('selectCategory', index)"
       />
+      <p v-if="!filterCategory.length" class="text-clinic-blue-200">
+        No category found
+      </p>
     </div>
   </div>
 </template>
