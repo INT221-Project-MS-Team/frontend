@@ -58,7 +58,7 @@ const updateUser = async () => {
     });
     return;
   }
-   let msalIdToken = localStorage.getItem('msal.idtoken');
+  let msalIdToken = localStorage.getItem('msal.idtoken');
   let token = localStorage.getItem('access_token');
   let authorization = undefined;
   if (msalIdToken) {
@@ -72,7 +72,7 @@ const updateUser = async () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer` + authorization,
+        Authorization: authorization,
       },
       body: JSON.stringify({
         name: editingData.value.name.trim(),
